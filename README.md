@@ -11,7 +11,7 @@ To realize the goal, its code is 100% written in Kotlin with a nice consideratio
 
 ### Project Status
 
-That being said, this project is still under development.
+This project is still under development.
 Using this library in your serious projects is not yet recommended.
 
 ### Kotlin Example
