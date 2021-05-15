@@ -3,7 +3,7 @@ package notion.api.v1.request
 import notion.api.v1.model.block.Block
 import notion.api.v1.model.common.property.NewProperty
 
-data class NewPageRequest(
+data class CreatePageRequest(
     val parent: Parent,
     val properties: Map<String, NewProperty>,
     val children: List<Block>? = null,

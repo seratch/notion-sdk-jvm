@@ -4,7 +4,7 @@ import notion.api.v1.model.database.query.filter.QueryFilter
 import notion.api.v1.model.database.query.sort.QuerySort
 import notion.api.v1.request.common.Pagination
 
-data class DatabaseQueryRequest(
+data class QueryDatabaseRequest(
     val databaseId: String,
     val filter: QueryFilter? = null,
     val sorts: List<QuerySort>? = null,

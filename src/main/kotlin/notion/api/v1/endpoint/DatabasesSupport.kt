@@ -9,8 +9,9 @@ import notion.api.v1.model.database.Databases
 import notion.api.v1.model.database.QueryResults
 import notion.api.v1.model.database.query.filter.QueryFilter
 import notion.api.v1.model.database.query.sort.QuerySort
-import notion.api.v1.request.DatabaseQueryRequest
-import notion.api.v1.request.DatabasesRequest
+import notion.api.v1.request.QueryDatabaseRequest
+import notion.api.v1.request.RetrieveDatabaseRequest
+import notion.api.v1.request.ListDatabasesRequest
 
 interface DatabasesSupport : EndpointsSupport {
     val httpClient: NotionHttpClient
@@ -18,15 +19,19 @@ interface DatabasesSupport : EndpointsSupport {
     val logger: NotionLogger
     val baseUrl: String
 
+    // -----------------------------------------------
+    // listDatabases
+    // -----------------------------------------------
+
     fun listDatabases(): Databases {
-        return listDatabases(DatabasesRequest())
+        return listDatabases(ListDatabasesRequest())
     }
 
     fun listDatabases(pageSize: Int, startCursor: String): Databases {
-        return listDatabases(DatabasesRequest(startCursor = startCursor, pageSize = pageSize))
+        return listDatabases(ListDatabasesRequest(startCursor = startCursor, pageSize = pageSize))
     }
 
-    fun listDatabases(request: DatabasesRequest): Databases {
+    fun listDatabases(request: ListDatabasesRequest): Databases {
         val httpResponse = httpClient.get(
             logger = logger,
             url = "$baseUrl/databases",
@@ -43,10 +48,18 @@ interface DatabasesSupport : EndpointsSupport {
         }
     }
 
+    // -----------------------------------------------
+    // retrieveDatabase
+    // -----------------------------------------------
+
     fun retrieveDatabase(databaseId: String): Database {
+        return retrieveDatabase(RetrieveDatabaseRequest(databaseId))
+    }
+
+    fun retrieveDatabase(request: RetrieveDatabaseRequest): Database {
         val httpResponse = httpClient.get(
             logger = logger,
-            url = "$baseUrl/databases/${urlEncode(databaseId)}",
+            url = "$baseUrl/databases/${urlEncode(request.databaseId)}",
             headers = buildRequestHeaders(emptyMap())
         )
         if (httpResponse.status == 200) {
@@ -59,6 +72,10 @@ interface DatabasesSupport : EndpointsSupport {
         }
     }
 
+    // -----------------------------------------------
+    // queryDatabase
+    // -----------------------------------------------
+
     fun queryDatabase(
         databaseId: String,
         filter: QueryFilter? = null,
@@ -67,7 +84,7 @@ interface DatabasesSupport : EndpointsSupport {
         pageSize: Int? = null,
     ): QueryResults {
         return queryDatabase(
-            DatabaseQueryRequest(
+            QueryDatabaseRequest(
                 databaseId = databaseId,
                 filter = filter,
                 sorts = sorts,
@@ -77,7 +94,7 @@ interface DatabasesSupport : EndpointsSupport {
         )
     }
 
-    fun queryDatabase(request: DatabaseQueryRequest): QueryResults {
+    fun queryDatabase(request: QueryDatabaseRequest): QueryResults {
         val httpResponse = httpClient.postTextBody(
             logger = logger,
             url = "$baseUrl/databases/${urlEncode(request.databaseId)}/query",

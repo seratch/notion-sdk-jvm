@@ -8,8 +8,8 @@ import notion.api.v1.model.page.Page
 import notion.api.v1.model.search.SearchResults
 import notion.api.v1.model.user.User
 import notion.api.v1.model.user.Users
-import notion.api.v1.request.DatabaseQueryRequest
-import notion.api.v1.request.NewPageRequest
+import notion.api.v1.request.QueryDatabaseRequest
+import notion.api.v1.request.CreatePageRequest
 import notion.api.v1.request.SearchRequest
 
 interface NotionJsonSerializer {
@@ -23,7 +23,7 @@ interface NotionJsonSerializer {
     fun toUser(body: String): User
     fun toUsers(body: String): Users
 
-    fun toJsonString(request: NewPageRequest): String
+    fun toJsonString(request: CreatePageRequest): String
     fun toJsonString(request: SearchRequest): String
-    fun toJsonString(request: DatabaseQueryRequest): String
+    fun toJsonString(request: QueryDatabaseRequest): String
 }

@@ -13,6 +13,10 @@ interface SearchSupport : EndpointsSupport {
     val logger: NotionLogger
     val baseUrl: String
 
+    // -----------------------------------------------
+    // search
+    // -----------------------------------------------
+
     fun search(query: String): SearchResults {
         return search(SearchRequest(query = query))
     }

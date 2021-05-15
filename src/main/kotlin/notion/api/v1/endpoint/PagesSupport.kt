@@ -5,7 +5,8 @@ import notion.api.v1.http.NotionHttpClient
 import notion.api.v1.json.NotionJsonSerializer
 import notion.api.v1.logging.NotionLogger
 import notion.api.v1.model.page.Page
-import notion.api.v1.request.NewPageRequest
+import notion.api.v1.request.CreatePageRequest
+import notion.api.v1.request.RetrievePageRequest
 
 interface PagesSupport : EndpointsSupport {
     val httpClient: NotionHttpClient
@@ -13,7 +14,11 @@ interface PagesSupport : EndpointsSupport {
     val logger: NotionLogger
     val baseUrl: String
 
-    fun createPage(page: NewPageRequest): Page {
+    // -----------------------------------------------
+    // createPage
+    // -----------------------------------------------
+
+    fun createPage(page: CreatePageRequest): Page {
         val httpResponse = httpClient.postTextBody(
             logger = logger,
             url = "$baseUrl/pages",
@@ -34,10 +39,18 @@ interface PagesSupport : EndpointsSupport {
         }
     }
 
+    // -----------------------------------------------
+    // retrievePage
+    // -----------------------------------------------
+
     fun retrievePage(pageId: String): Page {
+        return retrievePage(RetrievePageRequest(pageId))
+    }
+
+    fun retrievePage(request: RetrievePageRequest): Page {
         val httpResponse = httpClient.get(
             logger = logger,
-            url = "$baseUrl/pages/${urlEncode(pageId)}",
+            url = "$baseUrl/pages/${urlEncode(request.pageId)}",
             headers = buildRequestHeaders(emptyMap())
         )
         if (httpResponse.status == 200) {
@@ -49,6 +62,11 @@ interface PagesSupport : EndpointsSupport {
             )
         }
     }
+
+    // -----------------------------------------------
+    // updatePageProperties
+    // -----------------------------------------------
+
     // TODO: update page properties
 
 }

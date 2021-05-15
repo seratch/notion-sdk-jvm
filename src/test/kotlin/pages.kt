@@ -2,7 +2,7 @@ import notion.api.v1.NotionClient
 import notion.api.v1.model.common.property.NewProperty
 import notion.api.v1.model.common.property.RichText
 import notion.api.v1.model.common.property.RichTextText
-import notion.api.v1.request.NewPageRequest
+import notion.api.v1.request.CreatePageRequest
 import java.util.*
 
 fun main() {
@@ -10,8 +10,8 @@ fun main() {
     val databases = client.listDatabases()
     println(databases)
     val newPage = client.createPage(
-        NewPageRequest(
-            parent = NewPageRequest.Parent(
+        CreatePageRequest(
+            parent = CreatePageRequest.Parent(
                 type = "database_id",
                 databaseId = databases.results[0].id
             ),

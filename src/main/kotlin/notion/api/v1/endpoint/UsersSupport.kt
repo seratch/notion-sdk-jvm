@@ -6,7 +6,8 @@ import notion.api.v1.json.NotionJsonSerializer
 import notion.api.v1.logging.NotionLogger
 import notion.api.v1.model.user.User
 import notion.api.v1.model.user.Users
-import notion.api.v1.request.UsersRequest
+import notion.api.v1.request.RetrieveUserRequest
+import notion.api.v1.request.ListUsersRequest
 
 interface UsersSupport : EndpointsSupport {
     val httpClient: NotionHttpClient
@@ -14,10 +15,18 @@ interface UsersSupport : EndpointsSupport {
     val logger: NotionLogger
     val baseUrl: String
 
+    // -----------------------------------------------
+    // retrieveUser
+    // -----------------------------------------------
+
     fun retrieveUser(userId: String): User {
+        return retrieveUser(RetrieveUserRequest(userId))
+    }
+
+    fun retrieveUser(request: RetrieveUserRequest): User {
         val httpResponse = httpClient.get(
             logger = logger,
-            url = "$baseUrl/users/${urlEncode(userId)}",
+            url = "$baseUrl/users/${urlEncode(request.userId)}",
             headers = buildRequestHeaders(emptyMap())
         )
         if (httpResponse.status == 200) {
@@ -30,15 +39,19 @@ interface UsersSupport : EndpointsSupport {
         }
     }
 
+    // -----------------------------------------------
+    // listUsers
+    // -----------------------------------------------
+
     fun listUsers(): Users {
-        return listUsers(UsersRequest(null, null))
+        return listUsers(ListUsersRequest(null, null))
     }
 
     fun listUsers(pageSize: Int, startCursor: String): Users {
-        return listUsers(UsersRequest(startCursor = startCursor, pageSize = pageSize))
+        return listUsers(ListUsersRequest(startCursor = startCursor, pageSize = pageSize))
     }
 
-    fun listUsers(request: UsersRequest): Users {
+    fun listUsers(request: ListUsersRequest): Users {
         val httpResponse = httpClient.get(
             logger = logger,
             url = "$baseUrl/users",
