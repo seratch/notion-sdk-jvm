@@ -1,4 +1,4 @@
-package notion.api.v1.response
+package notion.api.v1.model.property
 
 import kotlinx.serialization.Serializable
 

@@ -1,8 +1,8 @@
-package notion.api.v1.response
+package notion.api.v1.model.common
 
 import kotlinx.serialization.SerialName
 
-interface NotionObject {
+interface HasObjectType {
     @SerialName("object")
     val objectType: String
 }

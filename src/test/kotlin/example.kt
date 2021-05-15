@@ -1,4 +1,5 @@
 import notion.api.v1.NotionClient
+import notion.api.v1.model.database.TextQueryFilter
 
 fun main() {
     val client = NotionClient(
@@ -12,6 +13,11 @@ fun main() {
     databases.results.forEach { database ->
         println(client.findDatabase(database.id))
     }
+    println(client.findDatabase("invalid"))
+    println(client.queryDatabase("invalid", filter = TextQueryFilter(
+        property = "Name",
+        equals = "Kazuhiro Sera",
+    )))
 
     val searchResults = client.search("Getting Started")
     println(searchResults)

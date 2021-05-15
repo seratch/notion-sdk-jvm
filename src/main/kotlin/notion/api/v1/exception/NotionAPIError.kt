@@ -1,7 +1,7 @@
 package notion.api.v1.exception
 
 import notion.api.v1.http.NotionHttpResponse
-import notion.api.v1.response.Error
+import notion.api.v1.model.error.Error
 
 class NotionAPIError(
     val error: Error,

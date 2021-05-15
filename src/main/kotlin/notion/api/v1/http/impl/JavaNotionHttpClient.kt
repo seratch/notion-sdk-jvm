@@ -1,8 +1,8 @@
 package notion.api.v1.http.impl
 
+import notion.api.v1.Utilities.urlEncode
 import notion.api.v1.http.NotionHttpClient
 import notion.api.v1.http.NotionHttpResponse
-import notion.api.v1.http.util.QueryStringUtil.urlEncode
 import notion.api.v1.logging.NotionLogger
 import java.io.IOException
 import java.io.InputStream
@@ -10,6 +10,7 @@ import java.net.HttpURLConnection
 import java.net.URL
 
 class JavaNotionHttpClient : NotionHttpClient {
+
     override fun get(
         logger: NotionLogger,
         url: String,

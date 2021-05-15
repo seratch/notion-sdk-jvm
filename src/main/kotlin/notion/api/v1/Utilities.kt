@@ -1,8 +1,8 @@
-package notion.api.v1.http.util
+package notion.api.v1
 
 import java.net.URLEncoder
 
-object QueryStringUtil {
+object Utilities {
 
     fun urlEncode(value: String): String = URLEncoder.encode(value, "UTF-8")
 

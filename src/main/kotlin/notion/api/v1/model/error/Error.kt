@@ -1,6 +1,7 @@
-package notion.api.v1.response
+package notion.api.v1.model.error
 
 import kotlinx.serialization.Serializable
+import notion.api.v1.model.common.HasObjectType
 
 @Serializable
 data class Error(
@@ -8,4 +9,4 @@ data class Error(
     val status: Int,
     val code: String,
     val message: String,
-) : NotionObject
+) : HasObjectType

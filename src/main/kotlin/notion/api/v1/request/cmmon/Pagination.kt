@@ -1,10 +1,10 @@
-package notion.api.v1.request
+package notion.api.v1.request.cmmon
 
-interface PaginationRequest {
+interface Pagination {
     val startCursor: String?
     val pageSize: Int?
 
-    fun toQueryString(): Map<String, String> {
+    fun buildPaginationParams(): Map<String, String> {
         val q = mutableMapOf<String, String>()
         if (startCursor != null) {
             q["start_cursor"] = startCursor!!

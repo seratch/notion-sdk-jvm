@@ -1,7 +1,8 @@
-package notion.api.v1.response
+package notion.api.v1.model.user
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import notion.api.v1.model.common.HasObjectType
 
 @Serializable
 data class User(
@@ -13,11 +14,4 @@ data class User(
     @SerialName("avatar_url")
     val avatarUrl: String? = null,
     val bot: Bot? = null,
-) : NotionObject {
-    @Serializable
-    data class Person(val email: String)
-
-    @Serializable
-    class Bot
-}
-
+) : HasObjectType

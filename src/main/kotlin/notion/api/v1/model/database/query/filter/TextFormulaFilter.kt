@@ -1,0 +1,15 @@
+package notion.api.v1.model.database.query.filter
+
+import kotlinx.serialization.Serializable
+
+@Serializable
+data class TextFormulaFilter(
+    override val equals: String? = null,
+    override val doesNotEqual: String? = null,
+    override val contains: String? = null,
+    override val doesNotContain: String? = null,
+    override val startsWith: String? = null,
+    override val endsWith: String? = null,
+    override val isEmpty: Boolean? = null,
+    override val isNotEmpty: Boolean? = null,
+) : TextFilter
