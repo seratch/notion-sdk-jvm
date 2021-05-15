@@ -1,4 +1,4 @@
-package notion.api.v1.request.cmmon
+package notion.api.v1.request.common
 
 interface Pagination {
     val startCursor: String?

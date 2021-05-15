@@ -1,8 +1,5 @@
 package notion.api.v1.model.database.query.filter
 
-import kotlinx.serialization.Serializable
-
-@Serializable
 data class NumberPropertyFilter(
     override val property: String? = null,
     override val equals: Int? = null,
@@ -13,4 +10,4 @@ data class NumberPropertyFilter(
     override val lessThanOrEqualTo: Int? = null,
     override val isEmpty: Boolean? = null,
     override val isNotEmpty: Boolean? = null,
-) : QueryPropertyFilter, NumberFilter
+) : QueryFilter, PropertyFilter, NumberFilter

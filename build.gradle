@@ -1,14 +1,5 @@
-buildscript {
-    ext.kotlin_version = '1.5.0'
-    repositories { mavenCentral() }
-
-    dependencies {
-        classpath "org.jetbrains.kotlin:kotlin-serialization:$kotlin_version"
-    }
-}
 plugins {
     id("org.jetbrains.kotlin.jvm") version('1.5.0')
-    id("org.jetbrains.kotlin.plugin.serialization") version('1.5.0')
     id("application")
     id("signing")
 }
@@ -22,9 +13,7 @@ configurations {
 dependencies {
     implementation(platform("org.jetbrains.kotlin:kotlin-bom"))
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-    implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:1.2.1"
+    implementation("com.google.code.gson:gson:2.8.6")
     provided("org.slf4j:slf4j-api:1.7.30")
     testCompile("org.slf4j:slf4j-simple:1.7.30")
-    // TODO: provided("com.squareup.okhttp3:okhttp:4.9.0")
-    // TODO: slf4j, log4j2?
 }

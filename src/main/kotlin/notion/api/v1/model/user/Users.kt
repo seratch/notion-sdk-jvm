@@ -1,13 +1,13 @@
 package notion.api.v1.model.user
 
-import kotlinx.serialization.Serializable
-import notion.api.v1.model.common.HasObjectType
+import com.google.gson.annotations.SerializedName
+import notion.api.v1.model.common.ObjectType
 import notion.api.v1.model.common.Pagination
 
-@Serializable
 data class Users(
+    @SerializedName("object")
     override val objectType: String = "list",
     val results: List<User>,
     override val nextCursor: String? = null,
     override val hasMore: Boolean = false,
-) : HasObjectType, Pagination
+) : ObjectType, Pagination

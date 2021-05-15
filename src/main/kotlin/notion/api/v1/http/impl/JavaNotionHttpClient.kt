@@ -28,16 +28,20 @@ class JavaNotionHttpClient : NotionHttpClient {
             conn.connectTimeout = 1_000
             conn.readTimeout = 10_000
             headers.forEach { (name, value) -> conn.setRequestProperty(name, value) }
-            var input: InputStream = try {
+
+            try {
                 conn.connect()
                 conn.inputStream
             } catch (e: IOException) {
-                conn.errorStream
-            }
-            input.use {
+                if (conn != null) {
+                    conn.errorStream
+                } else {
+                    null
+                }
+            }.use { input ->
                 val response = NotionHttpResponse(
                     status = conn.responseCode,
-                    body = input.bufferedReader(Charsets.UTF_8).use { it.readText() },
+                    body = input?.bufferedReader(Charsets.UTF_8)?.use { it.readText() } ?: "",
                     headers = conn.headerFields
                 )
                 logger.debug("Received a response (status: ${response.status}, body: ${response.body})")

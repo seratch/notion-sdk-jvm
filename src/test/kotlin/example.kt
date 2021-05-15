@@ -1,5 +1,5 @@
 import notion.api.v1.NotionClient
-import notion.api.v1.model.database.TextQueryFilter
+import notion.api.v1.model.database.query.filter.TextPropertyFilter
 
 fun main() {
     val client = NotionClient(
@@ -12,13 +12,11 @@ fun main() {
     val databases = client.listDatabases()
     databases.results.forEach { database ->
         println(client.findDatabase(database.id))
+        println(client.queryDatabase(database.id, filter = TextPropertyFilter(
+            property = "Name",
+            equals = "Kazuhiro Sera",
+        )))
     }
-    println(client.findDatabase("invalid"))
-    println(client.queryDatabase("invalid", filter = TextQueryFilter(
-        property = "Name",
-        equals = "Kazuhiro Sera",
-    )))
-
-    val searchResults = client.search("Getting Started")
+    val searchResults = client.search("Tuscan Kale")
     println(searchResults)
 }

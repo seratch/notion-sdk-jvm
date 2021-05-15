@@ -1,8 +1,5 @@
 package notion.api.v1.model.database.query.filter
 
-import kotlinx.serialization.Serializable
-
-@Serializable
 data class DateFormulaFilter(
     override val equals: String? = null, // TODO: ISO 8601 date and time
     override val before: String? = null, // TODO: ISO 8601 date and time
@@ -17,4 +14,4 @@ data class DateFormulaFilter(
     override val nextYear: DateFilter.DateCondition? = null,
     override val isEmpty: Boolean? = null,
     override val isNotEmpty: Boolean? = null,
-) : DateFilter
+) : QueryFilter, DateFilter

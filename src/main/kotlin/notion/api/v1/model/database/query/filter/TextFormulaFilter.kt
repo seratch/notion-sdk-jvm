@@ -1,8 +1,5 @@
 package notion.api.v1.model.database.query.filter
 
-import kotlinx.serialization.Serializable
-
-@Serializable
 data class TextFormulaFilter(
     override val equals: String? = null,
     override val doesNotEqual: String? = null,
@@ -12,4 +9,4 @@ data class TextFormulaFilter(
     override val endsWith: String? = null,
     override val isEmpty: Boolean? = null,
     override val isNotEmpty: Boolean? = null,
-) : TextFilter
+) : QueryFilter, TextFilter

@@ -1,12 +1,12 @@
 package notion.api.v1.model.error
 
-import kotlinx.serialization.Serializable
-import notion.api.v1.model.common.HasObjectType
+import com.google.gson.annotations.SerializedName
+import notion.api.v1.model.common.ObjectType
 
-@Serializable
 data class Error(
+    @SerializedName("object")
     override val objectType: String = "error",
     val status: Int,
     val code: String,
     val message: String,
-) : HasObjectType
+) : ObjectType

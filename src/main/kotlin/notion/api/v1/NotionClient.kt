@@ -5,32 +5,31 @@ import notion.api.v1.exception.NotionAPIError
 import notion.api.v1.http.NotionHttpClient
 import notion.api.v1.http.impl.JavaNotionHttpClient
 import notion.api.v1.json.NotionJsonSerializer
-import notion.api.v1.json.impl.KotlinxJsonSerializer
+import notion.api.v1.json.impl.GsonSerializer
 import notion.api.v1.logging.NotionLogger
 import notion.api.v1.logging.impl.StdoutNotionLogger
 import notion.api.v1.model.database.Database
 import notion.api.v1.model.database.Databases
+import notion.api.v1.model.database.QueryResults
 import notion.api.v1.model.database.query.filter.QueryFilter
 import notion.api.v1.model.database.query.sort.QuerySort
+import notion.api.v1.model.page.Page
 import notion.api.v1.model.search.SearchResults
 import notion.api.v1.model.user.User
 import notion.api.v1.model.user.Users
-import notion.api.v1.request.DatabaseQueryRequest
-import notion.api.v1.request.DatabasesRequest
-import notion.api.v1.request.SearchRequest
-import notion.api.v1.request.UsersRequest
+import notion.api.v1.request.*
 
 class NotionClient(
     private val token: String,
     var httpClient: NotionHttpClient = JavaNotionHttpClient(),
-    var jsonSerializer: NotionJsonSerializer = KotlinxJsonSerializer(),
+    var jsonSerializer: NotionJsonSerializer = GsonSerializer(),
     var logger: NotionLogger = StdoutNotionLogger(),
     var baseUrl: String = "https://api.notion.com/v1",
 ) {
     constructor(token: String) : this(
         token = token,
         httpClient = JavaNotionHttpClient(),
-        jsonSerializer = KotlinxJsonSerializer(),
+        jsonSerializer = GsonSerializer(),
         logger = StdoutNotionLogger(),
     )
 
@@ -85,7 +84,7 @@ class NotionClient(
         sorts: List<QuerySort>? = null,
         startCursor: String? = null,
         pageSize: Int? = null,
-    ): Database {
+    ): QueryResults {
         return queryDatabase(
             DatabaseQueryRequest(
                 databaseId = databaseId,
@@ -97,7 +96,7 @@ class NotionClient(
         )
     }
 
-    fun queryDatabase(request: DatabaseQueryRequest): Database {
+    fun queryDatabase(request: DatabaseQueryRequest): QueryResults {
         val httpResponse = httpClient.postTextBody(
             logger = logger,
             url = "$baseUrl/databases/${urlEncode(request.databaseId)}/query",
@@ -105,7 +104,7 @@ class NotionClient(
             headers = buildRequestHeaders(emptyMap())
         )
         if (httpResponse.status == 200) {
-            return jsonSerializer.toDatabase(httpResponse.body)
+            return jsonSerializer.toQueryResults(httpResponse.body)
         } else {
             throw NotionAPIError(
                 error = jsonSerializer.toError(httpResponse.body),
@@ -118,7 +117,42 @@ class NotionClient(
     // Pages
     // ---------------------------------------
 
-    // TODO: retrieve a page
+    fun createPage(page: NewPageRequest): Page {
+        val httpResponse = httpClient.postTextBody(
+            logger = logger,
+            url = "$baseUrl/pages",
+            body = jsonSerializer.toJsonString(page),
+            headers = buildRequestHeaders(
+                mapOf(
+                    "Content-Type" to "application/json"
+                )
+            )
+        )
+        if (httpResponse.status == 200) {
+            return jsonSerializer.toPage(httpResponse.body)
+        } else {
+            throw NotionAPIError(
+                error = jsonSerializer.toError(httpResponse.body),
+                httpResponse = httpResponse,
+            )
+        }
+    }
+
+    fun findPage(pageId: String): Page {
+        val httpResponse = httpClient.get(
+            logger = logger,
+            url = "$baseUrl/pages/${urlEncode(pageId)}",
+            headers = buildRequestHeaders(emptyMap())
+        )
+        if (httpResponse.status == 200) {
+            return jsonSerializer.toPage(httpResponse.body)
+        } else {
+            throw NotionAPIError(
+                error = jsonSerializer.toError(httpResponse.body),
+                httpResponse = httpResponse,
+            )
+        }
+    }
     // TODO: create a page
     // TODO: update page properties
 
@@ -208,6 +242,7 @@ class NotionClient(
     private fun buildRequestHeaders(additionalOnes: Map<String, String>): Map<String, String> {
         return mapOf(
             "Authorization" to "Bearer $token",
+            "Notion-Version" to "2021-05-13",
             "User-Agent" to "Notion-SDK-JVM by @seratch" // TODO: finalize
         ).plus(additionalOnes)
     }
