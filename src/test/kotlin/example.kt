@@ -7,11 +7,11 @@ fun main() {
     )
     val users = client.listUsers()
     users.results.forEach { user ->
-        println(client.findUser(user.id))
+        println(client.retrieveUser(user.id))
     }
     val databases = client.listDatabases()
     databases.results.forEach { database ->
-        println(client.findDatabase(database.id))
+        println(client.retrieveDatabase(database.id))
         println(client.queryDatabase(database.id, filter = TextPropertyFilter(
             property = "Name",
             equals = "Kazuhiro Sera",

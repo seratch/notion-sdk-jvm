@@ -1,13 +1,12 @@
 package notion.api.v1.http.impl
 
-import notion.api.v1.Utilities.urlEncode
 import notion.api.v1.http.NotionHttpClient
 import notion.api.v1.http.NotionHttpResponse
 import notion.api.v1.logging.NotionLogger
 import java.io.IOException
-import java.io.InputStream
 import java.net.HttpURLConnection
 import java.net.URL
+import java.net.URLEncoder
 
 class JavaNotionHttpClient : NotionHttpClient {
 
@@ -100,4 +99,7 @@ class JavaNotionHttpClient : NotionHttpClient {
             }
         }
     }
+
+    private fun urlEncode(value: String): String = URLEncoder.encode(value, "UTF-8")
+
 }

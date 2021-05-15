@@ -14,6 +14,7 @@ interface DateFilter {
     val nextYear: DateCondition?
     val isEmpty: Boolean?
     val isNotEmpty: Boolean?
+
     open class DateCondition
     object EmptyDateCondition : DateCondition()
 }

@@ -13,12 +13,12 @@ public class Example {
         var users = client.listUsers();
         logger.info("users: " + users);
         for (var user : users.getResults()) {
-            logger.info("user: " + client.findUser(user.getId()));
+            logger.info("user: " + client.retrieveUser(user.getId()));
         }
         var databases = client.listDatabases();
         logger.info("databases: " + databases);
         for (var database : databases.getResults()) {
-            client.findDatabase(database.getId());
+            client.retrieveDatabase(database.getId());
         }
         var results = client.search("Getting Started");
         logger.info("search results: " + results);
