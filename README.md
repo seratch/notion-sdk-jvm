@@ -1,8 +1,7 @@
 ## Unofficial Notion SDK for JVM Languages
 
 Here is an unofficial Notion SDK for JVM language users!
-This project aims to provide a tool for any JVM language developers without any hurdles.
-To realize the goal, its code is 100% written in Kotlin with a nice consideration for Java compatibility.
+This project aims to provide a tool for any JVM language developers without any hurdles. To realize the goal, its code is 100% written in Kotlin with a nice consideration for Java compatibility.
 
 ### Supported Java Runtimes
 
@@ -11,27 +10,23 @@ To realize the goal, its code is 100% written in Kotlin with a nice consideratio
 
 ### Project Status
 
-This project is still under development.
-Using this library in your serious projects is not yet recommended.
+This project is still under development. Using this library in your serious projects is not yet recommended.
 
 ### Kotlin Example
 
 ```kotlin
 import notion.api.v1.NotionClient
+import notion.api.v1.http.Okhttp3Client
+import notion.api.v1.logging.Slf4jNotionLogger
 
 fun main() {
-  val client = NotionClient(token = System.getenv("NOTION_TOKEN"))
-  val users = client.listUsers()
-  users.results.forEach { user ->
-    println(client.findUser(user.id))
-  }
-  val databases = client.listDatabases()
-  databases.results.forEach { database ->
-    println(client.findDatabase(database.id))
-  }
+  NotionClient(token = System.getenv("NOTION_TOKEN")).use { client ->
+    client.logger = Slf4jNotionLogger()
+    client.httpClient = Okhttp3Client()
 
-  val searchResults = client.search("Getting Started")
-  println(searchResults)
+    val searchResults = client.search("Getting Started")
+    println(searchResults)
+  }
 }
 ```
 
@@ -39,31 +34,16 @@ fun main() {
 
 ```java
 import notion.api.v1.NotionClient;
-import notion.api.v1.logging.impl.Slf4jNotionLogger;
+import notion.api.v1.http.Okhttp3Client;
+import notion.api.v1.logging.Slf4jNotionLogger;
+import notion.api.v1.model.database.Databases;
 
-public class Example {
-  public static void main(String[] args) throws Exception {
-    System.setProperty("org.slf4j.simpleLogger.log.notion-sdk-jvm", "debug");
+try (NotionClient client = new NotionClient(System.getenv("NOTION_TOKEN"))) {
+  client.setHttpClient(new Okhttp3Client());
+  client.setLogger(new Slf4jNotionLogger());
 
-    var client = new NotionClient(System.getenv("NOTION_TOKEN"));
-
-    // switching logger to an slf4j-api implementation
-    var logger = new Slf4jNotionLogger();
-    client.setLogger(logger);
-
-    var users = client.listUsers();
-    logger.info("users: " + users);
-    for (var user : users.getResults()) {
-      logger.info("user: " + client.findUser(user.getId()));
-    }
-    var databases = client.listDatabases();
-    logger.info("databases: " + databases);
-    for (var database : databases.getResults()) {
-      client.findDatabase(database.getId());
-    }
-    var results = client.search("Getting Started");
-    logger.info("search results: " + results);
-  }
+  Databases databases = client.listDatabases();
+  System.out.println(databases);
 }
 ```
 
