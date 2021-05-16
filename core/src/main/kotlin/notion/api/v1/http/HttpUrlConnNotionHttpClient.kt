@@ -1,6 +1,6 @@
 package notion.api.v1.http
 
-import notion.api.v1.http.UrlConnPatchMethodWorkaround.setPatchRequestMethod
+import notion.api.v1.http.HttpUrlConnPatchMethodWorkaround.setPatchRequestMethod
 import notion.api.v1.logging.NotionLogger
 import java.io.IOException
 import java.io.InputStream
@@ -8,7 +8,8 @@ import java.net.HttpURLConnection
 import java.net.URL
 
 
-class UrlConnNotionHttpClient(
+// TODO: proxy support
+class HttpUrlConnNotionHttpClient(
     private val connectTimeoutMillis: Int = 1_000,
     private val readTimeoutMillis: Int = 10_000,
 ) : NotionHttpClient {

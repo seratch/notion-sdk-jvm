@@ -1,5 +1,5 @@
 import notion.api.v1.NotionClient
-import notion.api.v1.http.Okhttp4Client
+import notion.api.v1.http.OkHttp4Client
 import notion.api.v1.model.pages.Page
 import notion.api.v1.model.pages.PageProperty
 import notion.api.v1.request.pages.CreatePageRequest
@@ -15,7 +15,7 @@ class SimpleTest {
     @Test
     fun pages() {
         NotionClient(token = System.getenv("NOTION_TOKEN")).use { client ->
-            client.httpClient = Okhttp4Client()
+            client.httpClient = OkHttp4Client()
             val databases = client.listDatabases()
             assertTrue { databases.results.isNotEmpty() }
 

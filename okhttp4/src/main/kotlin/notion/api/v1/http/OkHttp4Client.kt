@@ -1,18 +1,23 @@
 package notion.api.v1.http
 
 import notion.api.v1.logging.NotionLogger
-import okhttp3.*
+import okhttp3.Interceptor
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.RequestBody.Companion.toRequestBody
+import okhttp3.Response
 import java.util.concurrent.TimeUnit
 
-
-class Okhttp3Client : NotionHttpClient {
+class OkHttp4Client : NotionHttpClient {
     private val client: OkHttpClient
 
     companion object {
+        private val MEDIA_TYPE_APPLICATION_JSON = "application/json; charset=utf-8".toMediaType()
+
         private const val DEFAULT_CONNECT_TIMEOUT_MILLIS = 1_000
         private const val DEFAULT_READ_TIMEOUT_MILLIS = 20_000
         private const val DEFAULT_WRITE_TIMEOUT_MILLIS = 20_000
-        private val MEDIA_TYPE_APPLICATION_JSON = MediaType.parse("application/json; charset=utf-8")
 
         fun buildOkHttpClient(
             connectTimeoutMillis: Int = DEFAULT_CONNECT_TIMEOUT_MILLIS,
@@ -42,6 +47,7 @@ class Okhttp3Client : NotionHttpClient {
         this.client = buildOkHttpClient()
     }
 
+    // TODO: proxy support
     constructor(
         connectTimeoutMillis: Int = DEFAULT_CONNECT_TIMEOUT_MILLIS,
         writeTimeoutMillis: Int = DEFAULT_WRITE_TIMEOUT_MILLIS,
@@ -74,7 +80,7 @@ class Okhttp3Client : NotionHttpClient {
         headers: Map<String, String>
     ): NotionHttpResponse {
         val fullUrl = buildFullUrl(url, buildQueryString(query))
-        val req = Request.Builder().url(fullUrl).post(RequestBody.create(MEDIA_TYPE_APPLICATION_JSON, body))
+        val req = Request.Builder().url(fullUrl).post(body.toRequestBody(MEDIA_TYPE_APPLICATION_JSON))
         headers.forEach { (name, value) -> req.header(name, value) }
         return perform(req, body, logger)
     }
@@ -87,16 +93,16 @@ class Okhttp3Client : NotionHttpClient {
         headers: Map<String, String>
     ): NotionHttpResponse {
         val fullUrl = buildFullUrl(url, buildQueryString(query))
-        val req = Request.Builder().url(fullUrl).patch(RequestBody.create(MEDIA_TYPE_APPLICATION_JSON, body))
+        val req = Request.Builder().url(fullUrl).patch(body.toRequestBody(MEDIA_TYPE_APPLICATION_JSON))
         headers.forEach { (name, value) -> req.header(name, value) }
         return perform(req, body, logger)
     }
 
     @Throws(Exception::class)
     override fun close() {
-        this.client.dispatcher().executorService().shutdown()
-        this.client.connectionPool().evictAll()
-        client.cache()?.close()
+        this.client.dispatcher.executorService.shutdown()
+        this.client.connectionPool.evictAll()
+        client.cache?.close()
     }
 
     // ---------------------------------------
@@ -107,13 +113,13 @@ class Okhttp3Client : NotionHttpClient {
         logger: NotionLogger
     ): NotionHttpResponse {
         val request = req.build()
-        debugLogStart(logger, request, body)
+        debugLogStart(logger, body, request)
         val resp = client.newCall(req.build()).execute()
         try {
             val response = NotionHttpResponse(
-                status = resp.code(),
-                headers = resp.headers().toMultimap(),
-                body = resp.body()?.string() ?: ""
+                status = resp.code,
+                headers = resp.headers.toMultimap(),
+                body = resp.body?.string() ?: ""
             )
             debugLogSuccess(logger, response)
             return response
@@ -125,11 +131,11 @@ class Okhttp3Client : NotionHttpClient {
 
     private fun debugLogStart(
         logger: NotionLogger,
-        request: Request,
         body: String,
+        request: Request,
     ) {
-        val b = if (body.isBlank()) "" else "body $body\n"
-        logger.debug("Sending a request:\n${request.method()} ${request.url()}\n$b")
+        val b = if (body.isBlank()) "" else "body: $body\n"
+        logger.debug("Sending a request:\n${request.method} ${request.url}\n$b")
     }
 
     private fun debugLogFailure(logger: NotionLogger, e: Exception) {

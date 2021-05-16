@@ -13,7 +13,7 @@ You can start using this library just by adding `notion-sdk-jvm-core` dependency
 For Gradle users:
 
 ```gradle
-notionSdkVersion = "0.1.1"
+notionSdkVersion = "0.1.2"
 // This dependency is at least required
 implementation("com.github.seratch:notion-sdk-jvm-core:${notionSdkVersion}")
 ```
@@ -22,7 +22,7 @@ For Maven users:
 
 ```xml
 <properties>
-  <notion-sdk.version>0.1.1</notion-sdk.version>
+  <notion-sdk.version>0.1.2</notion-sdk.version>
 </properties>
 
 <dependencies>
@@ -116,7 +116,7 @@ For HTTP communications and logging, you can easily switch to other implementati
 
 #### Pluggable HTTP Client
 
-As you may know, `HttpURLConnection` does not support PATCH request method, the implementation does an "illegal reflective access" in `notion.api.v1.http.UrlConnPatchMethodWorkaround`. We recommend using your convenient HTTP client library for prodcution apps. Currently, we support [OkHttp](https://square.github.io/okhttp/) 3.x, [OkHttp](https://square.github.io/okhttp/) 4.x, and JDK's [`java.net.HttpClient`](https://docs.oracle.com/en/java/javase/11/docs/api/java.net.http/java/net/http/HttpClient.html).
+As you may know, `HttpURLConnection` does not support PATCH request method, the default implementation of `httpClient` in this library does an "illegal reflective access" to remove the limitation (see `notion.api.v1.http.HttpUrlConnPatchMethodWorkaround`). For this reason, we recommend using other HTTP client libraries for production apps. Currently, we support [OkHttp](https://square.github.io/okhttp/) 3.x, [OkHttp](https://square.github.io/okhttp/) 4.x, and JDK's [`java.net.HttpClient`](https://docs.oracle.com/en/java/javase/11/docs/api/java.net.http/java/net/http/HttpClient.html).
 
 ```gradle
 implementation("com.github.seratch:notion-sdk-jvm-okhttp3:${notionSdkVersion}") // OkHttp 3.x
@@ -128,11 +128,11 @@ You can switch the `httpClient` in the following ways:
 
 ```kotlin
 import notion.api.v1.NotionClient
-import notion.api.v1.http.JavaHttpClient
+import notion.api.v1.http.JavaNetHttpClient
 
 val client = NotionClient(
   token = System.getenv("NOTION_TOKEN"),
-  httpClient = JavaHttpClient(),
+  httpClient = JavaNetHttpClient(),
 )
 ```
 
@@ -140,10 +140,10 @@ or
 
 ```kotlin
 import notion.api.v1.NotionClient
-import notion.api.v1.http.Okhttp3Client
+import notion.api.v1.http.OkHttp3Client
 
 val client = NotionClient(token = System.getenv("NOTION_TOKEN"))
-client.httpClient = Okhttp3Client()
+client.httpClient = OkHttp3Client()
 ```
 
 #### Pluggable Logging
@@ -156,13 +156,13 @@ You can change the `logger` property of `NotionClient` instances.
 
 ```kotlin
 import notion.api.v1.NotionClient
-import notion.api.v1.http.JavaHttpClient
-import notion.api.v1.logging.Slf4jNotionLogger
+import notion.api.v1.http.JavaNetHttpClient
+import notion.api.v1.logging.Slf4jLogger
 
 val client = NotionClient(
   token = System.getenv("NOTION_TOKEN"),
-  httpClient = JavaHttpClient(),
-  logger = Slf4jNotionLogger(),
+  httpClient = JavaNetHttpClient(),
+  logger = Slf4jLogger(),
 )
 ```
 

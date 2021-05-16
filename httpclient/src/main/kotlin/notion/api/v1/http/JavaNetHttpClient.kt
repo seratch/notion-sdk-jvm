@@ -7,11 +7,11 @@ import java.net.http.HttpRequest
 import java.net.http.HttpResponse
 import java.time.Duration
 
-class JavaHttpClient(
+// TODO: proxy support
+class JavaNetHttpClient(
     connectTimeoutMillis: Int = 1_000,
     private val readTimeoutMillis: Int = 10_000,
 ) : NotionHttpClient {
-    // TODO: proxy
     private val client: HttpClient = HttpClient.newBuilder()
         .connectTimeout(Duration.ofMillis(connectTimeoutMillis.toLong()))
         .build()

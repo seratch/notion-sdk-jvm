@@ -25,7 +25,7 @@ import java.security.PrivilegedExceptionAction
 /**
  * Thanks to https://github.com/eclipse-ee4j/jersey/blob/3.0.2/core-client/src/main/java/org/glassfish/jersey/client/internal/HttpUrlConnector.java#L473
  */
-object UrlConnPatchMethodWorkaround {
+object HttpUrlConnPatchMethodWorkaround {
 
     fun setPatchRequestMethod(conn: HttpURLConnection) {
         try {
