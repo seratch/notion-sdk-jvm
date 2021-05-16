@@ -5,9 +5,12 @@ import org.junit.Assert;
 public class SimpleJavaTest {
 
     public static void main(String[] args) {
-        try (NotionClient client = new NotionClient(System.getenv("NOTION_TOKEN"))) {
+        NotionClient client = new NotionClient(System.getenv("NOTION_TOKEN"));
+        try {
             Databases databases = client.listDatabases();
             Assert.assertNotNull(databases);
+        } finally {
+            client.close();
         }
     }
 }

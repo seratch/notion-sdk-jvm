@@ -30,7 +30,7 @@ fun main() {
                 "Due" to PageProperty(
                     date = PageProperty.Date(start = "2021-05-13", end = "2021-12-31")
                 ),
-                "Velocity Points" to PageProperty(number = 123.5),
+                "Velocity Points" to PageProperty(number = 3),
                 "Assignee" to PageProperty(people = listOf(client.listUsers().results[0])),
                 "Done" to PageProperty(checkbox = true),
                 "Link" to PageProperty(url = "https://www.example.com"),

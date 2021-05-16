@@ -1,4 +1,4 @@
-## Unofficial Notion SDK for any JVM Language
+## Unofficial Notion SDK for Any JVM Language
 
 [![Maven Central](https://img.shields.io/maven-central/v/com.github.seratch/notion-sdk-jvm-core.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22com.github.seratch%22%20AND%20a:%22notion-sdk-jvm-core%22)
 
@@ -69,7 +69,7 @@ fun main() {
         "Due" to PageProperty(
           date = PageProperty.Date(start = "2021-05-13", end = "2021-12-31")
         ),
-        "Velocity Points" to PageProperty(number = 123.5),
+        "Velocity Points" to PageProperty(number = 3),
         "Assignee" to PageProperty(people = listOf(client.listUsers().results[0])),
         "Done" to PageProperty(checkbox = true),
         "Link" to PageProperty(url = "https://www.example.com"),
@@ -155,7 +155,6 @@ implementation("com.github.seratch:notion-sdk-jvm-slf4j:${notionSdkVersion}") //
 You can change the `logger` property of `NotionClient` instances.
 
 ```kotlin
-
 import notion.api.v1.NotionClient
 import notion.api.v1.http.JavaHttpClient
 import notion.api.v1.logging.Slf4jNotionLogger
