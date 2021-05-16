@@ -1,5 +1,7 @@
 ## Unofficial Notion SDK for any JVM Language
 
+[![Maven Central](https://img.shields.io/maven-central/v/com.github.seratch/notion-sdk-jvm-core.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22com.github.seratch%22%20AND%20a:%22notion-sdk-jvm-core%22)
+
 Here is an **unofficial** Notion SDK for any JVM language users!
 
 This project aims to provide a tool for any JVM language developers without any hurdles. To realize the goal, its code is written in Kotlin with a nice consideration for Java compatibility.
@@ -11,7 +13,7 @@ You can start using this library just by adding `notion-sdk-jvm-core` dependency
 For Gradle users:
 
 ```gradle
-notionSdkVersion = "0.1.0"
+notionSdkVersion = "0.1.1"
 // This dependency is at least required
 implementation("com.github.seratch:notion-sdk-jvm-core:${notionSdkVersion}")
 ```
@@ -20,7 +22,7 @@ For Maven users:
 
 ```xml
 <properties>
-  <notion-sdk.version>0.1.0</notion-sdk.version>
+  <notion-sdk.version>0.1.1</notion-sdk.version>
 </properties>
 
 <dependencies>
@@ -171,11 +173,11 @@ As of today, we don't support other JSON libraries yet. There are several reason
 
 ##### Necessity of polymorphic serializers for list objects
 
-We started with [kotlinx.serialization](https://github.com/Kotlin/kotlinx.serialization) first and it worked well except for the Search API responses. The `results` in the Search API responses requires polymorphic serializers for `properties: List[DatabaseProperty | PageProperty]`. @seratch was not able to find a way to handle the pattern with the library.
+In the early development stage of this SDK, we started with [kotlinx.serialization](https://github.com/Kotlin/kotlinx.serialization). It worked well except for the Search API responses. However, the `results` in the Search API responses requires polymorphic serializers for `properties: List[DatabaseProperty | PageProperty]`. The author (@seratch) was not able to find a way to handle the pattern with the library.
 
 ##### The author prefers camelCased property names
 
-I (@seratch) know a few novel libraries intentionally do not support the conversions between snake_cased keys and camelCased keys. I do understand the opinion, but I still prefer consistent field naming in the Java world.
+I (@seratch) know a few novel libraries intentionally do not support the conversions between snake_cased keys and camelCased keys. I do understand the opinion, but I still prefer consistent field naming in the Java world. This is the main reason why we didn't go with Moshi.
 
 ### Supported Java Runtimes
 

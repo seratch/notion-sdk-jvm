@@ -3,6 +3,7 @@ package notion.api.v1.json
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import notion.api.Metadata.isLibraryMaintainerMode
 import notion.api.v1.model.blocks.Block
 import notion.api.v1.model.blocks.Blocks
 import notion.api.v1.model.databases.Database
@@ -23,7 +24,7 @@ import notion.api.v1.request.search.SearchRequest
 class GsonSerializer : NotionJsonSerializer {
     private val gson: Gson
 
-    constructor(unknownPropertyDetection: Boolean = true) {
+    constructor(unknownPropertyDetection: Boolean = isLibraryMaintainerMode()) {
         val builder = GsonBuilder()
             .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
             .registerTypeAdapter(SearchResult::class.java, SearchResultParser())
