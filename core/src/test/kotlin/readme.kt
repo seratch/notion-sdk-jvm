@@ -13,7 +13,8 @@ fun main() {
         val database = databases.results.find { it.title?.first()?.plainText == "Test Database" }
             ?: throw IllegalStateException("Create a database named 'Test Database' and invite this app's user!")
         // All the options for "Severity" property (select type)
-        val options = database.properties?.get("Severity")?.select?.options
+        val severityOptions = database.properties?.get("Severity")?.select?.options
+        val tagOptions = database.properties?.get("Tags")?.multiSelect?.options
 
         // Create a new page in the database
         val newPage = client.createPage(CreatePageRequest(
@@ -24,7 +25,16 @@ fun main() {
                         text = PageProperty.RichText.Text(content = "Fix a bug")
                     ))
                 ),
-                "Severity" to PageProperty(select = options?.find { it.name == "High" }),
+                "Severity" to PageProperty(select = severityOptions?.find { it.name == "High" }),
+                "Tags" to PageProperty(multiSelect = tagOptions),
+                "Due" to PageProperty(
+                    date = PageProperty.Date(start = "2021-05-13", end = "2021-12-31")
+                ),
+                "Velocity Points" to PageProperty(number = 123.5),
+                "Assignee" to PageProperty(people = listOf(client.listUsers().results[0])),
+                "Done" to PageProperty(checkbox = true),
+                "Link" to PageProperty(url = "https://www.example.com"),
+                "Contact" to PageProperty(email = "foo@example.com"),
             )
         ))
 
@@ -32,7 +42,7 @@ fun main() {
         val updatedPage = client.updatePageProperties(UpdatePagePropertiesRequest(
             pageId = newPage.id,
             properties = mapOf(
-                "Severity" to PageProperty(select = options?.find { it.name == "Medium" }),
+                "Severity" to PageProperty(select = severityOptions?.find { it.name == "Medium" }),
             )
         ))
 

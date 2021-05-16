@@ -32,7 +32,7 @@ For Maven users:
 </dependencies>
 ```
 
-As already mentioned, this library is written in Kotlin. Using in the same language would be the smoothest :) Let's start with a simple code manupulating Notion pages :wave:
+As already mentioned, this library is written in Kotlin. Using in the same language would be the smoothest :) Let's start with a simple code manipulating Notion pages :wave:
 
 ```kotlin
 import notion.api.v1.NotionClient
@@ -48,9 +48,10 @@ fun main() {
     val databases = client.listDatabases()
     // Find the "Test Database" from the list
     val database = databases.results.find { it.title?.first()?.plainText == "Test Database" }
-        ?: throw IllegalStateException("Create a database named 'Test Database' and invite this app's user!")
+      ?: throw IllegalStateException("Create a database named 'Test Database' and invite this app's user!")
     // All the options for "Severity" property (select type)
-    val options = database.properties?.get("Severity")?.select?.options
+    val severityOptions = database.properties?.get("Severity")?.select?.options
+    val tagOptions = database.properties?.get("Tags")?.multiSelect?.options
 
     // Create a new page in the database
     val newPage = client.createPage(CreatePageRequest(
@@ -61,7 +62,16 @@ fun main() {
             text = PageProperty.RichText.Text(content = "Fix a bug")
           ))
         ),
-        "Severity" to PageProperty(select = options?.find { it.name == "High" }),
+        "Severity" to PageProperty(select = severityOptions?.find { it.name == "High" }),
+        "Tags" to PageProperty(multiSelect = tagOptions),
+        "Due" to PageProperty(
+          date = PageProperty.Date(start = "2021-05-13", end = "2021-12-31")
+        ),
+        "Velocity Points" to PageProperty(number = 123.5),
+        "Assignee" to PageProperty(people = listOf(client.listUsers().results[0])),
+        "Done" to PageProperty(checkbox = true),
+        "Link" to PageProperty(url = "https://www.example.com"),
+        "Contact" to PageProperty(email = "foo@example.com"),
       )
     ))
 
@@ -69,7 +79,7 @@ fun main() {
     val updatedPage = client.updatePageProperties(UpdatePagePropertiesRequest(
       pageId = newPage.id,
       properties = mapOf(
-        "Severity" to PageProperty(select = options?.find { it.name == "Medium" }),
+        "Severity" to PageProperty(select = severityOptions?.find { it.name == "Medium" }),
       )
     ))
 
@@ -159,13 +169,13 @@ val client = NotionClient(
 
 As of today, we don't support other JSON libraries yet. There are several reasons:
 
-* Necessity of polymorphic serializers for list objects
+##### Necessity of polymorphic serializers for list objects
 
 We started with [kotlinx.serialization](https://github.com/Kotlin/kotlinx.serialization) first and it worked well except for the Search API responses. The `results` in the Search API responses requires polymorphic serializers for `properties: List[DatabaseProperty | PageProperty]`. @seratch was not able to find a way to handle the pattern with the library.
 
-* @seratch still prefers camelCased property names
+##### The author prefers camelCased property names
 
-I know a few novel libraries intentionally do not support the conversions between snake_cased keys and camelCased keys. I do understand the opinion, but I still prefer consistent field naming in the Java world.
+I (@seratch) know a few novel libraries intentionally do not support the conversions between snake_cased keys and camelCased keys. I do understand the opinion, but I still prefer consistent field naming in the Java world.
 
 ### Supported Java Runtimes
 

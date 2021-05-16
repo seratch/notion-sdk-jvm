@@ -7,9 +7,9 @@ data class User(
     @SerializedName("object")
     override val objectType: String = "user",
     val id: String,
-    val type: String,
+    val type: String? = null,
     val person: Person? = null,
-    val name: String,
+    val name: String? = null,
     val avatarUrl: String? = null,
     val bot: Bot? = null,
 ) : ObjectType

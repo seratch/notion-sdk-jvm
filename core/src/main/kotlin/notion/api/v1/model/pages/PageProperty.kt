@@ -1,6 +1,7 @@
 package notion.api.v1.model.pages
 
 import notion.api.v1.model.databases.DatabaseProperty
+import notion.api.v1.model.users.User
 import java.util.*
 
 data class PageProperty(
@@ -9,10 +10,22 @@ data class PageProperty(
     val title: List<RichText>? = null,
     val richText: List<RichText>? = null,
     val select: DatabaseProperty.Select.Option? = null,
-    val multiSelect: MultiSelect? = null,
+    val multiSelect: List<DatabaseProperty.MultiSelect.Option>? = null,
+    val number: Number? = null,
     val date: Date? = null,
+    val people: List<User>? = null,
+    val checkbox: Boolean? = null,
+    val url: String? = null,
+    val phoneNumber: String? = null,
+    val email: String? = null,
+    val files: List<File>? = null,
+    val relation: List<PageReference>? = null,
     val formula: Formula? = null,
     val rollup: Rollup? = null,
+    val createdBy: User? = null,
+    val lastEditedBy: User? = null,
+    val createdTime: String? = null,
+    val lastEditedTime: String? = null,
 ) {
     data class RichText(
         val type: String = "text",
@@ -42,26 +55,27 @@ data class PageProperty(
         )
     }
 
+    data class PageReference(val id: String)
+
+    data class File(
+        val name: String? = null
+    )
+
     data class Date(
         val start: String? = null,
         val end: String? = null
     )
 
     data class Formula(
-        val type: String
+        val type: String,
+        val boolean: Boolean? = null,
+        val date: Date? = null,
+        val string: String? = null,
+        val number: Number? = null,
     )
 
     data class Rollup(
         val type: String
     )
 
-    data class MultiSelect(
-        val options: List<Option>? = null
-    ) {
-        data class Option(
-            val id: String? = null,
-            val name: String? = null,
-            val color: String? = null,
-        )
-    }
 }

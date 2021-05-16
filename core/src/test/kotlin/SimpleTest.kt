@@ -47,6 +47,9 @@ class SimpleTest {
                     "Severity" to PageProperty(
                         select = database.properties["Severity"]?.select?.options?.find { it.name == "High" }
                     ),
+                    "Velocity Points" to PageProperty(number = 3),
+                    "Assignee" to PageProperty(people = listOf(client.listUsers().results[0])),
+                    "Done" to PageProperty(checkbox = true)
                 )
             ))
             assertNotNull(newPage)

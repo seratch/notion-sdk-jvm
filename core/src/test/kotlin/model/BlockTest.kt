@@ -2,13 +2,14 @@ package model
 
 import notion.api.v1.json.GsonSerializer
 import org.junit.Test
+import kotlin.test.assertNotNull
 
 class BlockTest {
     @Test
     fun parser() {
         val serializer = GsonSerializer()
         val blocks = serializer.toBlocks(json)
-        print(blocks.results)
+        assertNotNull(blocks)
     }
 
     // https://developers.notion.com/reference/get-block-children

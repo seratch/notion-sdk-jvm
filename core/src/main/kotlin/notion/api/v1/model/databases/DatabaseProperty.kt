@@ -5,11 +5,23 @@ data class DatabaseProperty(
     val id: String,
     val title: RichText? = null,
     val richText: RichText? = null,
+    val number: Number? = null,
     val select: Select? = null,
     val multiSelect: MultiSelect? = null,
     val date: Date? = null,
-    val formula: Formula? = null,
+    val people: People? = null,
+    val checkbox: Checkbox? = null,
+    val url: Url? = null,
+    val phoneNumber: PhoneNumber? = null,
+    val relation: Relation? = null,
     val rollup: Rollup? = null,
+    val email: Email? = null,
+    val files: Files? = null,
+    val formula: Formula? = null,
+    val createdBy: CreatedBy? = null,
+    val lastEditedBy: LastEditedBy? = null,
+    val createdTime: CreatedTime? = null,
+    val lastEditedTime: LastEditedTime? = null,
 ) {
     data class RichText(
         val type: String = "text",
@@ -39,17 +51,43 @@ data class DatabaseProperty(
         )
     }
 
+    data class Number(
+        val format: String? = null,
+    )
+
     data class Date(
         val start: String? = null,
         val end: String? = null
     )
 
-    data class Formula(
-        val type: String
+    data class Relation(
+        val databaseId: String? = null,
+        val syncedPropertyName: String? = null,
+        val syncedPropertyId: String? = null,
     )
 
     data class Rollup(
-        val type: String
+        val relationPropertyName: String? = null,
+        val relationPropertyId: String? = null,
+        val rollupPropertyName: String? = null,
+        val rollupPropertyId: String? = null,
+        val function: String? = null,
+    )
+
+    class People
+
+    class Checkbox
+
+    class Url
+
+    class Files
+
+    class PhoneNumber
+
+    class Email
+
+    data class Formula(
+        val expression: String? = null
     )
 
     data class MultiSelect(
@@ -71,4 +109,12 @@ data class DatabaseProperty(
             val color: String? = null,
         )
     }
+
+    class CreatedBy
+
+    class LastEditedBy
+
+    class CreatedTime
+
+    class LastEditedTime
 }
