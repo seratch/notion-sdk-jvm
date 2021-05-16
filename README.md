@@ -116,12 +116,24 @@ For HTTP communications and logging, you can easily switch to other implementati
 
 #### Pluggable HTTP Client
 
-As you may know, `HttpURLConnection` does not support PATCH request method, the default implementation of `httpClient` in this library does an "illegal reflective access" to remove the limitation (see `notion.api.v1.http.HttpUrlConnPatchMethodWorkaround`). For this reason, we recommend using other HTTP client libraries for production apps. Currently, we support [OkHttp](https://square.github.io/okhttp/) 3.x, [OkHttp](https://square.github.io/okhttp/) 4.x, and JDK's [`java.net.HttpClient`](https://docs.oracle.com/en/java/javase/11/docs/api/java.net.http/java/net/http/HttpClient.html).
+As you may know, `HttpURLConnection` does not support PATCH request method, the default implementation of `httpClient` in this library does an "illegal reflective access" to remove the limitation (see `notion.api.v1.http.HttpUrlConnPatchMethodWorkaround`). For this reason, we recommend using other HTTP client libraries for production apps. Currently, we support the following libraries and modules:
+
+* [`java.net.HttpClient`](https://docs.oracle.com/en/java/javase/11/docs/api/java.net.http/java/net/http/HttpClient.html) in JDK 11+
+* `okhttp3.OkHttpClient` in [OkHttp](https://square.github.io/okhttp/) 4.x
+* `okhttp3.OkHttpClient` in [OkHttp](https://square.github.io/okhttp/) 3.x
 
 ```gradle
-implementation("com.github.seratch:notion-sdk-jvm-okhttp3:${notionSdkVersion}") // OkHttp 3.x
-implementation("com.github.seratch:notion-sdk-jvm-okhttp4:${notionSdkVersion}") // OkHttp 4.x
-implementation("com.github.seratch:notion-sdk-jvm-httpclient:${notionSdkVersion}") // java.net.http.HttpClient in JDK 11+
+// Add this if you use java.net.http.HttpClient in JDK 11+
+// This module is not yet available in Android runtimes
+implementation("com.github.seratch:notion-sdk-jvm-httpclient:${notionSdkVersion}")
+
+// Add this if you use OkHttp 4.x
+// Although the package name is `okhttp3`, the latest version is 4.x
+implementation("com.github.seratch:notion-sdk-jvm-okhttp4:${notionSdkVersion}")
+
+// Add this if you use OkHttp 3.x
+// Retrofit etc. depends on this major version. If your app has such dependencies, using this is the way to go
+implementation("com.github.seratch:notion-sdk-jvm-okhttp3:${notionSdkVersion}")
 ```
 
 You can switch the `httpClient` in the following ways:
@@ -172,7 +184,7 @@ As of today, we don't support other JSON libraries yet. There are several reason
 
 ##### Necessity of polymorphic serializers for list objects
 
-In the early development stage of this SDK, we started with [kotlinx.serialization](https://github.com/Kotlin/kotlinx.serialization). It worked well except for the Search API responses. However, the `results` in the Search API responses requires polymorphic serializers for `properties: List[DatabaseProperty | PageProperty]`. The author (@seratch) was not able to find a way to handle the pattern with the library.
+In the early development stage of this SDK, we started with [kotlinx.serialization](https://github.com/Kotlin/kotlinx.serialization). It worked well except for the Search API responses. However, the `results` in the Search API responses requires polymorphic serializers for `properties: List<DatabaseProperty | PageProperty>` (this is a pseudo code illustrating the property is a list of union type). The author (@seratch) was not able to find a way to handle the pattern with the library.
 
 ##### The author prefers camelCased property names
 
