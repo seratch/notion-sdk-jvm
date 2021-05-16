@@ -1,6 +1,7 @@
 ## Unofficial Notion SDK for Any JVM Language
 
 [![Maven Central](https://img.shields.io/maven-central/v/com.github.seratch/notion-sdk-jvm-core.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22com.github.seratch%22%20AND%20a:%22notion-sdk-jvm-core%22)
+[![CI Build](https://github.com/seratch/notion-sdk-jvm/actions/workflows/ci-build.yml/badge.svg)](https://github.com/seratch/notion-sdk-jvm/actions/workflows/ci-build.yml)
 
 Here is an **unofficial** Notion SDK for any JVM language users!
 
