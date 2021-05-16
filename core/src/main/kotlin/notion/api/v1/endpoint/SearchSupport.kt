@@ -5,7 +5,7 @@ import notion.api.v1.http.NotionHttpClient
 import notion.api.v1.json.NotionJsonSerializer
 import notion.api.v1.logging.NotionLogger
 import notion.api.v1.model.search.SearchResults
-import notion.api.v1.request.SearchRequest
+import notion.api.v1.request.search.SearchRequest
 
 interface SearchSupport : EndpointsSupport {
     val httpClient: NotionHttpClient

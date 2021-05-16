@@ -48,7 +48,7 @@ class Okhttp4Client : NotionHttpClient {
         val fullUrl = buildFullUrl(url, buildQueryString(query))
         val req = Request.Builder().url(fullUrl).get()
         headers.forEach { (name, value) -> req.header(name, value) }
-        return perform(req, logger)
+        return perform(req, "", logger)
     }
 
     override fun postTextBody(
@@ -61,7 +61,7 @@ class Okhttp4Client : NotionHttpClient {
         val fullUrl = buildFullUrl(url, buildQueryString(query))
         val req = Request.Builder().url(fullUrl).post(body.toRequestBody(MEDIA_TYPE_APPLICATION_JSON))
         headers.forEach { (name, value) -> req.header(name, value) }
-        return perform(req, logger)
+        return perform(req, body, logger)
     }
 
     override fun patchTextBody(
@@ -74,7 +74,7 @@ class Okhttp4Client : NotionHttpClient {
         val fullUrl = buildFullUrl(url, buildQueryString(query))
         val req = Request.Builder().url(fullUrl).patch(body.toRequestBody(MEDIA_TYPE_APPLICATION_JSON))
         headers.forEach { (name, value) -> req.header(name, value) }
-        return perform(req, logger)
+        return perform(req, body, logger)
     }
 
     @Throws(Exception::class)
@@ -88,10 +88,11 @@ class Okhttp4Client : NotionHttpClient {
 
     private fun perform(
         req: Request.Builder,
+        body: String,
         logger: NotionLogger
     ): NotionHttpResponse {
         val request = req.build()
-        debugLogStart(logger, request)
+        debugLogStart(logger, body, request)
         val resp = client.newCall(req.build()).execute()
         try {
             val response = NotionHttpResponse(
@@ -109,9 +110,11 @@ class Okhttp4Client : NotionHttpClient {
 
     private fun debugLogStart(
         logger: NotionLogger,
+        body: String,
         request: Request,
     ) {
-        logger.debug("Sending a request - ${request.method} ${request.url}")
+        val b = if (body.isBlank()) "" else "body: $body\n"
+        logger.debug("Sending a request:\n${request.method} ${request.url}\n$b")
     }
 
     private fun debugLogFailure(logger: NotionLogger, e: Exception) {
@@ -122,6 +125,6 @@ class Okhttp4Client : NotionHttpClient {
         logger: NotionLogger,
         response: NotionHttpResponse
     ) {
-        logger.debug("Received a response (status: ${response.status}, body: ${response.body})")
+        logger.debug("Received a response:\nstatus ${response.status}\nbody ${response.body}\n")
     }
 }

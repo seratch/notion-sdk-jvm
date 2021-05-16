@@ -4,10 +4,10 @@ import notion.api.v1.exception.NotionAPIError
 import notion.api.v1.http.NotionHttpClient
 import notion.api.v1.json.NotionJsonSerializer
 import notion.api.v1.logging.NotionLogger
-import notion.api.v1.model.user.User
-import notion.api.v1.model.user.Users
-import notion.api.v1.request.ListUsersRequest
-import notion.api.v1.request.RetrieveUserRequest
+import notion.api.v1.model.users.User
+import notion.api.v1.model.users.Users
+import notion.api.v1.request.users.ListUsersRequest
+import notion.api.v1.request.users.RetrieveUserRequest
 
 interface UsersSupport : EndpointsSupport {
     val httpClient: NotionHttpClient
@@ -47,7 +47,7 @@ interface UsersSupport : EndpointsSupport {
         return listUsers(ListUsersRequest(null, null))
     }
 
-    fun listUsers(pageSize: Int, startCursor: String): Users {
+    fun listUsers(pageSize: Int, startCursor: String?): Users {
         return listUsers(ListUsersRequest(startCursor = startCursor, pageSize = pageSize))
     }
 

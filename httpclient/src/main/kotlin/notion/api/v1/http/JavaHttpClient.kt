@@ -22,17 +22,27 @@ class JavaHttpClient(
         query: Map<String, String>,
         headers: Map<String, String>
     ): NotionHttpResponse {
-        val request = HttpRequest.newBuilder()
+        val fullUrl = buildFullUrl(url, buildQueryString(query))
+        val req = HttpRequest.newBuilder()
             .GET()
-            .uri(URI(buildFullUrl(url, buildQueryString(query))))
+            .uri(URI(fullUrl))
             .timeout(Duration.ofMillis(readTimeoutMillis.toLong()))
-        headers.forEach { (name, value) -> request.header(name, value) }
-        val response = client.send(request.build(), HttpResponse.BodyHandlers.ofString())
-        return NotionHttpResponse(
-            status = response.statusCode(),
-            headers = response.headers().map(),
-            body = response.body()
-        )
+        headers.forEach { (name, value) -> req.header(name, value) }
+        val request = req.build()
+        debugLogStart(logger, request, fullUrl, "")
+        try {
+            val resp = client.send(request, HttpResponse.BodyHandlers.ofString())
+            val response = NotionHttpResponse(
+                status = resp.statusCode(),
+                headers = resp.headers().map(),
+                body = resp.body()
+            )
+            debugLogSuccess(logger, response)
+            return response
+        } catch (e: Exception) {
+            debugLogFailure(logger, e)
+            throw e
+        }
     }
 
     override fun postTextBody(
@@ -42,17 +52,27 @@ class JavaHttpClient(
         body: String,
         headers: Map<String, String>
     ): NotionHttpResponse {
-        val request = HttpRequest.newBuilder()
+        val fullUrl = buildFullUrl(url, buildQueryString(query))
+        val req = HttpRequest.newBuilder()
             .POST(HttpRequest.BodyPublishers.ofString(body, Charsets.UTF_8))
-            .uri(URI(buildFullUrl(url, buildQueryString(query))))
+            .uri(URI(fullUrl))
             .timeout(Duration.ofMillis(readTimeoutMillis.toLong()))
-        headers.forEach { (name, value) -> request.header(name, value) }
-        val response = client.send(request.build(), HttpResponse.BodyHandlers.ofString())
-        return NotionHttpResponse(
-            status = response.statusCode(),
-            headers = response.headers().map(),
-            body = response.body()
-        )
+        headers.forEach { (name, value) -> req.header(name, value) }
+        val request = req.build()
+        debugLogStart(logger, request, fullUrl, body)
+        try {
+            val resp = client.send(request, HttpResponse.BodyHandlers.ofString())
+            val response = NotionHttpResponse(
+                status = resp.statusCode(),
+                headers = resp.headers().map(),
+                body = resp.body()
+            )
+            debugLogSuccess(logger, response)
+            return response
+        } catch (e: Exception) {
+            debugLogFailure(logger, e)
+            throw e
+        }
     }
 
     override fun patchTextBody(
@@ -62,16 +82,47 @@ class JavaHttpClient(
         body: String,
         headers: Map<String, String>
     ): NotionHttpResponse {
-        val request = HttpRequest.newBuilder()
+        val fullUrl = buildFullUrl(url, buildQueryString(query))
+        val req = HttpRequest.newBuilder()
             .method("PATCH", HttpRequest.BodyPublishers.ofString(body, Charsets.UTF_8))
             .uri(URI(buildFullUrl(url, buildQueryString(query))))
             .timeout(Duration.ofMillis(readTimeoutMillis.toLong()))
-        headers.forEach { (name, value) -> request.header(name, value) }
-        val response = client.send(request.build(), HttpResponse.BodyHandlers.ofString())
-        return NotionHttpResponse(
-            status = response.statusCode(),
-            headers = response.headers().map(),
-            body = response.body()
-        )
+        headers.forEach { (name, value) -> req.header(name, value) }
+        val request = req.build()
+        debugLogStart(logger, request, fullUrl, body)
+        try {
+            val resp = client.send(request, HttpResponse.BodyHandlers.ofString())
+            val response = NotionHttpResponse(
+                status = resp.statusCode(),
+                headers = resp.headers().map(),
+                body = resp.body()
+            )
+            debugLogSuccess(logger, response)
+            return response
+        } catch (e: Exception) {
+            debugLogFailure(logger, e)
+            throw e
+        }
+    }
+
+    private fun debugLogStart(
+        logger: NotionLogger,
+        request: HttpRequest,
+        fullUrl: String,
+        body: String?,
+    ) {
+        val b = if (body == null || body.isEmpty()) "" else "body $body\n"
+        logger.debug("Sending a request:\n${request.method()} $fullUrl\n$b")
+    }
+
+    private fun debugLogFailure(logger: NotionLogger, e: Exception) {
+        logger.info("Failed to disconnect from Notion: ${e.message}", e)
+    }
+
+    private fun debugLogSuccess(
+        logger: NotionLogger,
+        response: NotionHttpResponse
+    ) {
+        logger.debug("Received a response:\nstatus ${response.status}\nbody ${response.body}\n")
     }
 }

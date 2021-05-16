@@ -1,8 +1,8 @@
 package notion.api.v1.model.search
 
 import com.google.gson.annotations.SerializedName
-import notion.api.v1.model.page.PageParent
-import notion.api.v1.model.page.PageProperty
+import notion.api.v1.model.pages.PageParent
+import notion.api.v1.model.pages.PageProperty
 
 data class PageSearchResult(
     @SerializedName("object")

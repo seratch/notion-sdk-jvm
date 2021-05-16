@@ -4,14 +4,14 @@ import notion.api.v1.exception.NotionAPIError
 import notion.api.v1.http.NotionHttpClient
 import notion.api.v1.json.NotionJsonSerializer
 import notion.api.v1.logging.NotionLogger
-import notion.api.v1.model.database.Database
-import notion.api.v1.model.database.Databases
-import notion.api.v1.model.database.QueryResults
-import notion.api.v1.model.database.query.filter.QueryFilter
-import notion.api.v1.model.database.query.sort.QuerySort
-import notion.api.v1.request.ListDatabasesRequest
-import notion.api.v1.request.QueryDatabaseRequest
-import notion.api.v1.request.RetrieveDatabaseRequest
+import notion.api.v1.model.databases.Database
+import notion.api.v1.model.databases.Databases
+import notion.api.v1.model.databases.QueryResults
+import notion.api.v1.model.databases.query.filter.QueryFilter
+import notion.api.v1.model.databases.query.sort.QuerySort
+import notion.api.v1.request.databases.ListDatabasesRequest
+import notion.api.v1.request.databases.QueryDatabaseRequest
+import notion.api.v1.request.databases.RetrieveDatabaseRequest
 
 interface DatabasesSupport : EndpointsSupport {
     val httpClient: NotionHttpClient

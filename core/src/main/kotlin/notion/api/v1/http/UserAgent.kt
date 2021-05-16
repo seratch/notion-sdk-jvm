@@ -1,9 +1,11 @@
 package notion.api.v1.http
 
+import notion.api.Metadata
+
 object UserAgent {
 
     fun buildUserAgent(): String {
-        val libraryVersion = "0.1" // TODO: embed from the build info
+        val libraryVersion = Metadata.VERSION
         val library = "notion-sdk-jvm/$libraryVersion"
         val repo = "https://github.com/seratch/notion-sdk-jvm"
         val jvm = "" + System.getProperty("java.vm.name") + "/" + System.getProperty("java.version") + ""

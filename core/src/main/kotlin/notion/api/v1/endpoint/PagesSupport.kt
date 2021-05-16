@@ -4,10 +4,10 @@ import notion.api.v1.exception.NotionAPIError
 import notion.api.v1.http.NotionHttpClient
 import notion.api.v1.json.NotionJsonSerializer
 import notion.api.v1.logging.NotionLogger
-import notion.api.v1.model.page.Page
-import notion.api.v1.request.CreatePageRequest
-import notion.api.v1.request.RetrievePageRequest
-import notion.api.v1.request.UpdatePagePropertiesRequest
+import notion.api.v1.model.pages.Page
+import notion.api.v1.request.pages.CreatePageRequest
+import notion.api.v1.request.pages.RetrievePageRequest
+import notion.api.v1.request.pages.UpdatePagePropertiesRequest
 
 interface PagesSupport : EndpointsSupport {
     val httpClient: NotionHttpClient
