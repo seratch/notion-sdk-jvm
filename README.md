@@ -127,14 +127,17 @@ val client = NotionClient(
 or
 
 ```kotlin
+import notion.api.v1.NotionClient
+import notion.api.v1.http.Okhttp3Client
+
 val client = NotionClient(token = System.getenv("NOTION_TOKEN"))
-client.httpClient = JavaHttpClient()
+client.httpClient = Okhttp3Client()
 ```
 
 #### Pluggable Logging
 
 ```gradle
-implementation("com.github.seratch:notion-sdk-jvm-slf4j:${notionSdkVersion}") # slf4j-api 1.7
+implementation("com.github.seratch:notion-sdk-jvm-slf4j:${notionSdkVersion}") // slf4j-api 1.7
 ```
 
 You can change the `logger` property of `NotionClient` instances.
