@@ -1,6 +1,7 @@
 package notion.api.v1.logging
 
-import java.util.logging.*
+import java.util.logging.Level
+import java.util.logging.Logger
 
 class JavaUtilLogger(val logger: Logger) : NotionLogger {
 
@@ -8,29 +9,23 @@ class JavaUtilLogger(val logger: Logger) : NotionLogger {
         if (this.logger.level == null) {
             this.logger.level = Level.ALL
         }
-        if (this.logger.handlers == null || this.logger.handlers.isEmpty()) {
-            val handler = ConsoleHandler()
-            handler.level = this.logger.level
-            handler.formatter = SimpleFormatter()
-            this.logger.addHandler(handler)
-        }
     }
 
-    override fun isDebugEnabled(): Boolean = logger.level != null && logger.level.intValue() <= Level.FINE.intValue()
+    override fun isDebugEnabled(): Boolean = logger.isLoggable(Level.FINE)
 
     override fun debug(message: String, e: Throwable?) {
-        logger.fine(message)
+        logger.log(Level.FINE, message, e)
     }
 
     override fun info(message: String, e: Throwable?) {
-        logger.info(message)
+        logger.log(Level.INFO, message, e)
     }
 
     override fun warn(message: String, e: Throwable?) {
-        logger.warning(message)
+        logger.log(Level.WARNING, message, e)
     }
 
     override fun error(message: String, e: Throwable?) {
-        logger.severe(message)
+        logger.log(Level.SEVERE, message, e)
     }
 }
