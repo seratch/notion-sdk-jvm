@@ -4,5 +4,5 @@ import notion.api.v1.model.blocks.Block
 
 data class AppendBlockChildrenRequest(
     val blockId: String,
-    val children: List<Block>
+    val children: List<Block>,
 )

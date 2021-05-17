@@ -41,4 +41,39 @@ interface NotionHttpClient : AutoCloseable, Closeable {
 
     fun buildFullUrl(url: String, q: String) = url + if (q != "?") q else ""
 
+    fun debugLogStart(
+        logger: NotionLogger,
+        method: String,
+        fullUrl: String,
+        body: String?,
+    ) {
+        if (logger.isDebugEnabled()) {
+            val b = if (body == null || body.isEmpty()) "" else "body   $body\n"
+            logger.debug(
+                """Sending a request:
+$method $fullUrl
+$b
+""".trimIndent().trimMargin()
+            )
+        }
+    }
+
+    fun debugLogSuccess(
+        logger: NotionLogger,
+        response: NotionHttpResponse
+    ) {
+        if (logger.isDebugEnabled()) {
+            logger.debug(
+                """Received a response:
+status  ${response.status}
+body    ${response.body}
+""".trimIndent().trimMargin()
+            )
+        }
+    }
+
+    fun debugLogFailure(logger: NotionLogger, e: Exception) {
+        logger.warn("Failed to disconnect from Notion: ${e.message}", e)
+    }
+
 }

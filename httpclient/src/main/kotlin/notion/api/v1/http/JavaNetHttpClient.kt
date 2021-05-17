@@ -29,7 +29,7 @@ class JavaNetHttpClient(
             .timeout(Duration.ofMillis(readTimeoutMillis.toLong()))
         headers.forEach { (name, value) -> req.header(name, value) }
         val request = req.build()
-        debugLogStart(logger, request, fullUrl, "")
+        debugLogStart(logger, request.method(), fullUrl, "")
         try {
             val resp = client.send(request, HttpResponse.BodyHandlers.ofString())
             val response = NotionHttpResponse(
@@ -59,7 +59,7 @@ class JavaNetHttpClient(
             .timeout(Duration.ofMillis(readTimeoutMillis.toLong()))
         headers.forEach { (name, value) -> req.header(name, value) }
         val request = req.build()
-        debugLogStart(logger, request, fullUrl, body)
+        debugLogStart(logger, request.method(), fullUrl, body)
         try {
             val resp = client.send(request, HttpResponse.BodyHandlers.ofString())
             val response = NotionHttpResponse(
@@ -89,7 +89,7 @@ class JavaNetHttpClient(
             .timeout(Duration.ofMillis(readTimeoutMillis.toLong()))
         headers.forEach { (name, value) -> req.header(name, value) }
         val request = req.build()
-        debugLogStart(logger, request, fullUrl, body)
+        debugLogStart(logger, request.method(), fullUrl, body)
         try {
             val resp = client.send(request, HttpResponse.BodyHandlers.ofString())
             val response = NotionHttpResponse(
@@ -103,26 +103,5 @@ class JavaNetHttpClient(
             debugLogFailure(logger, e)
             throw e
         }
-    }
-
-    private fun debugLogStart(
-        logger: NotionLogger,
-        request: HttpRequest,
-        fullUrl: String,
-        body: String?,
-    ) {
-        val b = if (body == null || body.isEmpty()) "" else "body $body\n"
-        logger.debug("Sending a request:\n${request.method()} $fullUrl\n$b")
-    }
-
-    private fun debugLogFailure(logger: NotionLogger, e: Exception) {
-        logger.info("Failed to disconnect from Notion: ${e.message}", e)
-    }
-
-    private fun debugLogSuccess(
-        logger: NotionLogger,
-        response: NotionHttpResponse
-    ) {
-        logger.debug("Received a response:\nstatus ${response.status}\nbody ${response.body}\n")
     }
 }

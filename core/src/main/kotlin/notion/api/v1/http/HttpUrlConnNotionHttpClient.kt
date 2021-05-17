@@ -25,7 +25,7 @@ class HttpUrlConnNotionHttpClient(
         val conn = buildConnectionObject(fullUrl, headers)
         try {
             conn.requestMethod = "GET"
-            debugLogStart(logger, conn, fullUrl, null)
+            debugLogStart(logger, conn.requestMethod, fullUrl, null)
             connect(conn).use { input ->
                 val response = NotionHttpResponse(
                     status = conn.responseCode,
@@ -52,7 +52,7 @@ class HttpUrlConnNotionHttpClient(
         val conn = buildConnectionObject(fullUrl, headers)
         try {
             conn.requestMethod = "POST"
-            debugLogStart(logger, conn, fullUrl, body)
+            debugLogStart(logger, conn.requestMethod, fullUrl, body)
             setRequestBody(conn, body)
             connect(conn).use { input ->
                 val response = NotionHttpResponse(
@@ -80,7 +80,7 @@ class HttpUrlConnNotionHttpClient(
         val conn = buildConnectionObject(fullUrl, headers)
         try {
             setPatchRequestMethod(conn)
-            debugLogStart(logger, conn, fullUrl, body)
+            debugLogStart(logger, conn.requestMethod, fullUrl, body)
             setRequestBody(conn, body)
             connect(conn).use { input ->
                 val response = NotionHttpResponse(
@@ -130,26 +130,4 @@ class HttpUrlConnNotionHttpClient(
             debugLogFailure(logger, e)
         }
     }
-
-    private fun debugLogStart(
-        logger: NotionLogger,
-        conn: HttpURLConnection,
-        fullUrl: String,
-        body: String?,
-    ) {
-        val b = if (body == null || body.isEmpty()) "" else "body: $body\n"
-        logger.debug("Sending a request:\n${conn.requestMethod} $fullUrl\n$b")
-    }
-
-    private fun debugLogFailure(logger: NotionLogger, e: Exception) {
-        logger.info("Failed to disconnect from Notion: ${e.message}", e)
-    }
-
-    private fun debugLogSuccess(
-        logger: NotionLogger,
-        response: NotionHttpResponse
-    ) {
-        logger.debug("Received a response:\nstatus ${response.status}\nbody ${response.body}\n")
-    }
-
 }

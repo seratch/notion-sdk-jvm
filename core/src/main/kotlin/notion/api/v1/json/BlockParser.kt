@@ -14,7 +14,7 @@ class BlockParser : JsonDeserializer<Block>, JsonSerializer<Block> {
             "heading_3" -> return context.deserialize(json, HeadingThreeBlock::class.java)
             "bulleted_list_item" -> return context.deserialize(json, BulletedListItemBlock::class.java)
             "numbered_list_item" -> return context.deserialize(json, NumberedListItemBlock::class.java)
-            "to_do" -> return context.deserialize(json, TodoBlock::class.java)
+            "to_do" -> return context.deserialize(json, ToDoBlock::class.java)
             "toggle" -> return context.deserialize(json, ToggleBlock::class.java)
             "child_page" -> return context.deserialize(json, ChildPageBlock::class.java)
             "unsupported" -> return context.deserialize(json, UnsupportedBlock::class.java)

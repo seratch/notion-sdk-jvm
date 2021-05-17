@@ -1,23 +1,35 @@
 package notion.api.v1.logging
 
-class StdoutNotionLogger : NotionLogger {
+import java.time.ZoneId
+import java.util.*
+
+class StdoutNotionLogger(val name: String = StdoutNotionLogger::class.java.canonicalName) : NotionLogger {
+
+    override fun isDebugEnabled(): Boolean = true
+
+    private fun now(): String = Date().toInstant().atZone(ZoneId.systemDefault()).toOffsetDateTime().toString()
+
+    private fun buildMessage(level: String, message: String): String {
+        return "${now()} $level $name - $message"
+    }
+
     override fun debug(message: String, e: Throwable?) {
-        println(message)
+        println(buildMessage("DEBUG", message))
         e?.printStackTrace()
     }
 
     override fun info(message: String, e: Throwable?) {
-        println(message)
+        println(buildMessage("INFO", message))
         e?.printStackTrace()
     }
 
     override fun warn(message: String, e: Throwable?) {
-        println(message)
+        println(buildMessage("WARN", message))
         e?.printStackTrace()
     }
 
     override fun error(message: String, e: Throwable?) {
-        println(message)
+        println(buildMessage("ERROR", message))
         e?.printStackTrace()
     }
 }

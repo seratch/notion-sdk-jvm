@@ -5,11 +5,15 @@ import org.junit.Test
 import kotlin.test.assertNotNull
 
 class BlockTest {
+
     @Test
     fun parser() {
         val serializer = GsonSerializer()
         val blocks = serializer.toBlocks(json)
         assertNotNull(blocks)
+        assertNotNull(blocks.results[0].asHeadingTwo())
+        assertNotNull(blocks.results[1].asParagraph())
+        assertNotNull(blocks.results[2].asToggle())
     }
 
     // https://developers.notion.com/reference/get-block-children

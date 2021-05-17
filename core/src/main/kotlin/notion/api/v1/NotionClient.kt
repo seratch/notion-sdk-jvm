@@ -1,8 +1,8 @@
 package notion.api.v1
 
 import notion.api.v1.endpoint.*
-import notion.api.v1.http.NotionHttpClient
 import notion.api.v1.http.HttpUrlConnNotionHttpClient
+import notion.api.v1.http.NotionHttpClient
 import notion.api.v1.json.GsonSerializer
 import notion.api.v1.json.NotionJsonSerializer
 import notion.api.v1.logging.NotionLogger

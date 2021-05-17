@@ -2,7 +2,8 @@ package notion.api.v1.request.databases
 
 import notion.api.v1.request.common.Pagination
 
+// var is intentional here (for the easiness in other JVM languages)
 data class ListDatabasesRequest(
-    override val startCursor: String? = null,
-    override val pageSize: Int? = null,
+    override var startCursor: String? = null,
+    override var pageSize: Int? = null,
 ) : Pagination

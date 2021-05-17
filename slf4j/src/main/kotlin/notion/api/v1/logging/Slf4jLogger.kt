@@ -2,8 +2,10 @@ package notion.api.v1.logging
 
 import org.slf4j.LoggerFactory
 
-class Slf4jLogger(name: String = "notion-sdk-jvm") : NotionLogger {
+class Slf4jLogger(name: String = Slf4jLogger::class.java.canonicalName) : NotionLogger {
     private val logger = LoggerFactory.getLogger(name)
+
+    override fun isDebugEnabled(): Boolean = logger.isDebugEnabled
 
     override fun debug(message: String, e: Throwable?) {
         if (e != null) {

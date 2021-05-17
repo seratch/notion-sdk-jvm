@@ -113,7 +113,7 @@ class OkHttp4Client : NotionHttpClient {
         logger: NotionLogger
     ): NotionHttpResponse {
         val request = req.build()
-        debugLogStart(logger, body, request)
+        debugLogStart(logger, request.method, request.url.toUrl().toString(), body)
         val resp = client.newCall(req.build()).execute()
         try {
             val response = NotionHttpResponse(
@@ -127,25 +127,5 @@ class OkHttp4Client : NotionHttpClient {
             debugLogFailure(logger, e)
             throw e
         }
-    }
-
-    private fun debugLogStart(
-        logger: NotionLogger,
-        body: String,
-        request: Request,
-    ) {
-        val b = if (body.isBlank()) "" else "body: $body\n"
-        logger.debug("Sending a request:\n${request.method} ${request.url}\n$b")
-    }
-
-    private fun debugLogFailure(logger: NotionLogger, e: Exception) {
-        logger.info("Failed to disconnect from Notion: ${e.message}", e)
-    }
-
-    private fun debugLogSuccess(
-        logger: NotionLogger,
-        response: NotionHttpResponse
-    ) {
-        logger.debug("Received a response:\nstatus ${response.status}\nbody ${response.body}\n")
     }
 }
