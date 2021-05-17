@@ -56,9 +56,19 @@
                             <goal>testCompile</goal>
                         </goals>
                     </execution>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>doc-jar</goal>
+                        </goals>
+                    </execution>
                 </executions>
                 <configuration>
-                    <scalaVersion>${scala.version}</scalaVersion>
+                    <!-- TODO: We should remove this version once scala-maven-plugin works with Scala v3.0
+                    This is a workaround for attaching doc-jar. Without this version,
+                    doc-jar task fails with "java.lang.ClassNotFoundException: scala.tools.nsc.ScalaDoc"
+                    -->
+                    <scalaVersion>2.13.6</scalaVersion>
                 </configuration>
             </plugin>
             <plugin>
