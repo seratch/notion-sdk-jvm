@@ -14,9 +14,13 @@ object Main extends App {
 
   val users = client.listUsers(pageSize = 2)
 
-  val databaseId = client.listDatabases().getResults.asScala
+  val databaseId = client
+    .listDatabases()
+    .getResults
+    .asScala
     .find(_.getTitle.get(0).getPlainText == "Test Database")
-    .get.getId
+    .get
+    .getId
 
   val queryResult = client.queryDatabase(
     databaseId = databaseId,

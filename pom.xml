@@ -221,7 +221,7 @@
                             <include>src/main/kotlin/**/*.kt</include>
                             <include>src/test/kotlin/tests/**/*.kt</include>
                         </includes>
-                        <diktat/>
+                        <ktfmt/>
                     </kotlin>
                 </configuration>
             </plugin>

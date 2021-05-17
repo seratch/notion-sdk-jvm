@@ -24,26 +24,26 @@ class NotionClient(
     SearchSupport,
     UsersSupport {
 
-    companion object {
-        @JvmStatic val defaultBaseUrl: String = "https://api.notion.com/v1"
-        @JvmStatic val defaultHttpClient: NotionHttpClient = HttpUrlConnNotionHttpClient()
-        @JvmStatic val defaultLogger: NotionLogger = StdoutLogger()
-        @JvmStatic val defaultJsonSerializer: NotionJsonSerializer = GsonSerializer()
-    }
+  companion object {
+    @JvmStatic val defaultBaseUrl: String = "https://api.notion.com/v1"
+    @JvmStatic val defaultHttpClient: NotionHttpClient = HttpUrlConnNotionHttpClient()
+    @JvmStatic val defaultLogger: NotionLogger = StdoutLogger()
+    @JvmStatic val defaultJsonSerializer: NotionJsonSerializer = GsonSerializer()
+  }
 
-    constructor(token: String) : this(token = token, httpClient = defaultHttpClient)
-    constructor(
-        token: String,
-        httpClient: NotionHttpClient,
-        logger: NotionLogger
-    ) : this(
-        token = token,
-        httpClient = httpClient,
-        logger = logger,
-        jsonSerializer = defaultJsonSerializer,
-    )
+  constructor(token: String) : this(token = token, httpClient = defaultHttpClient)
+  constructor(
+      token: String,
+      httpClient: NotionHttpClient,
+      logger: NotionLogger
+  ) : this(
+      token = token,
+      httpClient = httpClient,
+      logger = logger,
+      jsonSerializer = defaultJsonSerializer,
+  )
 
-    override fun close() {
-        httpClient.close()
-    }
+  override fun close() {
+    httpClient.close()
+  }
 }

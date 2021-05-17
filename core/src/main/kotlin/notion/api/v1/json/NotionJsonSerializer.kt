@@ -18,20 +18,20 @@ import notion.api.v1.request.search.SearchRequest
 
 interface NotionJsonSerializer {
 
-    fun toBlock(body: String): Block
-    fun toBlocks(body: String): Blocks
-    fun toDatabase(body: String): Database
-    fun toDatabases(body: String): Databases
-    fun toError(body: String): Error
-    fun toPage(body: String): Page
-    fun toQueryResults(body: String): QueryResults
-    fun toSearchResults(body: String): SearchResults
-    fun toUser(body: String): User
-    fun toUsers(body: String): Users
+  fun toBlock(body: String): Block
+  fun toBlocks(body: String): Blocks
+  fun toDatabase(body: String): Database
+  fun toDatabases(body: String): Databases
+  fun toError(body: String): Error
+  fun toPage(body: String): Page
+  fun toQueryResults(body: String): QueryResults
+  fun toSearchResults(body: String): SearchResults
+  fun toUser(body: String): User
+  fun toUsers(body: String): Users
 
-    fun toJsonString(request: AppendBlockChildrenRequest): String
-    fun toJsonString(request: CreatePageRequest): String
-    fun toJsonString(request: SearchRequest): String
-    fun toJsonString(request: QueryDatabaseRequest): String
-    fun toJsonString(request: UpdatePagePropertiesRequest): String
+  fun toJsonString(request: AppendBlockChildrenRequest): String
+  fun toJsonString(request: CreatePageRequest): String
+  fun toJsonString(request: SearchRequest): String
+  fun toJsonString(request: QueryDatabaseRequest): String
+  fun toJsonString(request: UpdatePagePropertiesRequest): String
 }

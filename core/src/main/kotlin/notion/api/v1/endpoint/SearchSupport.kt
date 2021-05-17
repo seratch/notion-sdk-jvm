@@ -8,33 +8,33 @@ import notion.api.v1.model.search.SearchResults
 import notion.api.v1.request.search.SearchRequest
 
 interface SearchSupport : EndpointsSupport {
-    val httpClient: NotionHttpClient
-    val jsonSerializer: NotionJsonSerializer
-    val logger: NotionLogger
-    val baseUrl: String
+  val httpClient: NotionHttpClient
+  val jsonSerializer: NotionJsonSerializer
+  val logger: NotionLogger
+  val baseUrl: String
 
-    // -----------------------------------------------
-    // search
-    // -----------------------------------------------
+  // -----------------------------------------------
+  // search
+  // -----------------------------------------------
 
-    fun search(query: String): SearchResults {
-        return search(SearchRequest(query = query))
+  fun search(query: String): SearchResults {
+    return search(SearchRequest(query = query))
+  }
+
+  fun search(request: SearchRequest): SearchResults {
+    val httpResponse =
+        httpClient.postTextBody(
+            logger = logger,
+            url = "$baseUrl/search",
+            body = jsonSerializer.toJsonString(request),
+            headers = buildRequestHeaders(contentTypeJson()))
+    if (httpResponse.status == 200) {
+      return jsonSerializer.toSearchResults(httpResponse.body)
+    } else {
+      throw NotionAPIError(
+          error = jsonSerializer.toError(httpResponse.body),
+          httpResponse = httpResponse,
+      )
     }
-
-    fun search(request: SearchRequest): SearchResults {
-        val httpResponse =
-            httpClient.postTextBody(
-                logger = logger,
-                url = "$baseUrl/search",
-                body = jsonSerializer.toJsonString(request),
-                headers = buildRequestHeaders(contentTypeJson()))
-        if (httpResponse.status == 200) {
-            return jsonSerializer.toSearchResults(httpResponse.body)
-        } else {
-            throw NotionAPIError(
-                error = jsonSerializer.toError(httpResponse.body),
-                httpResponse = httpResponse,
-            )
-        }
-    }
+  }
 }

@@ -28,57 +28,57 @@ import java.security.PrivilegedExceptionAction
  */
 object HttpUrlConnPatchMethodWorkaround {
 
-    fun setPatchRequestMethod(conn: HttpURLConnection) {
-        try {
-            conn.requestMethod = "PATCH" // Check whether we are running on a buggy JRE
-        } catch (pe: ProtocolException) {
-            try {
-                AccessController.doPrivileged(
-                    PrivilegedExceptionAction<Any?> {
-                        try {
-                            conn.requestMethod = "PATCH"
-                        } catch (pe: ProtocolException) {
-                            var connectionClass: Class<*>? = conn.javaClass
-                            val delegateField: Field?
-                            try {
-                                delegateField = connectionClass!!.getDeclaredField("delegate")
-                                delegateField.isAccessible = true
-                                val delegateConnection = delegateField[conn] as HttpURLConnection
-                                setPatchRequestMethod(delegateConnection)
-                            } catch (e: NoSuchFieldException) {
-                                // Ignore for now, keep going
-                            } catch (e: IllegalArgumentException) {
-                                throw RuntimeException(e)
-                            } catch (e: IllegalAccessException) {
-                                throw RuntimeException(e)
-                            }
-                            try {
-                                var methodField: Field
-                                while (connectionClass != null) {
-                                    try {
-                                        methodField = connectionClass.getDeclaredField("method")
-                                    } catch (e: NoSuchFieldException) {
-                                        connectionClass = connectionClass.superclass
-                                        continue
-                                    }
-                                    methodField.isAccessible = true
-                                    methodField[conn] = "PATCH"
-                                    break
-                                }
-                            } catch (e: Exception) {
-                                throw RuntimeException(e)
-                            }
-                        }
-                        null
-                    })
-            } catch (e: PrivilegedActionException) {
-                val cause: Throwable? = e.cause
-                if (cause is RuntimeException) {
-                    throw cause
-                } else {
-                    throw RuntimeException(cause)
+  fun setPatchRequestMethod(conn: HttpURLConnection) {
+    try {
+      conn.requestMethod = "PATCH" // Check whether we are running on a buggy JRE
+    } catch (pe: ProtocolException) {
+      try {
+        AccessController.doPrivileged(
+            PrivilegedExceptionAction<Any?> {
+              try {
+                conn.requestMethod = "PATCH"
+              } catch (pe: ProtocolException) {
+                var connectionClass: Class<*>? = conn.javaClass
+                val delegateField: Field?
+                try {
+                  delegateField = connectionClass!!.getDeclaredField("delegate")
+                  delegateField.isAccessible = true
+                  val delegateConnection = delegateField[conn] as HttpURLConnection
+                  setPatchRequestMethod(delegateConnection)
+                } catch (e: NoSuchFieldException) {
+                  // Ignore for now, keep going
+                } catch (e: IllegalArgumentException) {
+                  throw RuntimeException(e)
+                } catch (e: IllegalAccessException) {
+                  throw RuntimeException(e)
                 }
-            }
+                try {
+                  var methodField: Field
+                  while (connectionClass != null) {
+                    try {
+                      methodField = connectionClass.getDeclaredField("method")
+                    } catch (e: NoSuchFieldException) {
+                      connectionClass = connectionClass.superclass
+                      continue
+                    }
+                    methodField.isAccessible = true
+                    methodField[conn] = "PATCH"
+                    break
+                  }
+                } catch (e: Exception) {
+                  throw RuntimeException(e)
+                }
+              }
+              null
+            })
+      } catch (e: PrivilegedActionException) {
+        val cause: Throwable? = e.cause
+        if (cause is RuntimeException) {
+          throw cause
+        } else {
+          throw RuntimeException(cause)
         }
+      }
     }
+  }
 }

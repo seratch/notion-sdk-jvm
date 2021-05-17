@@ -10,59 +10,56 @@ import org.junit.Test
 
 class DatabasesTest {
 
-    @Test
-    fun list() {
-        NotionClient(token = System.getenv("NOTION_TOKEN")).use { client ->
-            val databases = client.listDatabases()
-            assertNotNull(databases)
-            assertEquals("list", databases.objectType)
-            assertTrue { databases.results.isNotEmpty() }
-        }
+  @Test
+  fun list() {
+    NotionClient(token = System.getenv("NOTION_TOKEN")).use { client ->
+      val databases = client.listDatabases()
+      assertNotNull(databases)
+      assertEquals("list", databases.objectType)
+      assertTrue { databases.results.isNotEmpty() }
     }
+  }
 
-    @Test
-    fun query_property() {
-        NotionClient(token = System.getenv("NOTION_TOKEN")).use { client ->
-            val databases = client.listDatabases()
-            assertTrue { databases.results.isNotEmpty() }
+  @Test
+  fun query_property() {
+    NotionClient(token = System.getenv("NOTION_TOKEN")).use { client ->
+      val databases = client.listDatabases()
+      assertTrue { databases.results.isNotEmpty() }
 
-            val database =
-                databases.results.find { it.title?.get(0)?.plainText == "Test Database" }!!
+      val database = databases.results.find { it.title?.get(0)?.plainText == "Test Database" }!!
 
-            val queryResult =
-                client.queryDatabase(
-                    databaseId = database.id,
-                    filter =
-                        PropertyFilter(property = "Title", title = TextFilter(contains = "bug")),
-                    pageSize = 1,
-                )
-            assertNotNull(queryResult)
-            assertTrue { queryResult.results.isNotEmpty() }
-        }
+      val queryResult =
+          client.queryDatabase(
+              databaseId = database.id,
+              filter = PropertyFilter(property = "Title", title = TextFilter(contains = "bug")),
+              pageSize = 1,
+          )
+      assertNotNull(queryResult)
+      assertTrue { queryResult.results.isNotEmpty() }
     }
+  }
 
-    @Test
-    fun query_compound() {
-        NotionClient(token = System.getenv("NOTION_TOKEN")).use { client ->
-            val databases = client.listDatabases()
-            assertTrue { databases.results.isNotEmpty() }
+  @Test
+  fun query_compound() {
+    NotionClient(token = System.getenv("NOTION_TOKEN")).use { client ->
+      val databases = client.listDatabases()
+      assertTrue { databases.results.isNotEmpty() }
 
-            val database =
-                databases.results.find { it.title?.get(0)?.plainText == "Test Database" }!!
+      val database = databases.results.find { it.title?.get(0)?.plainText == "Test Database" }!!
 
-            val queryResult =
-                client.queryDatabase(
-                    databaseId = database.id,
-                    filter =
-                        CompoundFilter(
-                            and =
-                                listOf(
-                                    PropertyFilter(
-                                        property = "Title", title = TextFilter(contains = "bug")))),
-                    pageSize = 1,
-                )
-            assertNotNull(queryResult)
-            assertTrue { queryResult.results.isNotEmpty() }
-        }
+      val queryResult =
+          client.queryDatabase(
+              databaseId = database.id,
+              filter =
+                  CompoundFilter(
+                      and =
+                          listOf(
+                              PropertyFilter(
+                                  property = "Title", title = TextFilter(contains = "bug")))),
+              pageSize = 1,
+          )
+      assertNotNull(queryResult)
+      assertTrue { queryResult.results.isNotEmpty() }
     }
+  }
 }

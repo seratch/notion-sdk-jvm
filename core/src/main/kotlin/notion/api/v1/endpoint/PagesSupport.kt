@@ -10,74 +10,74 @@ import notion.api.v1.request.pages.RetrievePageRequest
 import notion.api.v1.request.pages.UpdatePagePropertiesRequest
 
 interface PagesSupport : EndpointsSupport {
-    val httpClient: NotionHttpClient
-    val jsonSerializer: NotionJsonSerializer
-    val logger: NotionLogger
-    val baseUrl: String
+  val httpClient: NotionHttpClient
+  val jsonSerializer: NotionJsonSerializer
+  val logger: NotionLogger
+  val baseUrl: String
 
-    // -----------------------------------------------
-    // createPage
-    // -----------------------------------------------
+  // -----------------------------------------------
+  // createPage
+  // -----------------------------------------------
 
-    fun createPage(page: CreatePageRequest): Page {
-        val httpResponse =
-            httpClient.postTextBody(
-                logger = logger,
-                url = "$baseUrl/pages",
-                body = jsonSerializer.toJsonString(page),
-                headers = buildRequestHeaders(contentTypeJson()))
-        if (httpResponse.status == 200) {
-            return jsonSerializer.toPage(httpResponse.body)
-        } else {
-            throw NotionAPIError(
-                error = jsonSerializer.toError(httpResponse.body),
-                httpResponse = httpResponse,
-            )
-        }
+  fun createPage(page: CreatePageRequest): Page {
+    val httpResponse =
+        httpClient.postTextBody(
+            logger = logger,
+            url = "$baseUrl/pages",
+            body = jsonSerializer.toJsonString(page),
+            headers = buildRequestHeaders(contentTypeJson()))
+    if (httpResponse.status == 200) {
+      return jsonSerializer.toPage(httpResponse.body)
+    } else {
+      throw NotionAPIError(
+          error = jsonSerializer.toError(httpResponse.body),
+          httpResponse = httpResponse,
+      )
     }
+  }
 
-    // -----------------------------------------------
-    // retrievePage
-    // -----------------------------------------------
+  // -----------------------------------------------
+  // retrievePage
+  // -----------------------------------------------
 
-    fun retrievePage(pageId: String): Page {
-        return retrievePage(RetrievePageRequest(pageId))
+  fun retrievePage(pageId: String): Page {
+    return retrievePage(RetrievePageRequest(pageId))
+  }
+
+  fun retrievePage(request: RetrievePageRequest): Page {
+    val httpResponse =
+        httpClient.get(
+            logger = logger,
+            url = "$baseUrl/pages/${urlEncode(request.pageId)}",
+            headers = buildRequestHeaders(emptyMap()))
+    if (httpResponse.status == 200) {
+      return jsonSerializer.toPage(httpResponse.body)
+    } else {
+      throw NotionAPIError(
+          error = jsonSerializer.toError(httpResponse.body),
+          httpResponse = httpResponse,
+      )
     }
+  }
 
-    fun retrievePage(request: RetrievePageRequest): Page {
-        val httpResponse =
-            httpClient.get(
-                logger = logger,
-                url = "$baseUrl/pages/${urlEncode(request.pageId)}",
-                headers = buildRequestHeaders(emptyMap()))
-        if (httpResponse.status == 200) {
-            return jsonSerializer.toPage(httpResponse.body)
-        } else {
-            throw NotionAPIError(
-                error = jsonSerializer.toError(httpResponse.body),
-                httpResponse = httpResponse,
-            )
-        }
+  // -----------------------------------------------
+  // updatePageProperties
+  // -----------------------------------------------
+
+  fun updatePageProperties(request: UpdatePagePropertiesRequest): Page {
+    val httpResponse =
+        httpClient.patchTextBody(
+            logger = logger,
+            url = "$baseUrl/pages/${request.pageId}",
+            body = jsonSerializer.toJsonString(request),
+            headers = buildRequestHeaders(contentTypeJson()))
+    if (httpResponse.status == 200) {
+      return jsonSerializer.toPage(httpResponse.body)
+    } else {
+      throw NotionAPIError(
+          error = jsonSerializer.toError(httpResponse.body),
+          httpResponse = httpResponse,
+      )
     }
-
-    // -----------------------------------------------
-    // updatePageProperties
-    // -----------------------------------------------
-
-    fun updatePageProperties(request: UpdatePagePropertiesRequest): Page {
-        val httpResponse =
-            httpClient.patchTextBody(
-                logger = logger,
-                url = "$baseUrl/pages/${request.pageId}",
-                body = jsonSerializer.toJsonString(request),
-                headers = buildRequestHeaders(contentTypeJson()))
-        if (httpResponse.status == 200) {
-            return jsonSerializer.toPage(httpResponse.body)
-        } else {
-            throw NotionAPIError(
-                error = jsonSerializer.toError(httpResponse.body),
-                httpResponse = httpResponse,
-            )
-        }
-    }
+  }
 }

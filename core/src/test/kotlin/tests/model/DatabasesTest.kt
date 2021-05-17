@@ -7,15 +7,15 @@ import org.junit.Test
 
 class DatabasesTest {
 
-    @Test
-    fun listDatabases() {
-        val parser = GsonSerializer(true)
-        val databases: Databases = parser.toDatabases(listDatabasesResponse)
-        assertNotNull(databases)
-    }
+  @Test
+  fun listDatabases() {
+    val parser = GsonSerializer(true)
+    val databases: Databases = parser.toDatabases(listDatabasesResponse)
+    assertNotNull(databases)
+  }
 
-    private val listDatabasesResponse =
-        """
+  private val listDatabasesResponse =
+      """
 {
   "object": "list",
   "results": [

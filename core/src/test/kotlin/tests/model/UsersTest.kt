@@ -6,15 +6,15 @@ import org.junit.Test
 
 class UsersTest {
 
-    @Test
-    fun listUsers() {
-        val parser = GsonSerializer(true)
-        val users = parser.toUsers(listUsersResponse)
-        assertNotNull(users)
-    }
+  @Test
+  fun listUsers() {
+    val parser = GsonSerializer(true)
+    val users = parser.toUsers(listUsersResponse)
+    assertNotNull(users)
+  }
 
-    private val listUsersResponse =
-        """
+  private val listUsersResponse =
+      """
 {
   "object": "list",
   "results": [

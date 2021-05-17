@@ -6,18 +6,18 @@ data class PageParent(
     var workspace: Boolean? = null // type: workspace
 ) {
 
-    // for other JVM languages
-    constructor(type: String) : this(type, null, null)
+  // for other JVM languages
+  constructor(type: String) : this(type, null, null)
 
-    companion object {
-        @JvmStatic
-        fun database(databaseId: String): PageParent {
-            return PageParent(type = "database", databaseId = databaseId)
-        }
-
-        @JvmStatic
-        fun page(pageId: String): PageParent {
-            return PageParent(type = "page", databaseId = pageId)
-        }
+  companion object {
+    @JvmStatic
+    fun database(databaseId: String): PageParent {
+      return PageParent(type = "database", databaseId = databaseId)
     }
+
+    @JvmStatic
+    fun page(pageId: String): PageParent {
+      return PageParent(type = "page", databaseId = pageId)
+    }
+  }
 }

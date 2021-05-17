@@ -10,22 +10,22 @@ open class SearchRequest(
     override var pageSize: Int? = null,
 ) : Pagination {
 
-    // For other JVM languages
-    constructor(query: String) : this(query, null, null, null, null)
-    constructor(query: String, filter: SearchFilter) : this(query, filter, null, null, null)
-    constructor(
-        query: String,
-        filter: SearchFilter,
-        sort: SearchSort
-    ) : this(query, filter, sort, null, null)
+  // For other JVM languages
+  constructor(query: String) : this(query, null, null, null, null)
+  constructor(query: String, filter: SearchFilter) : this(query, filter, null, null, null)
+  constructor(
+      query: String,
+      filter: SearchFilter,
+      sort: SearchSort
+  ) : this(query, filter, sort, null, null)
 
-    open class SearchFilter(
-        var value: String? = null,
-        var property: String? = null,
-    )
+  open class SearchFilter(
+      var value: String? = null,
+      var property: String? = null,
+  )
 
-    open class SearchSort(
-        var direction: String? = null,
-        var timestamp: String? = null,
-    )
+  open class SearchSort(
+      var direction: String? = null,
+      var timestamp: String? = null,
+  )
 }

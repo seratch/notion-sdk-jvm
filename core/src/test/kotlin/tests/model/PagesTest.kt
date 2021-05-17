@@ -7,15 +7,15 @@ import org.junit.Test
 
 class PagesTest {
 
-    @Test
-    fun createPage() {
-        val parser = GsonSerializer(true)
-        val databases: Databases = parser.toDatabases(createdPageResponse)
-        assertNotNull(databases)
-    }
+  @Test
+  fun createPage() {
+    val parser = GsonSerializer(true)
+    val databases: Databases = parser.toDatabases(createdPageResponse)
+    assertNotNull(databases)
+  }
 
-    private val createdPageResponse =
-        """
+  private val createdPageResponse =
+      """
 {
   "parent": {
     "type": "database",

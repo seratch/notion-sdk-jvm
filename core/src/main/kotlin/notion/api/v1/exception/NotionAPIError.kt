@@ -10,20 +10,20 @@ class NotionAPIError(
     override val cause: Throwable? = null
 ) : RuntimeException(message, cause) {
 
-    // for other JVM languages
-    constructor(
-        error: Error,
-        httpResponse: NotionHttpResponse
-    ) : this(error, httpResponse, buildMessage(error), null)
+  // for other JVM languages
+  constructor(
+      error: Error,
+      httpResponse: NotionHttpResponse
+  ) : this(error, httpResponse, buildMessage(error), null)
 
-    constructor(
-        error: Error,
-        httpResponse: NotionHttpResponse,
-        cause: Throwable
-    ) : this(error, httpResponse, buildMessage(error), cause)
+  constructor(
+      error: Error,
+      httpResponse: NotionHttpResponse,
+      cause: Throwable
+  ) : this(error, httpResponse, buildMessage(error), cause)
 
-    companion object {
-        private fun buildMessage(error: Error) =
-            "Got an error from Notion (status: ${error.status}, code: ${error.code}, message: ${error.message})"
-    }
+  companion object {
+    private fun buildMessage(error: Error) =
+        "Got an error from Notion (status: ${error.status}, code: ${error.code}, message: ${error.message})"
+  }
 }

@@ -6,19 +6,19 @@ import org.junit.Test
 
 class BlockTest {
 
-    @Test
-    fun parser() {
-        val serializer = GsonSerializer(true)
-        val blocks = serializer.toBlocks(json)
-        assertNotNull(blocks)
-        assertNotNull(blocks.results[0].asHeadingTwo())
-        assertNotNull(blocks.results[1].asParagraph())
-        assertNotNull(blocks.results[2].asToggle())
-    }
+  @Test
+  fun parser() {
+    val serializer = GsonSerializer(true)
+    val blocks = serializer.toBlocks(json)
+    assertNotNull(blocks)
+    assertNotNull(blocks.results[0].asHeadingTwo())
+    assertNotNull(blocks.results[1].asParagraph())
+    assertNotNull(blocks.results[2].asToggle())
+  }
 
-    // https://developers.notion.com/reference/get-block-children
-    private val json =
-        """
+  // https://developers.notion.com/reference/get-block-children
+  private val json =
+      """
 {
   "object": "list",
   "results": [

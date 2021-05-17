@@ -15,6 +15,6 @@ open class DateFilter(
     var isEmpty: Boolean? = null,
     var isNotEmpty: Boolean? = null,
 ) {
-    open class DateCondition
-    object EmptyDateCondition : DateCondition()
+  open class DateCondition
+  object EmptyDateCondition : DateCondition()
 }

@@ -9,17 +9,17 @@ data class RetrieveBlockChildrenRequest(
     override var pageSize: Int? = null,
 ) : Pagination {
 
-    // For other JVM languages
-    constructor(blockId: String) : this(blockId, null, null)
+  // For other JVM languages
+  constructor(blockId: String) : this(blockId, null, null)
 
-    fun toQuery(): Map<String, String> {
-        val body = mutableMapOf<String, String>()
-        if (startCursor != null) {
-            body["start_cursor"] = startCursor!!
-        }
-        if (pageSize != null) {
-            body["page_size"] = pageSize.toString()
-        }
-        return body
+  fun toQuery(): Map<String, String> {
+    val body = mutableMapOf<String, String>()
+    if (startCursor != null) {
+      body["start_cursor"] = startCursor!!
     }
+    if (pageSize != null) {
+      body["page_size"] = pageSize.toString()
+    }
+    return body
+  }
 }

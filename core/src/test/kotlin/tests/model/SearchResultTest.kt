@@ -5,15 +5,15 @@ import notion.api.v1.json.GsonSerializer
 import org.junit.Test
 
 class SearchResultTest {
-    @Test
-    fun parse() {
-        val serializer = GsonSerializer(true)
-        val searchResults = serializer.toSearchResults(json)
-        assertNotNull(searchResults)
-    }
+  @Test
+  fun parse() {
+    val serializer = GsonSerializer(true)
+    val searchResults = serializer.toSearchResults(json)
+    assertNotNull(searchResults)
+  }
 
-    private val json =
-        """
+  private val json =
+      """
 {
   "object": "list",
   "results": [

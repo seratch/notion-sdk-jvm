@@ -12,15 +12,15 @@ data class QueryDatabaseRequest(
     override var pageSize: Int? = null,
 ) : Pagination {
 
-    // For other JVM languages
-    constructor(databaseId: String) : this(databaseId, null, null, null, null)
-    constructor(
-        databaseId: String,
-        filter: QueryTopLevelFilter
-    ) : this(databaseId, filter, null, null, null)
-    constructor(
-        databaseId: String,
-        filter: QueryTopLevelFilter,
-        sorts: List<QuerySort>
-    ) : this(databaseId, filter, sorts, null, null)
+  // For other JVM languages
+  constructor(databaseId: String) : this(databaseId, null, null, null, null)
+  constructor(
+      databaseId: String,
+      filter: QueryTopLevelFilter
+  ) : this(databaseId, filter, null, null, null)
+  constructor(
+      databaseId: String,
+      filter: QueryTopLevelFilter,
+      sorts: List<QuerySort>
+  ) : this(databaseId, filter, sorts, null, null)
 }
