@@ -130,7 +130,7 @@ class HttpUrlConnNotionHttpClient(
     try {
       conn.disconnect()
     } catch (e: Exception) {
-      debugLogFailure(logger, e)
+      warnLogFailure(logger, e)
     }
   }
 }

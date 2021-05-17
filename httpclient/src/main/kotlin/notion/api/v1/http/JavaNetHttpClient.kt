@@ -40,7 +40,7 @@ class JavaNetHttpClient(
       debugLogSuccess(logger, response)
       return response
     } catch (e: Exception) {
-      debugLogFailure(logger, e)
+      warnLogFailure(logger, e)
       throw e
     }
   }
@@ -69,7 +69,7 @@ class JavaNetHttpClient(
       debugLogSuccess(logger, response)
       return response
     } catch (e: Exception) {
-      debugLogFailure(logger, e)
+      warnLogFailure(logger, e)
       throw e
     }
   }
@@ -98,7 +98,7 @@ class JavaNetHttpClient(
       debugLogSuccess(logger, response)
       return response
     } catch (e: Exception) {
-      debugLogFailure(logger, e)
+      warnLogFailure(logger, e)
       throw e
     }
   }

@@ -124,7 +124,7 @@ class OkHttp4Client : NotionHttpClient {
       debugLogSuccess(logger, response)
       return response
     } catch (e: Exception) {
-      debugLogFailure(logger, e)
+      warnLogFailure(logger, e)
       throw e
     }
   }

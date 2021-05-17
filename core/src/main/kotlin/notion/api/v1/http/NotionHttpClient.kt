@@ -69,7 +69,7 @@ body    ${response.body}
     }
   }
 
-  fun debugLogFailure(logger: NotionLogger, e: Exception) {
+  fun warnLogFailure(logger: NotionLogger, e: Exception) {
     logger.warn("Failed to disconnect from Notion: ${e.message}", e)
   }
 }
