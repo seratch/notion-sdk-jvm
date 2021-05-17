@@ -20,16 +20,12 @@ interface PagesSupport : EndpointsSupport {
     // -----------------------------------------------
 
     fun createPage(page: CreatePageRequest): Page {
-        val httpResponse = httpClient.postTextBody(
-            logger = logger,
-            url = "$baseUrl/pages",
-            body = jsonSerializer.toJsonString(page),
-            headers = buildRequestHeaders(
-                mapOf(
-                    "Content-Type" to "application/json"
-                )
-            )
-        )
+        val httpResponse =
+            httpClient.postTextBody(
+                logger = logger,
+                url = "$baseUrl/pages",
+                body = jsonSerializer.toJsonString(page),
+                headers = buildRequestHeaders(contentTypeJson()))
         if (httpResponse.status == 200) {
             return jsonSerializer.toPage(httpResponse.body)
         } else {
@@ -49,11 +45,11 @@ interface PagesSupport : EndpointsSupport {
     }
 
     fun retrievePage(request: RetrievePageRequest): Page {
-        val httpResponse = httpClient.get(
-            logger = logger,
-            url = "$baseUrl/pages/${urlEncode(request.pageId)}",
-            headers = buildRequestHeaders(emptyMap())
-        )
+        val httpResponse =
+            httpClient.get(
+                logger = logger,
+                url = "$baseUrl/pages/${urlEncode(request.pageId)}",
+                headers = buildRequestHeaders(emptyMap()))
         if (httpResponse.status == 200) {
             return jsonSerializer.toPage(httpResponse.body)
         } else {
@@ -69,16 +65,12 @@ interface PagesSupport : EndpointsSupport {
     // -----------------------------------------------
 
     fun updatePageProperties(request: UpdatePagePropertiesRequest): Page {
-        val httpResponse = httpClient.patchTextBody(
-            logger = logger,
-            url = "$baseUrl/pages/${request.pageId}",
-            body = jsonSerializer.toJsonString(request),
-            headers = buildRequestHeaders(
-                mapOf(
-                    "Content-Type" to "application/json"
-                )
-            )
-        )
+        val httpResponse =
+            httpClient.patchTextBody(
+                logger = logger,
+                url = "$baseUrl/pages/${request.pageId}",
+                body = jsonSerializer.toJsonString(request),
+                headers = buildRequestHeaders(contentTypeJson()))
         if (httpResponse.status == 200) {
             return jsonSerializer.toPage(httpResponse.body)
         } else {
@@ -88,5 +80,4 @@ interface PagesSupport : EndpointsSupport {
             )
         }
     }
-
 }

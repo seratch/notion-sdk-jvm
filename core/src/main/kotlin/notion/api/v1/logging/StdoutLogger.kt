@@ -7,7 +7,8 @@ class StdoutLogger(val name: String = StdoutLogger::class.java.canonicalName) : 
 
     override fun isDebugEnabled(): Boolean = true
 
-    private fun now(): String = Date().toInstant().atZone(ZoneId.systemDefault()).toOffsetDateTime().toString()
+    private fun now(): String =
+        Date().toInstant().atZone(ZoneId.systemDefault()).toOffsetDateTime().toString()
 
     private fun buildMessage(level: String, message: String): String {
         return "${now()} $level $name - $message"

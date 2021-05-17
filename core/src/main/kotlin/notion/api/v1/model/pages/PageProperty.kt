@@ -1,8 +1,8 @@
 package notion.api.v1.model.pages
 
+import java.util.*
 import notion.api.v1.model.databases.DatabaseProperty
 import notion.api.v1.model.users.User
-import java.util.*
 
 data class PageProperty(
     val id: String = UUID.randomUUID().toString(),
@@ -28,7 +28,6 @@ data class PageProperty(
     val lastEditedTime: String? = null,
 ) {
 
-
     data class RichText(
         val type: String = "text",
         var text: Text? = null,
@@ -37,15 +36,9 @@ data class PageProperty(
         var href: String? = null,
     ) {
 
-        data class Text(
-            var content: String? = null,
-            var link: Link? = null
-        )
+        data class Text(var content: String? = null, var link: Link? = null)
 
-        data class Link(
-            var type: String? = null,
-            var url: String? = null
-        )
+        data class Link(var type: String? = null, var url: String? = null)
 
         data class Annotations(
             var bold: Boolean? = null,
@@ -59,14 +52,9 @@ data class PageProperty(
 
     data class PageReference(val id: String)
 
-    data class File(
-        var name: String? = null
-    )
+    data class File(var name: String? = null)
 
-    data class Date(
-        var start: String? = null,
-        var end: String? = null
-    )
+    data class Date(var start: String? = null, var end: String? = null)
 
     data class Formula(
         val type: String,
@@ -79,8 +67,5 @@ data class PageProperty(
         constructor(type: String) : this(type, null, null, null, null)
     }
 
-    data class Rollup(
-        val type: String
-    )
-
+    data class Rollup(val type: String)
 }

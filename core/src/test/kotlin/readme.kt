@@ -29,15 +29,10 @@ fun main() {
             CreatePageRequest(
                 // Use the "Test Database" as this page's parent
                 parent = CreatePageRequest.Parent(type = "database", databaseId = database.id),
-                // Set values to the page's properties (these must be pre-defined before this API call)
+                // Set values to the page's properties
+                // (these must be pre-defined before this API call)
                 properties = mapOf(
-                    "Title" to prop(
-                        title = listOf(
-                            RichText(
-                                text = RichText.Text(content = "Fix a bug")
-                            )
-                        )
-                    ),
+                    "Title" to prop(title = listOf(RichText(text = RichText.Text(content = "Fix a bug")))),
                     "Severity" to prop(select = severityOptions?.find { it.name == "High" }),
                     "Tags" to prop(multiSelect = tagOptions),
                     "Due" to prop(date = Date(start = "2021-05-13", end = "2021-12-31")),
@@ -51,15 +46,16 @@ fun main() {
         )
 
         // Update properties in the page
-        val updatedPage = client.updatePageProperties(
-            UpdatePagePropertiesRequest(
-                pageId = newPage.id,
-                // Update only "Severity" property
-                properties = mapOf(
-                    "Severity" to prop(select = severityOptions?.find { it.name == "Medium" }),
+        val updatedPage =
+            client.updatePageProperties(
+                UpdatePagePropertiesRequest(
+                    pageId = newPage.id,
+                    // Update only "Severity" property
+                    properties = mapOf(
+                        "Severity" to prop(select = severityOptions?.find { it.name == "Medium" }),
+                    )
                 )
             )
-        )
 
         // Fetch the latest data of the page
         val retrievedPage = client.retrievePage(newPage.id)

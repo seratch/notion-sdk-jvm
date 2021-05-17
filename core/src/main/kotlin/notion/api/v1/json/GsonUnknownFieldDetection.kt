@@ -11,8 +11,11 @@ import java.lang.reflect.Field
 class GsonUnknownFieldDetection : TypeAdapterFactory {
 
     override fun <T> create(gson: Gson, type: TypeToken<T>?): TypeAdapter<T>? {
-        // If the type adapter is a reflective type adapter, we want to modify the implementation using reflection. The
-        // trick is to replace the Map object used to lookup the property name. Instead of returning null if the
+        // If the type adapter is a reflective type adapter, we want to modify the implementation
+        // using
+        // reflection. The
+        // trick is to replace the Map object used to lookup the property name. Instead of returning
+        // null if the
         // property is not found, we throw a Json exception to terminate the deserialization.
         val delegate = gson.getDelegateAdapter(this, type)
 
@@ -30,12 +33,14 @@ class GsonUnknownFieldDetection : TypeAdapterFactory {
                 val boundFieldsStr = sb.append("...").toString()
 
                 // Then replace it with our implementation throwing exception if the value is null.
-                boundFields = object : LinkedHashMap<Any?, Any?>(boundFields) {
-                    override fun get(key: Any?): Any? {
-                        return super.get(key)
-                            ?: throw JsonParseException("Unknown property detected: $key in $boundFieldsStr")
+                boundFields =
+                    object : LinkedHashMap<Any?, Any?>(boundFields) {
+                        override fun get(key: Any?): Any? {
+                            return super.get(key)
+                                ?: throw JsonParseException(
+                                    "Unknown property detected: $key in $boundFieldsStr")
+                        }
                     }
-                }
                 // Finally, push our custom map back using reflection.
                 f.set(delegate, boundFields)
             } catch (e: Exception) {

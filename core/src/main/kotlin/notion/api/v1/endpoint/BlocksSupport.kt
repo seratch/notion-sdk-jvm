@@ -20,12 +20,12 @@ interface BlocksSupport : EndpointsSupport {
     // -----------------------------------------------
 
     fun retrieveBlockChildren(request: RetrieveBlockChildrenRequest): Blocks {
-        val httpResponse = httpClient.get(
-            logger = logger,
-            query = request.toQuery(),
-            url = "$baseUrl/blocks/${urlEncode(request.blockId)}/children",
-            headers = buildRequestHeaders(emptyMap())
-        )
+        val httpResponse =
+            httpClient.get(
+                logger = logger,
+                query = request.toQuery(),
+                url = "$baseUrl/blocks/${urlEncode(request.blockId)}/children",
+                headers = buildRequestHeaders(emptyMap()))
         if (httpResponse.status == 200) {
             return jsonSerializer.toBlocks(httpResponse.body)
         } else {
@@ -41,16 +41,12 @@ interface BlocksSupport : EndpointsSupport {
     // -----------------------------------------------
 
     fun appendBlockChildren(request: AppendBlockChildrenRequest): Block {
-        val httpResponse = httpClient.patchTextBody(
-            logger = logger,
-            url = "$baseUrl/pages/${request.blockId}/children",
-            body = jsonSerializer.toJsonString(request),
-            headers = buildRequestHeaders(
-                mapOf(
-                    "Content-Type" to "application/json"
-                )
-            )
-        )
+        val httpResponse =
+            httpClient.patchTextBody(
+                logger = logger,
+                url = "$baseUrl/pages/${request.blockId}/children",
+                body = jsonSerializer.toJsonString(request),
+                headers = buildRequestHeaders(contentTypeJson()))
         if (httpResponse.status == 200) {
             return jsonSerializer.toBlock(httpResponse.body)
         } else {
@@ -60,5 +56,4 @@ interface BlocksSupport : EndpointsSupport {
             )
         }
     }
-
 }

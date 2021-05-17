@@ -1,9 +1,8 @@
 package notion.api.v1.http
 
+import java.util.concurrent.TimeUnit
 import notion.api.v1.logging.NotionLogger
 import okhttp3.*
-import java.util.concurrent.TimeUnit
-
 
 class OkHttp3Client : NotionHttpClient {
     private val client: OkHttpClient
@@ -36,7 +35,6 @@ class OkHttp3Client : NotionHttpClient {
             val request = chain.request().newBuilder().header("User-Agent", userAgent).build()
             return chain.proceed(request)
         }
-
     }
 
     constructor() {
@@ -49,11 +47,12 @@ class OkHttp3Client : NotionHttpClient {
         writeTimeoutMillis: Int = DEFAULT_WRITE_TIMEOUT_MILLIS,
         readTimeoutMillis: Int = DEFAULT_READ_TIMEOUT_MILLIS,
     ) {
-        this.client = buildOkHttpClient(
-            connectTimeoutMillis = connectTimeoutMillis,
-            writeTimeoutMillis = writeTimeoutMillis,
-            readTimeoutMillis = readTimeoutMillis,
-        )
+        this.client =
+            buildOkHttpClient(
+                connectTimeoutMillis = connectTimeoutMillis,
+                writeTimeoutMillis = writeTimeoutMillis,
+                readTimeoutMillis = readTimeoutMillis,
+            )
     }
 
     override fun get(
@@ -76,7 +75,10 @@ class OkHttp3Client : NotionHttpClient {
         headers: Map<String, String>
     ): NotionHttpResponse {
         val fullUrl = buildFullUrl(url, buildQueryString(query))
-        val req = Request.Builder().url(fullUrl).post(RequestBody.create(MEDIA_TYPE_APPLICATION_JSON, body))
+        val req =
+            Request.Builder()
+                .url(fullUrl)
+                .post(RequestBody.create(MEDIA_TYPE_APPLICATION_JSON, body))
         headers.forEach { (name, value) -> req.header(name, value) }
         return perform(req, body, logger)
     }
@@ -89,7 +91,10 @@ class OkHttp3Client : NotionHttpClient {
         headers: Map<String, String>
     ): NotionHttpResponse {
         val fullUrl = buildFullUrl(url, buildQueryString(query))
-        val req = Request.Builder().url(fullUrl).patch(RequestBody.create(MEDIA_TYPE_APPLICATION_JSON, body))
+        val req =
+            Request.Builder()
+                .url(fullUrl)
+                .patch(RequestBody.create(MEDIA_TYPE_APPLICATION_JSON, body))
         headers.forEach { (name, value) -> req.header(name, value) }
         return perform(req, body, logger)
     }
@@ -112,11 +117,11 @@ class OkHttp3Client : NotionHttpClient {
         debugLogStart(logger, request.method(), request.url().url().toString(), body)
         val resp = client.newCall(req.build()).execute()
         try {
-            val response = NotionHttpResponse(
-                status = resp.code(),
-                headers = resp.headers().toMultimap(),
-                body = resp.body()?.string() ?: ""
-            )
+            val response =
+                NotionHttpResponse(
+                    status = resp.code(),
+                    headers = resp.headers().toMultimap(),
+                    body = resp.body()?.string() ?: "")
             debugLogSuccess(logger, response)
             return response
         } catch (e: Exception) {

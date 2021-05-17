@@ -1,12 +1,11 @@
 package notion.api.v1.http
 
-import notion.api.v1.http.HttpUrlConnPatchMethodWorkaround.setPatchRequestMethod
-import notion.api.v1.logging.NotionLogger
 import java.io.IOException
 import java.io.InputStream
 import java.net.HttpURLConnection
 import java.net.URL
-
+import notion.api.v1.http.HttpUrlConnPatchMethodWorkaround.setPatchRequestMethod
+import notion.api.v1.logging.NotionLogger
 
 // TODO: proxy support
 class HttpUrlConnNotionHttpClient(
@@ -27,11 +26,11 @@ class HttpUrlConnNotionHttpClient(
             conn.requestMethod = "GET"
             debugLogStart(logger, conn.requestMethod, fullUrl, null)
             connect(conn).use { input ->
-                val response = NotionHttpResponse(
-                    status = conn.responseCode,
-                    body = readResponseBody(input),
-                    headers = conn.headerFields
-                )
+                val response =
+                    NotionHttpResponse(
+                        status = conn.responseCode,
+                        body = readResponseBody(input),
+                        headers = conn.headerFields)
                 debugLogSuccess(logger, response)
                 return response
             }
@@ -55,11 +54,11 @@ class HttpUrlConnNotionHttpClient(
             debugLogStart(logger, conn.requestMethod, fullUrl, body)
             setRequestBody(conn, body)
             connect(conn).use { input ->
-                val response = NotionHttpResponse(
-                    status = conn.responseCode,
-                    body = readResponseBody(input),
-                    headers = conn.headerFields
-                )
+                val response =
+                    NotionHttpResponse(
+                        status = conn.responseCode,
+                        body = readResponseBody(input),
+                        headers = conn.headerFields)
                 debugLogSuccess(logger, response)
                 return response
             }
@@ -83,11 +82,11 @@ class HttpUrlConnNotionHttpClient(
             debugLogStart(logger, conn.requestMethod, fullUrl, body)
             setRequestBody(conn, body)
             connect(conn).use { input ->
-                val response = NotionHttpResponse(
-                    status = conn.responseCode,
-                    body = readResponseBody(input),
-                    headers = conn.headerFields
-                )
+                val response =
+                    NotionHttpResponse(
+                        status = conn.responseCode,
+                        body = readResponseBody(input),
+                        headers = conn.headerFields)
                 debugLogSuccess(logger, response)
                 return response
             }
@@ -98,7 +97,10 @@ class HttpUrlConnNotionHttpClient(
 
     // -----------------------------------------------
 
-    private fun buildConnectionObject(fullUrl: String, headers: Map<String, String>): HttpURLConnection {
+    private fun buildConnectionObject(
+        fullUrl: String,
+        headers: Map<String, String>
+    ): HttpURLConnection {
         val conn = URL(fullUrl).openConnection() as HttpURLConnection
         conn.setRequestProperty("Connection", "close")
         conn.connectTimeout = connectTimeoutMillis
@@ -112,15 +114,16 @@ class HttpUrlConnNotionHttpClient(
         conn.outputStream.use { out -> out.write(body.toByteArray(Charsets.UTF_8)) }
     }
 
-    private fun connect(conn: HttpURLConnection): InputStream = try {
-        conn.connect()
-        conn.inputStream
-    } catch (e: IOException) {
-        conn.errorStream
-    }
+    private fun connect(conn: HttpURLConnection): InputStream =
+        try {
+            conn.connect()
+            conn.inputStream
+        } catch (e: IOException) {
+            conn.errorStream
+        }
 
     private fun readResponseBody(input: InputStream?): String {
-        return input?.bufferedReader(Charsets.UTF_8).use { it?.readText() } ?: "";
+        return input?.bufferedReader(Charsets.UTF_8).use { it?.readText() } ?: ""
     }
 
     private fun disconnect(conn: HttpURLConnection, logger: NotionLogger) {

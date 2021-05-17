@@ -5,7 +5,7 @@
 
     <groupId>com.github.seratch</groupId>
     <artifactId>notion-sdk-jvm-parent</artifactId>
-    <version>0.1.3</version>
+    <version>0.1.4</version>
     <packaging>pom</packaging>
 
     <name>Notion SDK Project</name>
@@ -24,6 +24,7 @@
         <module>httpclient</module>
         <module>okhttp3</module>
         <module>okhttp4</module>
+        <module>scala3</module>
         <module>slf4j</module>
     </modules>
 
@@ -57,6 +58,7 @@
         <nexus-staging-maven-plugin.version>1.6.8</nexus-staging-maven-plugin.version>
         <jacoco-maven-plugin.version>0.8.7</jacoco-maven-plugin.version>
         <dokka.version>1.4.32</dokka.version>
+        <spotless.version>2.11.1</spotless.version>
     </properties>
 
     <licenses>
@@ -208,6 +210,20 @@
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>com.diffplug.spotless</groupId>
+                <artifactId>spotless-maven-plugin</artifactId>
+                <version>${spotless.version}</version>
+                <configuration>
+                    <kotlin>
+                        <includes>
+                            <include>src/main/kotlin/**/*.kt</include>
+                            <include>src/test/kotlin/tests/**/*.kt</include>
+                        </includes>
+                        <diktat/>
+                    </kotlin>
+                </configuration>
             </plugin>
         </plugins>
     </build>
