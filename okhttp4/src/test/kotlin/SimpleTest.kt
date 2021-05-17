@@ -10,6 +10,8 @@ import notion.api.v1.request.pages.CreatePageRequest
 import notion.api.v1.request.pages.UpdatePagePropertiesRequest
 import org.junit.Test
 
+typealias prop = PageProperty
+
 class SimpleTest {
 
     @Test
