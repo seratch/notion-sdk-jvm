@@ -132,13 +132,10 @@ val notionSdkVersion = "0.1.5"
 lazy val root = project
   .in(file("."))
   .settings(
-    name := "notion-sdk-scala3-simple",
-    version := "0.1.0",
     scalaVersion := "3.0.0",
     libraryDependencies ++= Seq(
       "com.github.seratch" % "notion-sdk-jvm-scala3" % notionSdkVersion,
       "com.github.seratch" % "notion-sdk-jvm-httpclient" % notionSdkVersion,
-      "org.slf4j" % "slf4j-simple" % "1.7.30"
     )
   )
 ```
@@ -156,7 +153,7 @@ import scala.jdk.CollectionConverters._
 
   val client = ScalaNotionClient(
     token = System.getenv("NOTION_TOKEN"),
-    httpClient = new JavaNetHttpClient()
+    httpClient = new JavaNetHttpClient(),
   )
 
   val users = client.listUsers(pageSize = 2)
