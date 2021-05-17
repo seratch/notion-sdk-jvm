@@ -20,5 +20,4 @@ data class PageParent(
             return PageParent(type = "page", databaseId = pageId)
         }
     }
-
 }

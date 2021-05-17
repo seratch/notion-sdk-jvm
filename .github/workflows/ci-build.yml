@@ -23,7 +23,9 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: ${{ matrix.java-version }}
+      - name: Check the code format
+        run: |
+          mvn spotless:check
       - name: Compile the main/test code
         run: |
-          mvn clean test-compile -DfailIfNoTests=false --no-transfer-progress
-
+          mvn test-compile -DfailIfNoTests=false --no-transfer-progress

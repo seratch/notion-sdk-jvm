@@ -10,7 +10,10 @@ data class CreatePageRequest(
 ) {
 
     // For other JVM languages
-    constructor(parent: Parent, properties: Map<String, PageProperty>) : this(parent, properties, null)
+    constructor(
+        parent: Parent,
+        properties: Map<String, PageProperty>
+    ) : this(parent, properties, null)
 
     data class Parent(
         val type: String,

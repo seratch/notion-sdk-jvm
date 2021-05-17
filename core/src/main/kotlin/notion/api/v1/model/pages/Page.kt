@@ -5,8 +5,7 @@ import notion.api.v1.model.common.ObjectType
 
 // This data class does not have setters as developers never manually modify this
 data class Page(
-    @SerializedName("object")
-    override val objectType: String = "page",
+    @SerializedName("object") override val objectType: String = "page",
     val id: String,
     val createdTime: String,
     val lastEditedTime: String,

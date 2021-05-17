@@ -24,11 +24,11 @@ interface UsersSupport : EndpointsSupport {
     }
 
     fun retrieveUser(request: RetrieveUserRequest): User {
-        val httpResponse = httpClient.get(
-            logger = logger,
-            url = "$baseUrl/users/${urlEncode(request.userId)}",
-            headers = buildRequestHeaders(emptyMap())
-        )
+        val httpResponse =
+            httpClient.get(
+                logger = logger,
+                url = "$baseUrl/users/${urlEncode(request.userId)}",
+                headers = buildRequestHeaders(emptyMap()))
         if (httpResponse.status == 200) {
             return jsonSerializer.toUser(httpResponse.body)
         } else {
@@ -52,12 +52,12 @@ interface UsersSupport : EndpointsSupport {
     }
 
     fun listUsers(request: ListUsersRequest): Users {
-        val httpResponse = httpClient.get(
-            logger = logger,
-            url = "$baseUrl/users",
-            query = request.buildPaginationParams(),
-            headers = buildRequestHeaders(emptyMap())
-        )
+        val httpResponse =
+            httpClient.get(
+                logger = logger,
+                url = "$baseUrl/users",
+                query = request.buildPaginationParams(),
+                headers = buildRequestHeaders(emptyMap()))
         if (httpResponse.status == 200) {
             return jsonSerializer.toUsers(httpResponse.body)
         } else {

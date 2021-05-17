@@ -10,60 +10,57 @@ import kotlin.test.assertNotEquals
 import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
 
+typealias prop = PageProperty
+
 class SimpleTest {
 
     @Test
     fun pages() {
         NotionClient(token = System.getenv("NOTION_TOKEN")).use { client ->
             client.httpClient = OkHttp3Client()
+
             val databases = client.listDatabases()
             assertTrue { databases.results.isNotEmpty() }
 
-            val database = databases.results[0]
+            val database = databases.results.find { it.title?.get(0)?.plainText == "Test Database" }!!
 
-            val newPage: Page = client.createPage(CreatePageRequest(
-                parent = CreatePageRequest.Parent(
-                    type = "database",
-                    databaseId = database.id,
-                ),
-                properties = mapOf(
-                    "Title" to PageProperty(
-                        title = listOf(
-                            PageProperty.RichText(
-                                text = PageProperty.RichText.Text(content = "Fix a bug")
-                            )
-                        )
-                    ),
-                    "Description" to PageProperty(
-                        richText = listOf(
-                            PageProperty.RichText(
-                                text = PageProperty.RichText.Text(
-                                    content = "The bug is a minor one but one of our major customers have been affected by it for a while."
-                                )
-                            )
-                        )
-                    ),
-                    "Due" to PageProperty(
-                        date = PageProperty.Date(start = "2021-05-13", end = "2021-12-31")
-                    ),
-                    "Severity" to PageProperty(
-                        select = database.properties["Severity"]?.select?.options?.find { it.name == "High" }
-                    ),
+            // All the options for "Severity" property (select type)
+            val severityOptions = database.properties?.get("Severity")?.select?.options
+            // All the options for "Tags" property (multi_select type)
+            val tagOptions = database.properties?.get("Tags")?.multiSelect?.options
+            // The user object for "Assignee" property (people type)
+            val assignee = client.listUsers().results[0] // just picking the first user up
+
+            val newPage: Page = client.createPage(
+                CreatePageRequest(
+                    // Use the "Test Database" as this page's parent
+                    parent = CreatePageRequest.Parent(type = "database", databaseId = database.id),
+                    // Set values to the page's properties
+                    // (these must be pre-defined before this API call)
+                    properties = mapOf(
+                        "Title" to prop(title = listOf(PageProperty.RichText(text = PageProperty.RichText.Text(content = "Fix a bug")))),
+                        "Severity" to prop(select = severityOptions?.find { it.name == "High" }),
+                        "Tags" to prop(multiSelect = tagOptions),
+                        "Due" to prop(date = PageProperty.Date(start = "2021-05-13", end = "2021-12-31")),
+                        "Velocity Points" to prop(number = 3),
+                        "Assignee" to prop(people = listOf(assignee)),
+                        "Done" to prop(checkbox = true),
+                        "Link" to prop(url = "https://www.example.com"),
+                        "Contact" to prop(email = "foo@example.com"),
+                    )
                 )
-            ))
+            )
             assertNotNull(newPage)
 
-            val patchResult = client.updatePageProperties(UpdatePagePropertiesRequest(
-                pageId = newPage.id,
-                properties = mapOf(
-                    "Due" to PageProperty(
-                        date = PageProperty.Date(start = "2021-12-31")
-                    ),
-                    "Severity" to PageProperty(
-                        select = database.properties["Severity"]?.select?.options?.find { it.name == "Medium" }
-                    ),
+            val patchResult = client.updatePageProperties(
+                UpdatePagePropertiesRequest(
+                    pageId = newPage.id,
+                    // Update only "Severity" property
+                    properties = mapOf(
+                        "Severity" to prop(select = severityOptions?.find { it.name == "Medium" }),
+                    )
                 )
-            ))
+            )
             assertNotEquals(newPage.lastEditedTime, patchResult.lastEditedTime)
 
             val fetchedPage = client.retrievePage(newPage.id)

@@ -14,7 +14,7 @@ You can start using this library just by adding `notion-sdk-jvm-core` dependency
 For Gradle users:
 
 ```gradle
-notionSdkVersion = "0.1.3"
+val notionSdkVersion = "0.1.4"
 // This dependency is at least required
 implementation("com.github.seratch:notion-sdk-jvm-core:${notionSdkVersion}")
 ```
@@ -23,7 +23,7 @@ For Maven users:
 
 ```xml
 <properties>
-  <notion-sdk.version>0.1.3</notion-sdk.version>
+  <notion-sdk.version>0.1.4</notion-sdk.version>
 </properties>
 
 <dependencies>
@@ -40,10 +40,10 @@ As already mentioned, this library is written in Kotlin. Using in the same langu
 ```kotlin
 import notion.api.v1.NotionClient
 import notion.api.v1.model.pages.PageProperty
-import notion.api.v1.model.pages.PageProperty.*
+import notion.api.v1.model.pages.PageProperty.Date
+import notion.api.v1.model.pages.PageProperty.RichText
 import notion.api.v1.request.pages.CreatePageRequest
 import notion.api.v1.request.pages.UpdatePagePropertiesRequest
-import java.lang.IllegalStateException
 
 typealias prop = PageProperty
 
@@ -65,41 +65,45 @@ fun main() {
     val assignee = client.listUsers().results[0] // just picking the first user up
 
     // Create a new page in the database
-    val newPage = client.createPage(CreatePageRequest(
-      // Use the "Test Database" as this page's parent
-      parent = CreatePageRequest.Parent(type = "database", databaseId = database.id),
-      // Set values to the page's properties (these must be pre-defined before this API call)
-      properties = mapOf(
-        "Title" to prop(
-          title = listOf(RichText(
-            text = RichText.Text(content = "Fix a bug")
-          ))
-        ),
-        "Severity" to prop(select = severityOptions?.find { it.name == "High" }),
-        "Tags" to prop(multiSelect = tagOptions),
-        "Due" to prop(date = Date(start = "2021-05-13", end = "2021-12-31")),
-        "Velocity Points" to prop(number = 3),
-        "Assignee" to prop(people = listOf(assignee)),
-        "Done" to prop(checkbox = true),
-        "Link" to prop(url = "https://www.example.com"),
-        "Contact" to prop(email = "foo@example.com"),
+    val newPage = client.createPage(
+      CreatePageRequest(
+        // Use the "Test Database" as this page's parent
+        parent = CreatePageRequest.Parent(type = "database", databaseId = database.id),
+        // Set values to the page's properties
+        // (these must be pre-defined before this API call)
+        properties = mapOf(
+          "Title" to prop(title = listOf(RichText(text = RichText.Text(content = "Fix a bug")))),
+          "Severity" to prop(select = severityOptions?.find { it.name == "High" }),
+          "Tags" to prop(multiSelect = tagOptions),
+          "Due" to prop(date = Date(start = "2021-05-13", end = "2021-12-31")),
+          "Velocity Points" to prop(number = 3),
+          "Assignee" to prop(people = listOf(assignee)),
+          "Done" to prop(checkbox = true),
+          "Link" to prop(url = "https://www.example.com"),
+          "Contact" to prop(email = "foo@example.com"),
+        )
       )
-    ))
+    )
 
     // Update properties in the page
-    val updatedPage = client.updatePageProperties(UpdatePagePropertiesRequest(
-      pageId = newPage.id,
-      // Update only "Severity" property
-      properties = mapOf(
-        "Severity" to prop(select = severityOptions?.find { it.name == "Medium" }),
+    val updatedPage =
+      client.updatePageProperties(
+        UpdatePagePropertiesRequest(
+          pageId = newPage.id,
+          // Update only "Severity" property
+          properties = mapOf(
+            "Severity" to prop(select = severityOptions?.find { it.name == "Medium" }),
+          )
+        )
       )
-    ))
 
     // Fetch the latest data of the page
     val retrievedPage = client.retrievePage(newPage.id)
   }
 }
 ```
+
+#### Using in Java
 
 If you want to use Java, all the classes/methods should be accessible in Java and other JVM languages. If not, please let us know the issue in this project's issue tracker!
 
@@ -117,6 +121,66 @@ public class Readme {
 ```
 
 If you are looking for further examples, check the core project's test suites!
+
+#### Scala 3 Support
+
+Although many classes are still Java/Kotlin objects, you can seamlessly use this SDK in [Scala 3](https://docs.scala-lang.org/scala3/) too! Here is a simple `build.sbt` example:
+
+```sbt
+val notionSdkVersion = "0.1.4"
+
+lazy val root = project
+  .in(file("."))
+  .settings(
+    name := "notion-sdk-scala3-simple",
+    version := "0.1.0",
+    scalaVersion := "3.0.0",
+    libraryDependencies ++= Seq(
+      "com.github.seratch" % "notion-sdk-jvm-scala3" % notionSdkVersion,
+      "com.github.seratch" % "notion-sdk-jvm-httpclient" % notionSdkVersion,
+      "org.slf4j" % "slf4j-simple" % "1.7.30"
+    )
+  )
+```
+
+Save the following source code as `Main.scala`. Now you can run the app by hitting `sbt run`.
+
+```scala
+import notion.api.v1.ScalaNotionClient
+import notion.api.v1.http.JavaNetHttpClient
+import notion.api.v1.model.databases.query.filter.PropertyFilter
+import notion.api.v1.model.databases.query.filter.condition.TextFilter
+import scala.jdk.CollectionConverters._
+
+@main def example: Unit = {
+
+  val client = ScalaNotionClient(
+    token = System.getenv("NOTION_TOKEN"),
+    httpClient = new JavaNetHttpClient()
+  )
+
+  val users = client.listUsers(pageSize = 2)
+
+  val databaseId = client.listDatabases().getResults.asScala
+    .find(_.getTitle.get(0).getPlainText == "Test Database")
+    .get.getId
+
+  val queryResult = client.queryDatabase(
+    databaseId = databaseId,
+    filter = {
+      val filter = new PropertyFilter()
+      filter.setProperty("Title")
+      filter.setTitle {
+        val title = new TextFilter()
+        title.setContains("bug")
+        title
+      }
+      filter
+    },
+    pageSize = 3
+  )
+}
+```
 
 ### Plugins
 

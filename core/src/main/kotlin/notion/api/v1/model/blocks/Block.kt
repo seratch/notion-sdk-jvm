@@ -52,9 +52,8 @@ interface Block : ObjectType {
         else throw IllegalStateException("Failed to cast $type block to UnsupportedBlock")
 }
 
-data class ParagraphBlock(
-    @SerializedName("object")
-    override val objectType: String = "block",
+open class ParagraphBlock(
+    @SerializedName("object") override val objectType: String = "block",
     override val type: String = "paragraph",
     override val id: String,
     override val createdTime: String,
@@ -70,26 +69,19 @@ data class ParagraphBlock(
         hasChildren: Boolean,
         createdTime: String,
         lastEditedTime: String,
-    ) : this(
-        "block", "paragraph", id, createdTime, lastEditedTime, hasChildren, paragraph
-    )
+    ) : this("block", "paragraph", id, createdTime, lastEditedTime, hasChildren, paragraph)
 
-    data class Element(
-        val text: List<PageProperty.RichText>,
-        val children: List<Block>? = null
-    )
+    open class Element(var text: List<PageProperty.RichText>, var children: List<Block>? = null)
 }
 
-data class HeadingOneBlock(
-    @SerializedName("object")
-    override val objectType: String = "block",
+open class HeadingOneBlock(
+    @SerializedName("object") override val objectType: String = "block",
     override val type: String = "heading_1",
     override val id: String,
     override val createdTime: String,
     override val lastEditedTime: String,
     override val hasChildren: Boolean = false,
-    @SerializedName("heading_1")
-    val heading1: Element,
+    @SerializedName("heading_1") val heading1: Element,
 ) : Block {
 
     // for other JVM languages
@@ -99,25 +91,21 @@ data class HeadingOneBlock(
         hasChildren: Boolean,
         createdTime: String,
         lastEditedTime: String,
-    ) : this(
-        "block", "heading_1", id, createdTime, lastEditedTime, hasChildren, heading1
-    )
+    ) : this("block", "heading_1", id, createdTime, lastEditedTime, hasChildren, heading1)
 
-    data class Element(
-        val text: List<PageProperty.RichText>,
+    open class Element(
+        var text: List<PageProperty.RichText>,
     )
 }
 
-data class HeadingTwoBlock(
-    @SerializedName("object")
-    override val objectType: String = "block",
+open class HeadingTwoBlock(
+    @SerializedName("object") override val objectType: String = "block",
     override val type: String = "heading_2",
     override val id: String,
     override val createdTime: String,
     override val lastEditedTime: String,
     override val hasChildren: Boolean = false,
-    @SerializedName("heading_2")
-    val heading2: Element,
+    @SerializedName("heading_2") val heading2: Element,
 ) : Block {
 
     // for other JVM languages
@@ -127,25 +115,21 @@ data class HeadingTwoBlock(
         hasChildren: Boolean,
         createdTime: String,
         lastEditedTime: String,
-    ) : this(
-        "block", "heading_2", id, createdTime, lastEditedTime, hasChildren, heading2
-    )
+    ) : this("block", "heading_2", id, createdTime, lastEditedTime, hasChildren, heading2)
 
-    data class Element(
-        val text: List<PageProperty.RichText>,
+    open class Element(
+        var text: List<PageProperty.RichText>,
     )
 }
 
-data class HeadingThreeBlock(
-    @SerializedName("object")
-    override val objectType: String = "block",
+open class HeadingThreeBlock(
+    @SerializedName("object") override val objectType: String = "block",
     override val type: String = "heading_3",
     override val id: String,
     override val createdTime: String,
     override val lastEditedTime: String,
     override val hasChildren: Boolean = false,
-    @SerializedName("heading_3")
-    val heading3: Element,
+    @SerializedName("heading_3") val heading3: Element,
 ) : Block {
 
     // for other JVM languages
@@ -155,18 +139,15 @@ data class HeadingThreeBlock(
         hasChildren: Boolean,
         createdTime: String,
         lastEditedTime: String,
-    ) : this(
-        "block", "heading_3", id, createdTime, lastEditedTime, hasChildren, heading3
-    )
+    ) : this("block", "heading_3", id, createdTime, lastEditedTime, hasChildren, heading3)
 
-    data class Element(
-        val text: List<PageProperty.RichText>,
+    open class Element(
+        var text: List<PageProperty.RichText>,
     )
 }
 
-data class BulletedListItemBlock(
-    @SerializedName("object")
-    override val objectType: String = "block",
+open class BulletedListItemBlock(
+    @SerializedName("object") override val objectType: String = "block",
     override val type: String = "bulleted_list_item",
     override val id: String,
     override val createdTime: String,
@@ -183,18 +164,19 @@ data class BulletedListItemBlock(
         createdTime: String,
         lastEditedTime: String,
     ) : this(
-        "block", "bulleted_list_item", id, createdTime, lastEditedTime, hasChildren, bulletedListItem
-    )
+        "block",
+        "bulleted_list_item",
+        id,
+        createdTime,
+        lastEditedTime,
+        hasChildren,
+        bulletedListItem)
 
-    data class Element(
-        val text: List<PageProperty.RichText>,
-        val children: List<Block>? = null
-    )
+    open class Element(var text: List<PageProperty.RichText>, var children: List<Block>? = null)
 }
 
-data class NumberedListItemBlock(
-    @SerializedName("object")
-    override val objectType: String = "block",
+open class NumberedListItemBlock(
+    @SerializedName("object") override val objectType: String = "block",
     override val type: String = "numbered_list_item",
     override val id: String,
     override val createdTime: String,
@@ -211,18 +193,19 @@ data class NumberedListItemBlock(
         createdTime: String,
         lastEditedTime: String,
     ) : this(
-        "block", "numbered_list_item", id, createdTime, lastEditedTime, hasChildren, numberedListItem
-    )
+        "block",
+        "numbered_list_item",
+        id,
+        createdTime,
+        lastEditedTime,
+        hasChildren,
+        numberedListItem)
 
-    data class Element(
-        val text: List<PageProperty.RichText>,
-        val children: List<Block>? = null
-    )
+    open class Element(var text: List<PageProperty.RichText>, var children: List<Block>? = null)
 }
 
-data class ToDoBlock(
-    @SerializedName("object")
-    override val objectType: String = "block",
+open class ToDoBlock(
+    @SerializedName("object") override val objectType: String = "block",
     override val type: String = "to_do",
     override val id: String,
     override val createdTime: String,
@@ -238,19 +221,13 @@ data class ToDoBlock(
         hasChildren: Boolean,
         createdTime: String,
         lastEditedTime: String,
-    ) : this(
-        "block", "to_do", id, createdTime, lastEditedTime, hasChildren, toDo
-    )
+    ) : this("block", "to_do", id, createdTime, lastEditedTime, hasChildren, toDo)
 
-    data class Element(
-        val checked: Boolean,
-        val children: List<Block>? = null
-    )
+    open class Element(var checked: Boolean, var children: List<Block>? = null)
 }
 
-data class ToggleBlock(
-    @SerializedName("object")
-    override val objectType: String = "block",
+open class ToggleBlock(
+    @SerializedName("object") override val objectType: String = "block",
     override val type: String = "toggle",
     override val id: String,
     override val createdTime: String,
@@ -266,19 +243,13 @@ data class ToggleBlock(
         hasChildren: Boolean,
         createdTime: String,
         lastEditedTime: String,
-    ) : this(
-        "block", "toggle", id, createdTime, lastEditedTime, hasChildren, toggle
-    )
+    ) : this("block", "toggle", id, createdTime, lastEditedTime, hasChildren, toggle)
 
-    data class Element(
-        val text: List<PageProperty.RichText>,
-        val children: List<Block>? = null
-    )
+    open class Element(var text: List<PageProperty.RichText>, var children: List<Block>? = null)
 }
 
-data class ChildPageBlock(
-    @SerializedName("object")
-    override val objectType: String = "block",
+open class ChildPageBlock(
+    @SerializedName("object") override val objectType: String = "block",
     override val type: String = "child_page",
     override val id: String,
     override val createdTime: String,
@@ -294,18 +265,13 @@ data class ChildPageBlock(
         hasChildren: Boolean,
         createdTime: String,
         lastEditedTime: String,
-    ) : this(
-        "block", "child_page", id, createdTime, lastEditedTime, hasChildren, childPage
-    )
+    ) : this("block", "child_page", id, createdTime, lastEditedTime, hasChildren, childPage)
 
-    data class Element(
-        val title: String
-    )
+    open class Element(var title: String)
 }
 
-data class UnsupportedBlock(
-    @SerializedName("object")
-    override val objectType: String = "block",
+open class UnsupportedBlock(
+    @SerializedName("object") override val objectType: String = "block",
     override val type: String = "unsupported",
     override val id: String,
     override val createdTime: String,
@@ -318,8 +284,5 @@ data class UnsupportedBlock(
         hasChildren: Boolean,
         createdTime: String,
         lastEditedTime: String,
-    ) : this(
-        "block", "unsupported", id, createdTime, lastEditedTime, hasChildren
-    )
-
+    ) : this("block", "unsupported", id, createdTime, lastEditedTime, hasChildren)
 }

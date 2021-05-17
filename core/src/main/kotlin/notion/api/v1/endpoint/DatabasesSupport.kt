@@ -7,7 +7,7 @@ import notion.api.v1.logging.NotionLogger
 import notion.api.v1.model.databases.Database
 import notion.api.v1.model.databases.Databases
 import notion.api.v1.model.databases.QueryResults
-import notion.api.v1.model.databases.query.filter.QueryFilter
+import notion.api.v1.model.databases.query.filter.QueryTopLevelFilter
 import notion.api.v1.model.databases.query.sort.QuerySort
 import notion.api.v1.request.databases.ListDatabasesRequest
 import notion.api.v1.request.databases.QueryDatabaseRequest
@@ -32,12 +32,12 @@ interface DatabasesSupport : EndpointsSupport {
     }
 
     fun listDatabases(request: ListDatabasesRequest): Databases {
-        val httpResponse = httpClient.get(
-            logger = logger,
-            url = "$baseUrl/databases",
-            query = request.buildPaginationParams(),
-            headers = buildRequestHeaders(emptyMap())
-        )
+        val httpResponse =
+            httpClient.get(
+                logger = logger,
+                url = "$baseUrl/databases",
+                query = request.buildPaginationParams(),
+                headers = buildRequestHeaders(emptyMap()))
         if (httpResponse.status == 200) {
             return jsonSerializer.toDatabases(httpResponse.body)
         } else {
@@ -57,11 +57,11 @@ interface DatabasesSupport : EndpointsSupport {
     }
 
     fun retrieveDatabase(request: RetrieveDatabaseRequest): Database {
-        val httpResponse = httpClient.get(
-            logger = logger,
-            url = "$baseUrl/databases/${urlEncode(request.databaseId)}",
-            headers = buildRequestHeaders(emptyMap())
-        )
+        val httpResponse =
+            httpClient.get(
+                logger = logger,
+                url = "$baseUrl/databases/${urlEncode(request.databaseId)}",
+                headers = buildRequestHeaders(emptyMap()))
         if (httpResponse.status == 200) {
             return jsonSerializer.toDatabase(httpResponse.body)
         } else {
@@ -78,7 +78,7 @@ interface DatabasesSupport : EndpointsSupport {
 
     fun queryDatabase(
         databaseId: String,
-        filter: QueryFilter? = null,
+        filter: QueryTopLevelFilter? = null,
         sorts: List<QuerySort>? = null,
         startCursor: String? = null,
         pageSize: Int? = null,
@@ -90,17 +90,16 @@ interface DatabasesSupport : EndpointsSupport {
                 sorts = sorts,
                 startCursor = startCursor,
                 pageSize = pageSize,
-            )
-        )
+            ))
     }
 
     fun queryDatabase(request: QueryDatabaseRequest): QueryResults {
-        val httpResponse = httpClient.postTextBody(
-            logger = logger,
-            url = "$baseUrl/databases/${urlEncode(request.databaseId)}/query",
-            body = jsonSerializer.toJsonString(request),
-            headers = buildRequestHeaders(emptyMap())
-        )
+        val httpResponse =
+            httpClient.postTextBody(
+                logger = logger,
+                url = "$baseUrl/databases/${urlEncode(request.databaseId)}/query",
+                body = jsonSerializer.toJsonString(request),
+                headers = buildRequestHeaders(contentTypeJson()))
         if (httpResponse.status == 200) {
             return jsonSerializer.toQueryResults(httpResponse.body)
         } else {

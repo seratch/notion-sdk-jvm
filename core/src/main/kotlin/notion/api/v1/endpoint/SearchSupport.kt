@@ -22,16 +22,12 @@ interface SearchSupport : EndpointsSupport {
     }
 
     fun search(request: SearchRequest): SearchResults {
-        val httpResponse = httpClient.postTextBody(
-            logger = logger,
-            url = "$baseUrl/search",
-            body = jsonSerializer.toJsonString(request),
-            headers = buildRequestHeaders(
-                mapOf(
-                    "Content-Type" to "application/json"
-                )
-            )
-        )
+        val httpResponse =
+            httpClient.postTextBody(
+                logger = logger,
+                url = "$baseUrl/search",
+                body = jsonSerializer.toJsonString(request),
+                headers = buildRequestHeaders(contentTypeJson()))
         if (httpResponse.status == 200) {
             return jsonSerializer.toSearchResults(httpResponse.body)
         } else {
