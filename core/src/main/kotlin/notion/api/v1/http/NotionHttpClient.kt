@@ -57,10 +57,11 @@ $b
     }
   }
 
-  fun debugLogSuccess(logger: NotionLogger, response: NotionHttpResponse) {
+  fun debugLogSuccess(logger: NotionLogger, startTimeMillis: Long, response: NotionHttpResponse) {
     if (logger.isDebugEnabled()) {
+      val responseTimeMillis = System.currentTimeMillis() - startTimeMillis
       logger.debug(
-          """Received a response:
+          """Received a response ($responseTimeMillis millis):
 status  ${response.status}
 body    ${response.body}
 """

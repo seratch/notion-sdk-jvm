@@ -1,4 +1,4 @@
-package tests.endpoint
+package integration_tests
 
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull

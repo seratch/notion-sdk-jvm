@@ -10,7 +10,7 @@ import notion.api.v1.logging.NotionLogger
 // TODO: proxy support
 class JavaNetHttpClient(
     connectTimeoutMillis: Int = 1_000,
-    private val readTimeoutMillis: Int = 10_000,
+    private val readTimeoutMillis: Int = 30_000,
 ) : NotionHttpClient {
   private val client: HttpClient =
       HttpClient.newBuilder()
@@ -23,6 +23,7 @@ class JavaNetHttpClient(
       query: Map<String, String>,
       headers: Map<String, String>
   ): NotionHttpResponse {
+    val startTimeMillis = System.currentTimeMillis()
     val fullUrl = buildFullUrl(url, buildQueryString(query))
     val req =
         HttpRequest.newBuilder()
@@ -37,7 +38,7 @@ class JavaNetHttpClient(
       val response =
           NotionHttpResponse(
               status = resp.statusCode(), headers = resp.headers().map(), body = resp.body())
-      debugLogSuccess(logger, response)
+      debugLogSuccess(logger, startTimeMillis, response)
       return response
     } catch (e: Exception) {
       warnLogFailure(logger, e)
@@ -52,6 +53,7 @@ class JavaNetHttpClient(
       body: String,
       headers: Map<String, String>
   ): NotionHttpResponse {
+    val startTimeMillis = System.currentTimeMillis()
     val fullUrl = buildFullUrl(url, buildQueryString(query))
     val req =
         HttpRequest.newBuilder()
@@ -66,7 +68,7 @@ class JavaNetHttpClient(
       val response =
           NotionHttpResponse(
               status = resp.statusCode(), headers = resp.headers().map(), body = resp.body())
-      debugLogSuccess(logger, response)
+      debugLogSuccess(logger, startTimeMillis, response)
       return response
     } catch (e: Exception) {
       warnLogFailure(logger, e)
@@ -81,6 +83,7 @@ class JavaNetHttpClient(
       body: String,
       headers: Map<String, String>
   ): NotionHttpResponse {
+    val startTimeMillis = System.currentTimeMillis()
     val fullUrl = buildFullUrl(url, buildQueryString(query))
     val req =
         HttpRequest.newBuilder()
@@ -95,7 +98,7 @@ class JavaNetHttpClient(
       val response =
           NotionHttpResponse(
               status = resp.statusCode(), headers = resp.headers().map(), body = resp.body())
-      debugLogSuccess(logger, response)
+      debugLogSuccess(logger, startTimeMillis, response)
       return response
     } catch (e: Exception) {
       warnLogFailure(logger, e)

@@ -28,4 +28,4 @@ jobs:
           mvn spotless:check
       - name: Compile the main/test code
         run: |
-          mvn test-compile -DfailIfNoTests=false --no-transfer-progress
+          mvn test-compile --no-transfer-progress -DfailIfNoTests=false '-Dtest=tests.**.*Test' test

@@ -2,7 +2,7 @@ package tests.model
 
 import kotlin.test.assertNotNull
 import notion.api.v1.json.GsonSerializer
-import notion.api.v1.model.databases.Databases
+import notion.api.v1.model.pages.Page
 import org.junit.Test
 
 class PagesTest {
@@ -10,8 +10,8 @@ class PagesTest {
   @Test
   fun createPage() {
     val parser = GsonSerializer(true)
-    val databases: Databases = parser.toDatabases(createdPageResponse)
-    assertNotNull(databases)
+    val page: Page = parser.toPage(createdPageResponse)
+    assertNotNull(page)
   }
 
   private val createdPageResponse =

@@ -10,7 +10,7 @@ import notion.api.v1.logging.NotionLogger
 // TODO: proxy support
 class HttpUrlConnNotionHttpClient(
     private val connectTimeoutMillis: Int = 1_000,
-    private val readTimeoutMillis: Int = 10_000,
+    private val readTimeoutMillis: Int = 30_000,
 ) : NotionHttpClient {
 
   override fun get(
@@ -19,6 +19,7 @@ class HttpUrlConnNotionHttpClient(
       query: Map<String, String>,
       headers: Map<String, String>
   ): NotionHttpResponse {
+    val startTimeMillis = System.currentTimeMillis()
     val q = buildQueryString(query)
     val fullUrl = buildFullUrl(url, q)
     val conn = buildConnectionObject(fullUrl, headers)
@@ -31,7 +32,7 @@ class HttpUrlConnNotionHttpClient(
                 status = conn.responseCode,
                 body = readResponseBody(input),
                 headers = conn.headerFields)
-        debugLogSuccess(logger, response)
+        debugLogSuccess(logger, startTimeMillis, response)
         return response
       }
     } finally {
@@ -46,6 +47,7 @@ class HttpUrlConnNotionHttpClient(
       body: String,
       headers: Map<String, String>
   ): NotionHttpResponse {
+    val startTimeMillis = System.currentTimeMillis()
     val q = buildQueryString(query)
     val fullUrl = buildFullUrl(url, q)
     val conn = buildConnectionObject(fullUrl, headers)
@@ -59,7 +61,7 @@ class HttpUrlConnNotionHttpClient(
                 status = conn.responseCode,
                 body = readResponseBody(input),
                 headers = conn.headerFields)
-        debugLogSuccess(logger, response)
+        debugLogSuccess(logger, startTimeMillis, response)
         return response
       }
     } finally {
@@ -74,6 +76,7 @@ class HttpUrlConnNotionHttpClient(
       body: String,
       headers: Map<String, String>
   ): NotionHttpResponse {
+    val startTimeMillis = System.currentTimeMillis()
     val q = buildQueryString(query)
     val fullUrl = buildFullUrl(url, q)
     val conn = buildConnectionObject(fullUrl, headers)
@@ -87,7 +90,7 @@ class HttpUrlConnNotionHttpClient(
                 status = conn.responseCode,
                 body = readResponseBody(input),
                 headers = conn.headerFields)
-        debugLogSuccess(logger, response)
+        debugLogSuccess(logger, startTimeMillis, response)
         return response
       }
     } finally {

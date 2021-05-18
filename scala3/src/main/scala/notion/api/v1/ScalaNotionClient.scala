@@ -9,7 +9,7 @@ import notion.api.v1.model.blocks.Block
 import notion.api.v1.model.databases.query.filter.QueryTopLevelFilter
 import notion.api.v1.model.databases.query.sort.QuerySort
 import notion.api.v1.model.databases.{Database, Databases, QueryResults}
-import notion.api.v1.model.pages.{Page, PageProperty}
+import notion.api.v1.model.pages.{Page, PageParent, PageProperty}
 import notion.api.v1.model.search.SearchResults
 import notion.api.v1.model.users.{User, Users}
 import notion.api.v1.request.databases.QueryDatabaseRequest
@@ -17,7 +17,6 @@ import notion.api.v1.request.pages.{
   CreatePageRequest,
   UpdatePagePropertiesRequest
 }
-import notion.api.v1.request.pages.CreatePageRequest.Parent
 import notion.api.v1.request.search.SearchRequest
 import notion.api.v1.request.search.SearchRequest._
 
@@ -127,7 +126,7 @@ case class ScalaNotionClient(
   // ---------------------------------------------------------------
 
   def createPage(
-      parent: Parent,
+      parent: PageParent,
       properties: Map[String, PageProperty],
       children: List[Block] = List.empty
   ): Page = {

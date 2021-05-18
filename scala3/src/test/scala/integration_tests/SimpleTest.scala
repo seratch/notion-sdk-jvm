@@ -1,11 +1,12 @@
+package integration_tests
+
 import notion.api.v1.ScalaNotionClient
 import notion.api.v1.http.JavaNetHttpClient
-import notion.api.v1.model.databases.query.filter.condition.TextFilter
 import notion.api.v1.model.databases.query.filter.PropertyFilter
-import notion.api.v1.model.pages.PageProperty
+import notion.api.v1.model.databases.query.filter.condition.TextFilter
+import notion.api.v1.model.pages.{PageParent, PageProperty}
 import notion.api.v1.model.pages.PageProperty.RichText
 import notion.api.v1.model.pages.PageProperty.RichText.Text
-import notion.api.v1.request.pages.CreatePageRequest.Parent
 import org.junit.Assert.assertNotNull
 import org.junit.Test
 
@@ -63,7 +64,7 @@ class SimpleTest {
 
       val page = client.createPage(
         parent = {
-          val p = new Parent("database")
+          val p = new PageParent("database")
           p.setDatabaseId(databaseId)
           p
         },

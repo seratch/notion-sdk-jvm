@@ -1,4 +1,4 @@
-package tests.endpoint
+package integration_tests
 
 import kotlin.test.assertNotNull
 import notion.api.v1.NotionClient

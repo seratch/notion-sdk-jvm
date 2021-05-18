@@ -220,6 +220,7 @@
                         <includes>
                             <include>src/main/kotlin/**/*.kt</include>
                             <include>src/test/kotlin/tests/**/*.kt</include>
+                            <include>src/test/kotlin/integration_tests/**/*.kt</include>
                         </includes>
                         <ktfmt/>
                     </kotlin>

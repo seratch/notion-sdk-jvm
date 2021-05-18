@@ -4,7 +4,10 @@ import notion.api.v1.exception.NotionAPIError
 import notion.api.v1.http.NotionHttpClient
 import notion.api.v1.json.NotionJsonSerializer
 import notion.api.v1.logging.NotionLogger
+import notion.api.v1.model.blocks.Block
 import notion.api.v1.model.pages.Page
+import notion.api.v1.model.pages.PageParent
+import notion.api.v1.model.pages.PageProperty
 import notion.api.v1.request.pages.CreatePageRequest
 import notion.api.v1.request.pages.RetrievePageRequest
 import notion.api.v1.request.pages.UpdatePagePropertiesRequest
@@ -18,6 +21,19 @@ interface PagesSupport : EndpointsSupport {
   // -----------------------------------------------
   // createPage
   // -----------------------------------------------
+
+  fun createPage(
+      parent: PageParent,
+      properties: Map<String, PageProperty>,
+      children: List<Block>? = null,
+  ): Page {
+    return createPage(
+        CreatePageRequest(
+            parent = parent,
+            properties = properties,
+            children = children,
+        ))
+  }
 
   fun createPage(page: CreatePageRequest): Page {
     val httpResponse =
@@ -63,6 +79,14 @@ interface PagesSupport : EndpointsSupport {
   // -----------------------------------------------
   // updatePageProperties
   // -----------------------------------------------
+
+  fun updatePageProperties(pageId: String, properties: Map<String, PageProperty>): Page {
+    return updatePageProperties(
+        UpdatePagePropertiesRequest(
+            pageId = pageId,
+            properties = properties,
+        ))
+  }
 
   fun updatePageProperties(request: UpdatePagePropertiesRequest): Page {
     val httpResponse =

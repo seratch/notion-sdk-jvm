@@ -11,8 +11,8 @@ class OkHttp3Client : NotionHttpClient {
     private val MEDIA_TYPE_APPLICATION_JSON = MediaType.parse("application/json; charset=utf-8")
 
     private const val DEFAULT_CONNECT_TIMEOUT_MILLIS = 1_000
-    private const val DEFAULT_READ_TIMEOUT_MILLIS = 20_000
-    private const val DEFAULT_WRITE_TIMEOUT_MILLIS = 20_000
+    private const val DEFAULT_READ_TIMEOUT_MILLIS = 30_000
+    private const val DEFAULT_WRITE_TIMEOUT_MILLIS = 30_000
 
     fun buildOkHttpClient(
         connectTimeoutMillis: Int = DEFAULT_CONNECT_TIMEOUT_MILLIS,
@@ -109,6 +109,7 @@ class OkHttp3Client : NotionHttpClient {
       body: String,
       logger: NotionLogger
   ): NotionHttpResponse {
+    val startTimeMillis = System.currentTimeMillis()
     val request = req.build()
     debugLogStart(logger, request.method(), request.url().url().toString(), body)
     val resp = client.newCall(req.build()).execute()
@@ -118,7 +119,7 @@ class OkHttp3Client : NotionHttpClient {
               status = resp.code(),
               headers = resp.headers().toMultimap(),
               body = resp.body()?.string() ?: "")
-      debugLogSuccess(logger, response)
+      debugLogSuccess(logger, startTimeMillis, response)
       return response
     } catch (e: Exception) {
       warnLogFailure(logger, e)
