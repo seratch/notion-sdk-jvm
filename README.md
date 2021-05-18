@@ -1,15 +1,17 @@
-## Unofficial Notion SDK for Any JVM Language
+## A Notion SDK for Any JVM Language
 
 [![Maven Central](https://img.shields.io/maven-central/v/com.github.seratch/notion-sdk-jvm-core.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22com.github.seratch%22%20AND%20a:%22notion-sdk-jvm-core%22)
 [![CI Build](https://github.com/seratch/notion-sdk-jvm/actions/workflows/ci-build.yml/badge.svg)](https://github.com/seratch/notion-sdk-jvm/actions/workflows/ci-build.yml)
 
-Here is an **unofficial** Notion SDK for any JVM language users!
+Here is an [Notion API](https://developers.notion.com/) SDK for any JVM language users :wave: 
 
 This project aims to provide a Notion API client for any JVM language developers without hurdles. To realize the goal, its code is written in Kotlin with a nice consideration for Java compatibility.
 
+This SDK works on [Android runtime](https://developer.android.com/) and any distributions based on [OpenJDK](https://openjdk.java.net/). With regard to programming languages, this project provides out-of-the-box supports for Java (of course!), [Kotlin](https://kotlinlang.org/), and the novel [Scala 3](https://docs.scala-lang.org/scala3/)! We don't have nice wrappers for some other JVM lanaguages such as [Groovy](https://groovy-lang.org/) and [Clojure](https://clojure.org/), but your code using this library should work in the lanaguges too.
+
 ### Getting Started
 
-You can start using this library just by adding `notion-sdk-jvm-core` dependency to your project!
+You can start using this library just by adding `notion-sdk-jvm-core` dependency to your project.
 
 For Gradle users:
 
@@ -100,7 +102,7 @@ fun main() {
 
 #### Using in Java
 
-Even when you use this SDK in Java and other languages, all the classes/methods should be accessible. If not, please let us know the issue in this project's issue tracker!
+Even when you use this SDK in Java and other languages, all the classes/methods should be accessible. If you find issues, please let us know the issue in [this project's issue tracker](https://github.com/seratch/notion-sdk-jvm/issues).
 
 ```java
 import notion.api.v1.NotionClient;
@@ -133,33 +135,39 @@ lazy val root = project
   )
 ```
 
-Save the following source code as `Main.scala`. Now you can run the app by hitting `sbt run`.
+Save the following source code as `Main.scala`. You can run the app by hitting `sbt run`.
 
 ```scala
 import notion.api.v1.ScalaNotionClient
 import notion.api.v1.http.JavaNetHttpClient
+import notion.api.v1.model.common.PropertyType
 import notion.api.v1.model.databases.query.filter.PropertyFilter
 import notion.api.v1.model.databases.query.filter.condition.TextFilter
+
 import scala.jdk.CollectionConverters._
 
 @main def example: Unit = {
 
   val client = ScalaNotionClient(
     token = System.getenv("NOTION_TOKEN"),
-    httpClient = new JavaNetHttpClient(),
+    httpClient = new JavaNetHttpClient()
   )
 
   val users = client.listUsers(pageSize = 2)
 
-  val databaseId = client.listDatabases().getResults.asScala
+  val databaseId = client
+    .listDatabases()
+    .getResults
+    .asScala
     .find(_.getTitle.get(0).getPlainText == "Test Database")
-    .get.getId
+    .get
+    .getId
 
   val queryResult = client.queryDatabase(
     databaseId = databaseId,
     filter = {
       val filter = new PropertyFilter()
-      filter.setProperty("Title")
+      filter.setProperty(PropertyType.Title)
       filter.setTitle {
         val title = new TextFilter()
         title.setContains("bug")
@@ -180,7 +188,9 @@ For HTTP communications and logging, you can easily switch to other implementati
 
 #### Pluggable HTTP Client
 
-`java.net.HttpURLConnection` does not support PATCH request method. For this reason, the default implementation of `httpClient` does an "illegal reflective access" to overcome the limitation (see `notion.api.v1.http.HttpUrlConnPatchMethodWorkaround` for details). It's totally fine to use the default `httpClient` when you first try this SDK, but we recommend using other implmentations for production apps. Currently, we support the following libraries and modules:
+As some may know, `java.net.HttpURLConnection` does not support PATCH request method :cry:. Thus, the default `httpClient` has to make an "illegal reflective access" to overcome the limitation for perfoming PATCH method requests (see [this class](https://github.com/seratch/notion-sdk-jvm/blob/main/core/src/main/kotlin/notion/api/v1/http/HttpUrlConnPatchMethodWorkaround.kt) for details). 
+
+If you use PATH method API calls such as [`PATCH https://api.notion.com/v1/pages/{page_id}`](https://developers.notion.com/reference/patch-page), we recommend other `httpClient` implementations listed below. If you don't use PATCH method APIs at all and don't want to add any extra dependencies, the default `httpClient` works for you with any issues.
 
 * [`java.net.HttpClient`](https://docs.oracle.com/en/java/javase/11/docs/api/java.net.http/java/net/http/HttpClient.html) in JDK 11+
 * `okhttp3.OkHttpClient` in [OkHttp](https://square.github.io/okhttp/) 4.x
@@ -188,7 +198,7 @@ For HTTP communications and logging, you can easily switch to other implementati
 
 ```gradle
 // Add this if you use java.net.http.HttpClient in JDK 11+
-// This module is not yet available in Android runtimes
+// Please note that this module does not work on Android runtime
 implementation("com.github.seratch:notion-sdk-jvm-httpclient:${notionSdkVersion}")
 
 // Add this if you use OkHttp 4.x
@@ -196,7 +206,7 @@ implementation("com.github.seratch:notion-sdk-jvm-httpclient:${notionSdkVersion}
 implementation("com.github.seratch:notion-sdk-jvm-okhttp4:${notionSdkVersion}")
 
 // Add this if you use OkHttp 3.x
-// Retrofit etc. depend on this major version. If your app has such dependencies, using this is the way to go
+// If you have other dependencies relying on okhttp 3.x (e.g., Retrofit)
 implementation("com.github.seratch:notion-sdk-jvm-okhttp3:${notionSdkVersion}")
 ```
 
@@ -224,14 +234,14 @@ client.httpClient = OkHttp3Client()
 
 #### Pluggable Logging
 
-You can change the `logger` property of `NotionClient` instances. Currently, this library's stdout logger (default), `java.util.logging` and slf4j-api are supported. Here are the steps to use an slf4j logger. Add the following optional module along with your favorite implementation (e.g., logback-classic, slf4j-simple).
+You can change the `logger` property of `NotionClient` instances. Currently, this libarary supports its own stdout logger (default), `java.util.logging`, and slf4j-api based ones. Here are the steps to use an slf4j-api logger. Add the following optional module along with your favorite implementation (e.g., logback-classic, slf4j-simple).
 
 ```gradle
 implementation("com.github.seratch:notion-sdk-jvm-slf4j:${notionSdkVersion}") // slf4j-api 1.7
 implementation("org.slf4j:slf4j-simple:1.7.30")
 ```
 
-You can switch to the implementation as below. As with the `httpClient` example, you can use the setter method too.
+Now you can switch to your slf4j logger. As with the `httpClient` example, you can use the setter method too.
 
 ```kotlin
 import notion.api.v1.NotionClient
@@ -250,15 +260,15 @@ val client = NotionClient(
 
 #### Why is not JSON serialization pluggable?
 
-As of today, we don't support other JSON libraries yet. There are several reasons:
+As of today, we don't support other JSON libraries yet. There are two reasons:
 
 ##### Necessity of polymorphic serializers for list objects
 
-In the early development stage of this SDK, we started with [kotlinx.serialization](https://github.com/Kotlin/kotlinx.serialization). It worked well except for the Search API responses. However, the `results` in the Search API responses requires polymorphic serializers for `properties: List<DatabaseProperty | PageProperty>` (this is a pseudo-code illustrating the property is a list of union type). We could not find a way to handle the pattern with the library at that time.
+In the early development stage of this SDK, we started with [kotlinx.serialization](https://github.com/Kotlin/kotlinx.serialization). It worked well except for the Search API responses. The `results` returned by the API requires polymorphic serializers for `properties: List<DatabaseProperty | PageProperty>` (this is a pseudo-code illustrating the property is a list of union type). We could not find a way to handle the pattern with the library at that time.
 
-##### The author prefers camelCased property names
+##### Easily enabling camelCased property names
 
-We know a few novel libraries intentionally do not support the conversions between snake_cased keys and camelCased keys. We do respect the opinion, but we still prefer consistent field naming in the Java world. It's the main reason why we did not go with Moshi.
+We know a few novel Kotlin libraries do not support the conversions between snake_cased keys and camelCased keys. Although we do respect the opinion and see the benefit, we still prefer consistent field naming in the Java world. This is another major reason why we did not go with either of kotlinx.serialization and Moshi.
 
 ### Supported Java Runtimes
 
