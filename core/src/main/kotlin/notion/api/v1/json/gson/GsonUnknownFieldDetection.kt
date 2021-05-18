@@ -1,4 +1,4 @@
-package notion.api.v1.json
+package notion.api.v1.json.gson
 
 import com.google.gson.Gson
 import com.google.gson.JsonParseException

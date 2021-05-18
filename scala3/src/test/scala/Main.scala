@@ -1,5 +1,6 @@
 import notion.api.v1.ScalaNotionClient
 import notion.api.v1.http.JavaNetHttpClient
+import notion.api.v1.model.common.PropertyType
 import notion.api.v1.model.databases.query.filter.PropertyFilter
 import notion.api.v1.model.databases.query.filter.condition.TextFilter
 
@@ -26,7 +27,7 @@ object Main extends App {
     databaseId = databaseId,
     filter = {
       val filter = new PropertyFilter()
-      filter.setProperty("Title")
+      filter.setProperty(PropertyType.Title)
       filter.setTitle {
         val title = new TextFilter()
         title.setContains("bug")

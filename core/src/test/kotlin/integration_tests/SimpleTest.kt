@@ -19,7 +19,8 @@ class SimpleTest {
       val databases = client.listDatabases()
       assertTrue { databases.results.isNotEmpty() }
 
-      val database = databases.results.find { it.title?.get(0)?.plainText == "Test Database" }!!
+      val database =
+          databases.results.find { it.title.any { t -> t.plainText.contains("Test Database") } }!!
 
       // All the options for "Severity" property (select type)
       val severityOptions = database.properties?.get("Severity")?.select?.options
@@ -31,7 +32,7 @@ class SimpleTest {
       val newPage: Page =
           client.createPage(
               // Use the "Test Database" as this page's parent
-              parent = PageParent(type = "database", databaseId = database.id),
+              parent = PageParent.database(databaseId = database.id),
               // Set values to the page's properties
               // (these must be pre-defined before this API call)
               properties =

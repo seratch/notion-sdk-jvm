@@ -1,7 +1,11 @@
 package notion.api.v1.model.databases
 
+import notion.api.v1.model.common.*
+import notion.api.v1.model.pages.Page
+import notion.api.v1.model.users.User
+
 open class DatabaseProperty(
-    val type: String,
+    val type: PropertyType,
     val id: String,
     var title: RichText? = null,
     var richText: RichText? = null,
@@ -24,7 +28,7 @@ open class DatabaseProperty(
     val lastEditedTime: LastEditedTime? = null,
 ) {
   constructor(
-      type: String,
+      type: PropertyType,
       id: String
   ) : this(
       type,
@@ -51,16 +55,17 @@ open class DatabaseProperty(
   )
 
   open class RichText(
-      var type: String = "text",
+      var type: RichTextType = RichTextType.Text,
       var text: Text? = null,
       var annotations: Annotations? = null,
-      var plainText: String? = null,
+      var plainText: String = "",
       var href: String? = null,
+      val mention: Mention? = null,
   ) {
 
     open class Text(var content: String? = null, var link: Link? = null)
 
-    open class Link(var type: String? = null, var url: String? = null)
+    open class Link(var type: RichTextLinkType? = null, var url: String? = null)
 
     open class Annotations(
         var bold: Boolean? = null,
@@ -68,7 +73,14 @@ open class DatabaseProperty(
         var strikethrough: Boolean? = null,
         var underline: Boolean? = null,
         var code: Boolean? = null,
-        var color: String? = null,
+        var color: RichTextColor? = null,
+    )
+    open class Mention(
+        var type: RichTextMentionType? = null,
+        var user: User? = null,
+        val page: Page? = null,
+        val database: Database? = null,
+        val date: Date? = null,
     )
   }
 
@@ -110,7 +122,7 @@ open class DatabaseProperty(
     open class Option(
         var id: String? = null,
         var name: String? = null,
-        var color: String? = null,
+        var color: OptionColor? = null,
     )
   }
 
@@ -118,7 +130,7 @@ open class DatabaseProperty(
     data class Option(
         val id: String? = null,
         val name: String? = null,
-        val color: String? = null,
+        val color: OptionColor? = null,
     )
   }
 

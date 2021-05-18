@@ -2,13 +2,14 @@ package notion.api.v1.model.users
 
 import com.google.gson.annotations.SerializedName
 import notion.api.v1.model.common.ObjectType
+import notion.api.v1.model.common.WithObjectType
 
 data class User(
-    @SerializedName("object") override val objectType: String = "user",
+    @SerializedName("object") override val objectType: ObjectType = ObjectType.User,
     val id: String,
-    val type: String? = null,
+    val type: UserType? = null,
     val person: Person? = null,
     val name: String? = null,
     val avatarUrl: String? = null,
     val bot: Bot? = null,
-) : ObjectType
+) : WithObjectType

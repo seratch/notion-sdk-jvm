@@ -18,6 +18,7 @@ data class QueryDatabaseRequest(
       databaseId: String,
       filter: QueryTopLevelFilter
   ) : this(databaseId, filter, null, null, null)
+
   constructor(
       databaseId: String,
       filter: QueryTopLevelFilter,

@@ -24,7 +24,7 @@ class PagesTest {
 
       val newPage: Page =
           client.createPage(
-              parent = PageParent(type = "database", databaseId = database.id),
+              parent = PageParent.database(databaseId = database.id),
               properties =
                   mapOf(
                       "Title" to

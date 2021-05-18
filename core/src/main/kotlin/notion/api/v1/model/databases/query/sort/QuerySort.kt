@@ -1,7 +1,9 @@
 package notion.api.v1.model.databases.query.sort
 
+import notion.api.v1.model.common.PropertyType
+
 open class QuerySort(
-    val property: String? = null,
-    val timestamp: String? = null,
-    val direction: String? = null,
+    var property: PropertyType? = null,
+    var timestamp: QuerySortTimestamp? = null,
+    var direction: QuerySortDirection? = QuerySortDirection.Ascending,
 )

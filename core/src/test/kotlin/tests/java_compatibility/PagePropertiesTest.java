@@ -1,5 +1,6 @@
 package tests.java_compatibility;
 
+import notion.api.v1.model.common.FormulaType;
 import notion.api.v1.model.pages.PageProperty;
 import org.junit.Test;
 
@@ -28,7 +29,7 @@ public class PagePropertiesTest {
 
     @Test
     public void formula() {
-        PageProperty.Formula formula = new PageProperty.Formula("boolean");
+        PageProperty.Formula formula = new PageProperty.Formula(FormulaType.Boolean);
         formula.setBoolean(false);
         assertNotNull(formula);
     }

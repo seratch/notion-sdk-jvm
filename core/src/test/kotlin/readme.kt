@@ -13,7 +13,7 @@ fun main() {
         // Look up all databases that this app can access
         val databases = client.listDatabases()
         // Find the "Test Database" from the list
-        val database = databases.results.find { it.title?.first()?.plainText == "Test Database" }
+        val database = databases.results.find { it.title.any { t -> t.plainText.contains("Test Database") } }
             ?: throw IllegalStateException("Create a database named 'Test Database' and invite this app's user!")
 
         // All the options for "Severity" property (select type)
@@ -26,7 +26,7 @@ fun main() {
         // Create a new page in the database
         val newPage = client.createPage(
             // Use the "Test Database" as this page's parent
-            parent = PageParent(type = "database", databaseId = database.id),
+            parent = PageParent.database(database.id),
             // Set values to the page's properties
             // (these must be pre-defined before this API call)
             properties = mapOf(

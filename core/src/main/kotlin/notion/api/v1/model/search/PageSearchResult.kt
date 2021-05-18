@@ -1,11 +1,12 @@
 package notion.api.v1.model.search
 
 import com.google.gson.annotations.SerializedName
+import notion.api.v1.model.common.ObjectType
 import notion.api.v1.model.pages.PageParent
 import notion.api.v1.model.pages.PageProperty
 
 data class PageSearchResult(
-    @SerializedName("object") override val objectType: String = "page",
+    @SerializedName("object") override val objectType: ObjectType = ObjectType.Page,
     override val id: String,
     override val createdTime: String,
     override val lastEditedTime: String,

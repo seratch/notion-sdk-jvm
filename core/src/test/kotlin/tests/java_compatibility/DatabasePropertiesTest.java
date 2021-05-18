@@ -1,5 +1,6 @@
 package tests.java_compatibility;
 
+import notion.api.v1.model.common.PropertyType;
 import notion.api.v1.model.databases.DatabaseProperty;
 import org.junit.Test;
 
@@ -9,7 +10,7 @@ public class DatabasePropertiesTest {
 
     @Test
     public void minimumConstructor() {
-        DatabaseProperty property = new DatabaseProperty("rich_text", "id-value");
+        DatabaseProperty property = new DatabaseProperty(PropertyType.RichText, "id-value");
         assertNotNull(property);
     }
 

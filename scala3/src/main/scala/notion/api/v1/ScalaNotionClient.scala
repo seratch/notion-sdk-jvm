@@ -199,6 +199,7 @@ case class ScalaNotionClient(
   // ---------------------------------------------------------------
 
   object NoSearchFilter extends SearchFilter()
+
   object NoSearchSort extends SearchSort()
 
   def search(

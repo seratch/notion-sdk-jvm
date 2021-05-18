@@ -53,7 +53,7 @@ fun main() {
         // Look up all databases that this app can access
         val databases = client.listDatabases()
         // Find the "Test Database" from the list
-        val database = databases.results.find { it.title?.first()?.plainText == "Test Database" }
+        val database = databases.results.find { it.title.any { t -> t.plainText.contains("Test Database") } }
             ?: throw IllegalStateException("Create a database named 'Test Database' and invite this app's user!")
 
         // All the options for "Severity" property (select type)
@@ -66,7 +66,7 @@ fun main() {
         // Create a new page in the database
         val newPage = client.createPage(
             // Use the "Test Database" as this page's parent
-            parent = PageParent(type = "database", databaseId = database.id),
+            parent = PageParent.database(database.id),
             // Set values to the page's properties
             // (these must be pre-defined before this API call)
             properties = mapOf(
@@ -196,7 +196,7 @@ implementation("com.github.seratch:notion-sdk-jvm-httpclient:${notionSdkVersion}
 implementation("com.github.seratch:notion-sdk-jvm-okhttp4:${notionSdkVersion}")
 
 // Add this if you use OkHttp 3.x
-// Retrofit etc. depends on this major version. If your app has such dependencies, using this is the way to go
+// Retrofit etc. depend on this major version. If your app has such dependencies, using this is the way to go
 implementation("com.github.seratch:notion-sdk-jvm-okhttp3:${notionSdkVersion}")
 ```
 
@@ -207,8 +207,8 @@ import notion.api.v1.NotionClient
 import notion.api.v1.http.JavaNetHttpClient
 
 val client = NotionClient(
-  token = System.getenv("NOTION_TOKEN"),
-  httpClient = JavaNetHttpClient(),
+    token = System.getenv("NOTION_TOKEN"),
+    httpClient = JavaNetHttpClient(),
 )
 ```
 
@@ -224,12 +224,13 @@ client.httpClient = OkHttp3Client()
 
 #### Pluggable Logging
 
-You can change the `logger` property of `NotionClient` instances. Currently, this library's stdout logger (default), `java.util.logging` and slf4j-api are supported. Here are the steps to use an slf4j logger. Add the following optional module along with your favorite implementation.
+You can change the `logger` property of `NotionClient` instances. Currently, this library's stdout logger (default), `java.util.logging` and slf4j-api are supported. Here are the steps to use an slf4j logger. Add the following optional module along with your favorite implementation (e.g., logback-classic, slf4j-simple).
 
 ```gradle
 implementation("com.github.seratch:notion-sdk-jvm-slf4j:${notionSdkVersion}") // slf4j-api 1.7
-implementation("org.slf4j:slf4j-api:1.7.30")
+implementation("org.slf4j:slf4j-simple:1.7.30")
 ```
+
 You can switch to the implementation as below. As with the `httpClient` example, you can use the setter method too.
 
 ```kotlin
@@ -237,10 +238,13 @@ import notion.api.v1.NotionClient
 import notion.api.v1.http.JavaNetHttpClient
 import notion.api.v1.logging.Slf4jLogger
 
+// for slf4j-simple
+System.setProperty("org.slf4j.simpleLogger.defaultLogLevel", "debug")
+
 val client = NotionClient(
-  token = System.getenv("NOTION_TOKEN"),
-  httpClient = JavaNetHttpClient(),
-  logger = Slf4jLogger(),
+    token = System.getenv("NOTION_TOKEN"),
+    httpClient = JavaNetHttpClient(),
+    logger = Slf4jLogger(),
 )
 ```
 
@@ -250,11 +254,11 @@ As of today, we don't support other JSON libraries yet. There are several reason
 
 ##### Necessity of polymorphic serializers for list objects
 
-In the early development stage of this SDK, we started with [kotlinx.serialization](https://github.com/Kotlin/kotlinx.serialization). It worked well except for the Search API responses. However, the `results` in the Search API responses requires polymorphic serializers for `properties: List<DatabaseProperty | PageProperty>` (this is a pseudo-code illustrating the property is a list of union type). The author (@seratch) could not find a way to handle the pattern with the library.
+In the early development stage of this SDK, we started with [kotlinx.serialization](https://github.com/Kotlin/kotlinx.serialization). It worked well except for the Search API responses. However, the `results` in the Search API responses requires polymorphic serializers for `properties: List<DatabaseProperty | PageProperty>` (this is a pseudo-code illustrating the property is a list of union type). We could not find a way to handle the pattern with the library at that time.
 
 ##### The author prefers camelCased property names
 
-I (@seratch) know a few novel libraries intentionally do not support the conversions between snake_cased keys and camelCased keys. I do understand the opinion, but I still prefer consistent field naming in the Java world. It's the main reason why we didn't go with Moshi.
+We know a few novel libraries intentionally do not support the conversions between snake_cased keys and camelCased keys. We do respect the opinion, but we still prefer consistent field naming in the Java world. It's the main reason why we did not go with Moshi.
 
 ### Supported Java Runtimes
 

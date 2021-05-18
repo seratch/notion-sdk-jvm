@@ -2,11 +2,12 @@ package integration_tests
 
 import notion.api.v1.ScalaNotionClient
 import notion.api.v1.http.JavaNetHttpClient
+import notion.api.v1.model.common.PropertyType
 import notion.api.v1.model.databases.query.filter.PropertyFilter
 import notion.api.v1.model.databases.query.filter.condition.TextFilter
-import notion.api.v1.model.pages.{PageParent, PageProperty}
 import notion.api.v1.model.pages.PageProperty.RichText
 import notion.api.v1.model.pages.PageProperty.RichText.Text
+import notion.api.v1.model.pages.{PageParent, PageProperty}
 import org.junit.Assert.assertNotNull
 import org.junit.Test
 
@@ -23,7 +24,9 @@ class SimpleTest {
       assertNotNull(databases)
 
       val databaseId = databases.getResults.asScala
-        .filter(_.getTitle.get(0).getPlainText == "Test Database")
+        .filter(
+          _.getTitle.asScala.exists(_.getPlainText.contains("Test Database"))
+        )
         .head
         .getId
 
@@ -35,7 +38,7 @@ class SimpleTest {
           databaseId,
           filter = {
             val f = new PropertyFilter()
-            f.setProperty("Title")
+            f.setProperty(PropertyType.Title)
             val title = new TextFilter()
             title.setContains("bug")
             f.setTitle(title)
@@ -58,16 +61,14 @@ class SimpleTest {
       assertNotNull(databases)
 
       val databaseId = databases.getResults.asScala
-        .filter(_.getTitle.get(0).getPlainText == "Test Database")
+        .filter(
+          _.getTitle.asScala.exists(_.getPlainText.contains("Test Database"))
+        )
         .head
         .getId
 
       val page = client.createPage(
-        parent = {
-          val p = new PageParent("database")
-          p.setDatabaseId(databaseId)
-          p
-        },
+        parent = PageParent.database(databaseId),
         properties = Map(
           "Title" -> {
             val p = new PageProperty()

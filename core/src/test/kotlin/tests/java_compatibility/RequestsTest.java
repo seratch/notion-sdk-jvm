@@ -1,6 +1,7 @@
 package tests.java_compatibility;
 
 import notion.api.v1.model.pages.PageParent;
+import notion.api.v1.model.pages.PageParentType;
 import notion.api.v1.request.blocks.AppendBlockChildrenRequest;
 import notion.api.v1.request.blocks.RetrieveBlockChildrenRequest;
 import notion.api.v1.request.databases.ListDatabasesRequest;
@@ -31,7 +32,7 @@ public class RequestsTest {
 
         assertNotNull(new RetrieveDatabaseRequest("database-id"));
 
-        assertNotNull(new CreatePageRequest(new PageParent("database"), Collections.emptyMap()));
+        assertNotNull(new CreatePageRequest(new PageParent(PageParentType.Database), Collections.emptyMap()));
         assertNotNull(new CreatePageRequest(PageParent.database("database-id"), Collections.emptyMap()));
         assertNotNull(new CreatePageRequest(PageParent.page("page-id"), Collections.emptyMap()));
 

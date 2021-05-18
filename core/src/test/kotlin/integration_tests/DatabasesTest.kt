@@ -4,8 +4,14 @@ import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
 import notion.api.v1.NotionClient
-import notion.api.v1.model.databases.query.filter.*
+import notion.api.v1.model.common.ObjectType
+import notion.api.v1.model.common.PropertyType
+import notion.api.v1.model.databases.query.filter.CompoundFilter
+import notion.api.v1.model.databases.query.filter.PropertyFilter
 import notion.api.v1.model.databases.query.filter.condition.TextFilter
+import notion.api.v1.model.databases.query.sort.QuerySort
+import notion.api.v1.model.databases.query.sort.QuerySortDirection
+import notion.api.v1.model.databases.query.sort.QuerySortTimestamp
 import org.junit.Test
 
 class DatabasesTest {
@@ -15,8 +21,9 @@ class DatabasesTest {
     NotionClient(token = System.getenv("NOTION_TOKEN")).use { client ->
       val databases = client.listDatabases()
       assertNotNull(databases)
-      assertEquals("list", databases.objectType)
+      assertEquals(ObjectType.List, databases.objectType)
       assertTrue { databases.results.isNotEmpty() }
+      assertEquals(ObjectType.Database, databases.results[0].objectType)
     }
   }
 
@@ -26,16 +33,26 @@ class DatabasesTest {
       val databases = client.listDatabases()
       assertTrue { databases.results.isNotEmpty() }
 
-      val database = databases.results.find { it.title?.get(0)?.plainText == "Test Database" }!!
+      val database =
+          databases.results.find { it.title.any { t -> t.plainText.contains("Test Database") } }!!
 
       val queryResult =
           client.queryDatabase(
               databaseId = database.id,
-              filter = PropertyFilter(property = "Title", title = TextFilter(contains = "bug")),
+              filter =
+                  PropertyFilter(
+                      property = PropertyType.Title, title = TextFilter(contains = "bug")),
+              sorts =
+                  listOf(
+                      QuerySort(property = PropertyType.Title),
+                      QuerySort(
+                          timestamp = QuerySortTimestamp.LastEditedTime,
+                          direction = QuerySortDirection.Descending)),
               pageSize = 1,
           )
       assertNotNull(queryResult)
       assertTrue { queryResult.results.isNotEmpty() }
+      assertEquals(ObjectType.Page, queryResult.results[0].objectType)
     }
   }
 
@@ -45,7 +62,8 @@ class DatabasesTest {
       val databases = client.listDatabases()
       assertTrue { databases.results.isNotEmpty() }
 
-      val database = databases.results.find { it.title?.get(0)?.plainText == "Test Database" }!!
+      val database =
+          databases.results.find { it.title.any { t -> t.plainText.contains("Test Database") } }!!
 
       val queryResult =
           client.queryDatabase(
@@ -55,11 +73,13 @@ class DatabasesTest {
                       and =
                           listOf(
                               PropertyFilter(
-                                  property = "Title", title = TextFilter(contains = "bug")))),
+                                  property = PropertyType.Title,
+                                  title = TextFilter(contains = "bug")))),
               pageSize = 1,
           )
       assertNotNull(queryResult)
       assertTrue { queryResult.results.isNotEmpty() }
+      assertEquals(ObjectType.Page, queryResult.results[0].objectType)
     }
   }
 }

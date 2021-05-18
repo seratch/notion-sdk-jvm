@@ -4,6 +4,9 @@ import com.google.gson.FieldNamingPolicy
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import notion.api.Metadata.isLibraryMaintainerMode
+import notion.api.v1.json.gson.BlockParser
+import notion.api.v1.json.gson.GsonUnknownFieldDetection
+import notion.api.v1.json.gson.SearchResultParser
 import notion.api.v1.model.blocks.Block
 import notion.api.v1.model.blocks.Blocks
 import notion.api.v1.model.databases.Database
@@ -47,8 +50,10 @@ class GsonSerializer : NotionJsonSerializer {
   override fun toPage(body: String): Page = gson.fromJson(body, Page::class.java)
   override fun toQueryResults(body: String): QueryResults =
       gson.fromJson(body, QueryResults::class.java)
+
   override fun toSearchResults(body: String): SearchResults =
       gson.fromJson(body, SearchResults::class.java)
+
   override fun toUser(body: String): User = gson.fromJson(body, User::class.java)
   override fun toUsers(body: String): Users = gson.fromJson(body, Users::class.java)
 
