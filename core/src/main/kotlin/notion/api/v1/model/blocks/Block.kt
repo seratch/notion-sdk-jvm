@@ -1,16 +1,17 @@
 package notion.api.v1.model.blocks
 
 import com.google.gson.annotations.SerializedName
+import java.util.*
 import notion.api.v1.model.common.ObjectType
 import notion.api.v1.model.common.WithObjectType
 import notion.api.v1.model.pages.PageProperty
 
 interface Block : WithObjectType {
-  val id: String
   val type: BlockType
-  val createdTime: String
-  val lastEditedTime: String
-  val hasChildren: Boolean
+  var id: String?
+  var createdTime: String?
+  var lastEditedTime: String?
+  var hasChildren: Boolean?
 
   fun asParagraph(): ParagraphBlock =
       if (type == BlockType.Paragraph) this as ParagraphBlock
@@ -55,21 +56,21 @@ interface Block : WithObjectType {
 
 open class ParagraphBlock(
     @SerializedName("object") override val objectType: ObjectType = ObjectType.Block,
-    override val type: BlockType = BlockType.Paragraph,
-    override val id: String,
-    override val createdTime: String,
-    override val lastEditedTime: String,
-    override val hasChildren: Boolean,
+    override var type: BlockType = BlockType.Paragraph,
+    override var id: String? = UUID.randomUUID().toString(),
+    override var createdTime: String? = null,
+    override var lastEditedTime: String? = null,
+    override var hasChildren: Boolean? = null,
     val paragraph: Element,
 ) : Block {
 
   // for other JVM languages
   constructor(
-      id: String,
       paragraph: Element,
-      hasChildren: Boolean,
-      createdTime: String,
-      lastEditedTime: String,
+      id: String? = UUID.randomUUID().toString(),
+      hasChildren: Boolean? = null,
+      createdTime: String? = null,
+      lastEditedTime: String? = null,
   ) : this(
       ObjectType.Block,
       BlockType.Paragraph,
@@ -85,20 +86,20 @@ open class ParagraphBlock(
 open class HeadingOneBlock(
     @SerializedName("object") override val objectType: ObjectType = ObjectType.Block,
     override val type: BlockType = BlockType.HeadingOne,
-    override val id: String,
-    override val createdTime: String,
-    override val lastEditedTime: String,
-    override val hasChildren: Boolean = false,
+    override var id: String? = UUID.randomUUID().toString(),
+    override var createdTime: String? = null,
+    override var lastEditedTime: String? = null,
+    override var hasChildren: Boolean? = null,
     @SerializedName("heading_1") val heading1: Element,
 ) : Block {
 
   // for other JVM languages
   constructor(
-      id: String,
       heading1: Element,
-      hasChildren: Boolean,
-      createdTime: String,
-      lastEditedTime: String,
+      id: String? = UUID.randomUUID().toString(),
+      hasChildren: Boolean? = null,
+      createdTime: String? = null,
+      lastEditedTime: String? = null,
   ) : this(
       ObjectType.Block,
       BlockType.HeadingOne,
@@ -116,20 +117,20 @@ open class HeadingOneBlock(
 open class HeadingTwoBlock(
     @SerializedName("object") override val objectType: ObjectType = ObjectType.Block,
     override val type: BlockType = BlockType.HeadingTwo,
-    override val id: String,
-    override val createdTime: String,
-    override val lastEditedTime: String,
-    override val hasChildren: Boolean = false,
+    override var id: String? = UUID.randomUUID().toString(),
+    override var createdTime: String? = null,
+    override var lastEditedTime: String? = null,
+    override var hasChildren: Boolean? = null,
     @SerializedName("heading_2") val heading2: Element,
 ) : Block {
 
   // for other JVM languages
   constructor(
-      id: String,
       heading2: Element,
-      hasChildren: Boolean,
-      createdTime: String,
-      lastEditedTime: String,
+      id: String? = UUID.randomUUID().toString(),
+      hasChildren: Boolean? = null,
+      createdTime: String? = null,
+      lastEditedTime: String? = null,
   ) : this(
       ObjectType.Block,
       BlockType.HeadingTwo,
@@ -147,20 +148,20 @@ open class HeadingTwoBlock(
 open class HeadingThreeBlock(
     @SerializedName("object") override val objectType: ObjectType = ObjectType.Block,
     override val type: BlockType = BlockType.HeadingThree,
-    override val id: String,
-    override val createdTime: String,
-    override val lastEditedTime: String,
-    override val hasChildren: Boolean = false,
+    override var id: String? = UUID.randomUUID().toString(),
+    override var createdTime: String? = null,
+    override var lastEditedTime: String? = null,
+    override var hasChildren: Boolean? = null,
     @SerializedName("heading_3") val heading3: Element,
 ) : Block {
 
   // for other JVM languages
   constructor(
-      id: String,
       heading3: Element,
-      hasChildren: Boolean,
-      createdTime: String,
-      lastEditedTime: String,
+      id: String? = UUID.randomUUID().toString(),
+      hasChildren: Boolean? = null,
+      createdTime: String? = null,
+      lastEditedTime: String? = null,
   ) : this(
       ObjectType.Block,
       BlockType.HeadingThree,
@@ -178,20 +179,20 @@ open class HeadingThreeBlock(
 open class BulletedListItemBlock(
     @SerializedName("object") override val objectType: ObjectType = ObjectType.Block,
     override val type: BlockType = BlockType.BulletedListItem,
-    override val id: String,
-    override val createdTime: String,
-    override val lastEditedTime: String,
-    override val hasChildren: Boolean,
+    override var id: String? = UUID.randomUUID().toString(),
+    override var createdTime: String? = null,
+    override var lastEditedTime: String? = null,
+    override var hasChildren: Boolean? = null,
     val bulletedListItem: Element,
 ) : Block {
 
   // for other JVM languages
   constructor(
-      id: String,
       bulletedListItem: Element,
-      hasChildren: Boolean,
-      createdTime: String,
-      lastEditedTime: String,
+      id: String? = UUID.randomUUID().toString(),
+      hasChildren: Boolean? = null,
+      createdTime: String? = null,
+      lastEditedTime: String? = null,
   ) : this(
       ObjectType.Block,
       BlockType.BulletedListItem,
@@ -207,20 +208,20 @@ open class BulletedListItemBlock(
 open class NumberedListItemBlock(
     @SerializedName("object") override val objectType: ObjectType = ObjectType.Block,
     override val type: BlockType = BlockType.NumberedListItem,
-    override val id: String,
-    override val createdTime: String,
-    override val lastEditedTime: String,
-    override val hasChildren: Boolean,
+    override var id: String? = UUID.randomUUID().toString(),
+    override var createdTime: String? = null,
+    override var lastEditedTime: String? = null,
+    override var hasChildren: Boolean? = null,
     val numberedListItem: Element,
 ) : Block {
 
   // for other JVM languages
   constructor(
-      id: String,
       numberedListItem: Element,
-      hasChildren: Boolean,
-      createdTime: String,
-      lastEditedTime: String,
+      id: String? = UUID.randomUUID().toString(),
+      hasChildren: Boolean? = null,
+      createdTime: String? = null,
+      lastEditedTime: String? = null,
   ) : this(
       ObjectType.Block,
       BlockType.NumberedListItem,
@@ -236,42 +237,46 @@ open class NumberedListItemBlock(
 open class ToDoBlock(
     @SerializedName("object") override val objectType: ObjectType = ObjectType.Block,
     override val type: BlockType = BlockType.ToDo,
-    override val id: String,
-    override val createdTime: String,
-    override val lastEditedTime: String,
-    override val hasChildren: Boolean,
+    override var id: String? = UUID.randomUUID().toString(),
+    override var createdTime: String? = null,
+    override var lastEditedTime: String? = null,
+    override var hasChildren: Boolean? = null,
     val toDo: Element,
 ) : Block {
 
   // for other JVM languages
   constructor(
-      id: String,
       toDo: Element,
-      hasChildren: Boolean,
-      createdTime: String,
-      lastEditedTime: String,
+      id: String? = UUID.randomUUID().toString(),
+      hasChildren: Boolean? = null,
+      createdTime: String? = null,
+      lastEditedTime: String? = null,
   ) : this(ObjectType.Block, BlockType.ToDo, id, createdTime, lastEditedTime, hasChildren, toDo)
 
-  open class Element(var checked: Boolean, var children: List<Block>? = null)
+  open class Element(
+      var checked: Boolean = false,
+      var text: List<PageProperty.RichText>? = null,
+      var children: List<Block>? = null
+  )
 }
 
 open class ToggleBlock(
     @SerializedName("object") override val objectType: ObjectType = ObjectType.Block,
     override val type: BlockType = BlockType.Toggle,
-    override val id: String,
-    override val createdTime: String,
-    override val lastEditedTime: String,
-    override val hasChildren: Boolean,
+    override var id: String? = UUID.randomUUID().toString(),
+    override var createdTime: String? = null,
+    override var lastEditedTime: String? = null,
+    override var hasChildren: Boolean? = null,
     val toggle: Element,
 ) : Block {
 
   // for other JVM languages
   constructor(
-      id: String,
       toggle: Element,
-      hasChildren: Boolean,
-      createdTime: String,
-      lastEditedTime: String,
+      id: String? = UUID.randomUUID().toString(),
+      hasChildren: Boolean? = null,
+      createdTime: String? = null,
+      lastEditedTime: String? = null,
   ) : this(ObjectType.Block, BlockType.Toggle, id, createdTime, lastEditedTime, hasChildren, toggle)
 
   open class Element(var text: List<PageProperty.RichText>, var children: List<Block>? = null)
@@ -280,20 +285,20 @@ open class ToggleBlock(
 open class ChildPageBlock(
     @SerializedName("object") override val objectType: ObjectType = ObjectType.Block,
     override val type: BlockType = BlockType.ChildPage,
-    override val id: String,
-    override val createdTime: String,
-    override val lastEditedTime: String,
-    override val hasChildren: Boolean,
+    override var id: String? = UUID.randomUUID().toString(),
+    override var createdTime: String? = null,
+    override var lastEditedTime: String? = null,
+    override var hasChildren: Boolean? = null,
     val childPage: Element,
 ) : Block {
 
   // for other JVM languages
   constructor(
-      id: String,
       childPage: Element,
-      hasChildren: Boolean,
-      createdTime: String,
-      lastEditedTime: String,
+      id: String? = UUID.randomUUID().toString(),
+      hasChildren: Boolean? = null,
+      createdTime: String? = null,
+      lastEditedTime: String? = null,
   ) : this(
       ObjectType.Block,
       BlockType.ChildPage,
@@ -309,16 +314,17 @@ open class ChildPageBlock(
 open class UnsupportedBlock(
     @SerializedName("object") override val objectType: ObjectType = ObjectType.Block,
     override val type: BlockType = BlockType.Unsupported,
-    override val id: String,
-    override val createdTime: String,
-    override val lastEditedTime: String,
-    override val hasChildren: Boolean,
+    override var id: String? = UUID.randomUUID().toString(),
+    override var createdTime: String? = null,
+    override var lastEditedTime: String? = null,
+    override var hasChildren: Boolean? = null,
 ) : Block {
+
   // for other JVM languages
   constructor(
-      id: String,
-      hasChildren: Boolean,
-      createdTime: String,
-      lastEditedTime: String,
+      id: String? = UUID.randomUUID().toString(),
+      hasChildren: Boolean? = null,
+      createdTime: String? = null,
+      lastEditedTime: String? = null,
   ) : this(ObjectType.Block, BlockType.Unsupported, id, createdTime, lastEditedTime, hasChildren)
 }

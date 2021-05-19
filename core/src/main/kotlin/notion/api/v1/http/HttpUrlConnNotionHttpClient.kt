@@ -9,7 +9,7 @@ import notion.api.v1.logging.NotionLogger
 
 // TODO: proxy support
 class HttpUrlConnNotionHttpClient(
-    private val connectTimeoutMillis: Int = 1_000,
+    private val connectTimeoutMillis: Int = 3_000,
     private val readTimeoutMillis: Int = 30_000,
 ) : NotionHttpClient {
 

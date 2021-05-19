@@ -14,11 +14,11 @@ public class BlocksTest {
     @Test
     public void paragraph() {
         ParagraphBlock block = new ParagraphBlock(
-                "id",
                 new ParagraphBlock.Element(
                         Arrays.asList(new PageProperty.RichText()),
                         Collections.emptyList()
                 ),
+                "id",
                 false,
                 "2021-05-01",
                 "2021-05-02"

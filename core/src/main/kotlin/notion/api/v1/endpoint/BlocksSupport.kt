@@ -48,11 +48,15 @@ interface BlocksSupport : EndpointsSupport {
   // appendBlockChildren
   // -----------------------------------------------
 
+  fun appendBlockChildren(blockId: String, children: List<Block>): Block {
+    return appendBlockChildren(AppendBlockChildrenRequest(blockId, children))
+  }
+
   fun appendBlockChildren(request: AppendBlockChildrenRequest): Block {
     val httpResponse =
         httpClient.patchTextBody(
             logger = logger,
-            url = "$baseUrl/pages/${request.blockId}/children",
+            url = "$baseUrl/blocks/${request.blockId}/children",
             body = jsonSerializer.toJsonString(request),
             headers = buildRequestHeaders(contentTypeJson()))
     if (httpResponse.status == 200) {

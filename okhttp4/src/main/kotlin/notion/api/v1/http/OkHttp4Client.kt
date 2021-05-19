@@ -15,7 +15,7 @@ class OkHttp4Client : NotionHttpClient {
   companion object {
     private val MEDIA_TYPE_APPLICATION_JSON = "application/json; charset=utf-8".toMediaType()
 
-    private const val DEFAULT_CONNECT_TIMEOUT_MILLIS = 1_000
+    private const val DEFAULT_CONNECT_TIMEOUT_MILLIS = 3_000
     private const val DEFAULT_READ_TIMEOUT_MILLIS = 30_000
     private const val DEFAULT_WRITE_TIMEOUT_MILLIS = 30_000
 
