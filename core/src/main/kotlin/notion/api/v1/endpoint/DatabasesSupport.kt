@@ -27,7 +27,7 @@ interface DatabasesSupport : EndpointsSupport {
     return listDatabases(ListDatabasesRequest())
   }
 
-  fun listDatabases(pageSize: Int, startCursor: String): Databases {
+  fun listDatabases(pageSize: Int? = null, startCursor: String? = null): Databases {
     return listDatabases(ListDatabasesRequest(startCursor = startCursor, pageSize = pageSize))
   }
 

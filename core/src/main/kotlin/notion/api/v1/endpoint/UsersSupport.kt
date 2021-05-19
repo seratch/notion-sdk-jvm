@@ -47,7 +47,7 @@ interface UsersSupport : EndpointsSupport {
     return listUsers(ListUsersRequest(null, null))
   }
 
-  fun listUsers(pageSize: Int, startCursor: String?): Users {
+  fun listUsers(pageSize: Int? = null, startCursor: String? = null): Users {
     return listUsers(ListUsersRequest(startCursor = startCursor, pageSize = pageSize))
   }
 

@@ -21,6 +21,23 @@ interface SearchSupport : EndpointsSupport {
     return search(SearchRequest(query = query))
   }
 
+  fun search(
+      query: String,
+      filter: SearchRequest.SearchFilter? = null,
+      sort: SearchRequest.SearchSort? = null,
+      startCursor: String? = null,
+      pageSize: Int? = null,
+  ): SearchResults {
+    return search(
+        SearchRequest(
+            query = query,
+            filter = filter,
+            sort = sort,
+            startCursor = startCursor,
+            pageSize = pageSize,
+        ))
+  }
+
   fun search(request: SearchRequest): SearchResults {
     val httpResponse =
         httpClient.postTextBody(
