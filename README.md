@@ -198,7 +198,7 @@ For HTTP communications and logging, you can easily switch to other implementati
 
 As some may know, `java.net.HttpURLConnection` does not support PATCH request method :cry:. Thus, the default `httpClient` has to make an "illegal reflective access" to overcome the limitation for perfoming PATCH method requests (see [this class](https://github.com/seratch/notion-sdk-jvm/blob/main/core/src/main/kotlin/notion/api/v1/http/HttpUrlConnPatchMethodWorkaround.kt) for details). 
 
-If you use PATH method API calls such as [`PATCH https://api.notion.com/v1/pages/{page_id}`](https://developers.notion.com/reference/patch-page), we recommend other `httpClient` implementations listed below. If you don't use PATCH method APIs at all and don't want to add any extra dependencies, the default `httpClient` works for you with any issues.
+If you use PATH method API calls such as [`PATCH https://api.notion.com/v1/pages/{page_id}`](https://developers.notion.com/reference/patch-page), we recommend other `httpClient` implementations listed below. If you don't use PATCH method APIs at all and don't want to add any extra dependencies, the default `httpClient` works fine for you.
 
 * [`java.net.HttpClient`](https://docs.oracle.com/en/java/javase/11/docs/api/java.net.http/java/net/http/HttpClient.html) in JDK 11+
 * `okhttp3.OkHttpClient` in [OkHttp](https://square.github.io/okhttp/) 4.x
@@ -242,7 +242,7 @@ client.httpClient = OkHttp3Client()
 
 #### Pluggable Logging
 
-You can change the `logger` property of `NotionClient` instances. Currently, this libarary supports its own stdout logger (default), `java.util.logging`, and slf4j-api based ones. Here are the steps to use an slf4j-api logger. Add the following optional module along with your favorite implementation (e.g., logback-classic, slf4j-simple).
+You can change the `logger` property of a `NotionClient` instances Currently, this libarary supports its own stdout logger (default), `java.util.logging`, and slf4j-api based ones. Here are the steps to switch to an slf4j-api logger. Add the following optional module along with your favorite implementation (e.g., logback-classic, slf4j-simple).
 
 ```gradle
 implementation("com.github.seratch:notion-sdk-jvm-slf4j:${notionSdkVersion}") // slf4j-api 1.7
@@ -266,9 +266,9 @@ val client = NotionClient(
 )
 ```
 
-#### Why is not JSON serialization pluggable?
+#### Why isn't JSON serialization pluggable?
 
-As of today, we don't support other JSON libraries yet. There are two reasons:
+We don't support other JSON libraries yet. There are two reasons:
 
 ##### Necessity of polymorphic serializers for list objects
 
