@@ -19,6 +19,14 @@ interface BlocksSupport : EndpointsSupport {
   // retrieveBlockChildren
   // -----------------------------------------------
 
+  fun retrieveBlockChildren(
+      blockId: String,
+      startCursor: String? = null,
+      pageSize: Int? = null,
+  ): Blocks {
+    return retrieveBlockChildren(RetrieveBlockChildrenRequest(blockId, startCursor, pageSize))
+  }
+
   fun retrieveBlockChildren(request: RetrieveBlockChildrenRequest): Blocks {
     val httpResponse =
         httpClient.get(
