@@ -5,7 +5,7 @@ import notion.api.v1.model.databases.query.sort.QuerySort
 import notion.api.v1.request.common.Pagination
 
 data class QueryDatabaseRequest(
-    val databaseId: String,
+    @Transient val databaseId: String,
     var filter: QueryTopLevelFilter? = null,
     var sorts: List<QuerySort>? = null,
     override var startCursor: String? = null,

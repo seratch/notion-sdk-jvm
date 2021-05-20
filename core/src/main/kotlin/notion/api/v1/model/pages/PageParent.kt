@@ -1,7 +1,8 @@
 package notion.api.v1.model.pages
 
 data class PageParent(
-    val type: PageParentType,
+    // Notion stopped using type (as of May 19, 2021)
+    val type: PageParentType? = null,
     var databaseId: String? = null, // type: database
     var pageId: String? = null, // type: page
     var workspace: Boolean? = null // type: workspace
@@ -13,17 +14,20 @@ data class PageParent(
   companion object {
     @JvmStatic
     fun database(databaseId: String): PageParent {
-      return PageParent(type = PageParentType.Database, databaseId = databaseId)
+      // having the `type` property does not work as of May 19, 2021
+      return PageParent(type = null, databaseId = databaseId)
     }
 
     @JvmStatic
     fun page(pageId: String): PageParent {
-      return PageParent(type = PageParentType.Page, pageId = pageId)
+      // having the `type` property does not work as of May 19, 2021
+      return PageParent(type = null, pageId = pageId)
     }
 
     @JvmStatic
     fun workspace(): PageParent {
-      return PageParent(type = PageParentType.Workspace, workspace = true)
+      // having the `type` property does not work as of May 19, 2021
+      return PageParent(type = null, workspace = true)
     }
   }
 }

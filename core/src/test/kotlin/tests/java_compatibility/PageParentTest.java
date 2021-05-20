@@ -9,8 +9,14 @@ import static org.junit.Assert.assertNotNull;
 public class PageParentTest {
 
     @Test
+    public void creation_noArgConstructor() {
+        PageParent parent = new PageParent();
+        assertNotNull(parent);
+    }
+
+    @Test
     public void creation() {
-        PageParent parent = new PageParent(PageParentType.Database);
+        PageParent parent = new PageParent(PageParentType.DatabaseId);
         parent.setDatabaseId("database-id");
         assertNotNull(parent);
     }

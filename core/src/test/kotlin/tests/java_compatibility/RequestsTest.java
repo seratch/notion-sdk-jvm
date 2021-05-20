@@ -32,7 +32,7 @@ public class RequestsTest {
 
         assertNotNull(new RetrieveDatabaseRequest("database-id"));
 
-        assertNotNull(new CreatePageRequest(new PageParent(PageParentType.Database), Collections.emptyMap()));
+        assertNotNull(new CreatePageRequest(new PageParent(PageParentType.DatabaseId), Collections.emptyMap()));
         assertNotNull(new CreatePageRequest(PageParent.database("database-id"), Collections.emptyMap()));
         assertNotNull(new CreatePageRequest(PageParent.page("page-id"), Collections.emptyMap()));
 
