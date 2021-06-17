@@ -52,11 +52,7 @@ As this library is in Kotlin, using in the same language is the smoothest :) Let
 ```kotlin
 import notion.api.v1.NotionClient
 import notion.api.v1.model.pages.PageParent
-import notion.api.v1.model.pages.PageProperty
-import notion.api.v1.model.pages.PageProperty.Date
-import notion.api.v1.model.pages.PageProperty.RichText
-
-typealias prop = PageProperty
+import notion.api.v1.model.pages.PageProperty as prop
 
 fun main() {
     val client = NotionClient(token = System.getenv("NOTION_TOKEN"))
@@ -82,10 +78,10 @@ fun main() {
             // Set values to the page's properties
             // (these must be pre-defined before this API call)
             properties = mapOf(
-                "Title" to prop(title = listOf(RichText(text = RichText.Text(content = "Fix a bug")))),
+                "Title" to prop(title = listOf(prop.RichText(text = prop.RichText.Text(content = "Fix a bug")))),
                 "Severity" to prop(select = severityOptions?.find { it.name == "High" }),
                 "Tags" to prop(multiSelect = tagOptions),
-                "Due" to prop(date = Date(start = "2021-05-13", end = "2021-12-31")),
+                "Due" to prop(date = prop.Date(start = "2021-05-13", end = "2021-12-31")),
                 "Velocity Points" to prop(number = 3),
                 "Assignee" to prop(people = listOf(assignee)),
                 "Done" to prop(checkbox = true),
