@@ -1,10 +1,12 @@
 package integration_tests
 
+import javax.swing.text.html.Option
 import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
 import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
 import notion.api.v1.NotionClient
+import notion.api.v1.model.databases.DatabaseProperty
 import notion.api.v1.model.pages.Page
 import notion.api.v1.model.pages.PageParent
 import notion.api.v1.model.pages.PageProperty
@@ -24,8 +26,16 @@ class SimpleTest {
 
       // All the options for "Severity" property (select type)
       val severityOptions = database.properties?.get("Severity")?.select?.options
+
       // All the options for "Tags" property (multi_select type)
-      val tagOptions = database.properties?.get("Tags")?.multiSelect?.options
+      // https://developers.notion.com/changelog/select-values-can-now-be-dynamically-created-via-create-and-update-page-endpoints-other-updates-since-public-beta-launch
+      // val tagOptions = database.properties?.get("Tags")?.multiSelect?.options
+      val tagOptions =
+          listOf(
+              DatabaseProperty.MultiSelect.Option(name = "Tag1"),
+              DatabaseProperty.MultiSelect.Option(name = "Tag2"),
+              DatabaseProperty.MultiSelect.Option(name = "Tag3"),
+          )
       // The user object for "Assignee" property (people type)
       val assignee = client.listUsers().results[0] // just picking the first user up
 
