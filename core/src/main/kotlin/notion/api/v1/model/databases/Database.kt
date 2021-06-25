@@ -10,6 +10,7 @@ data class Database(
     val id: String,
     val createdTime: String,
     val lastEditedTime: String,
+    val parent: DatabaseParent? = null,
     val title: List<DatabaseProperty.RichText>,
     val properties: Map<String, DatabaseProperty>
 ) : WithObjectType
