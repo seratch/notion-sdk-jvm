@@ -24,7 +24,7 @@ You can start using this library just by adding `notion-sdk-jvm-core` dependency
 For Gradle users:
 
 ```gradle
-ext.notionSdkVersion = "0.1.9"
+ext.notionSdkVersion = "0.1.10"
 dependencies {
   // This dependency is at least required
   implementation("com.github.seratch:notion-sdk-jvm-core:${notionSdkVersion}")
@@ -35,7 +35,7 @@ For Maven users:
 
 ```xml
 <properties>
-  <notion-sdk.version>0.1.9</notion-sdk.version>
+  <notion-sdk.version>0.1.10</notion-sdk.version>
 </properties>
 
 <dependencies>
@@ -128,7 +128,7 @@ public class Readme {
 Although many classes are still Java/Kotlin objects, you can seamlessly use this SDK in [Scala 3](https://docs.scala-lang.org/scala3/) too! Here is a simple `build.sbt` example:
 
 ```sbt
-val notionSdkVersion = "0.1.9"
+val notionSdkVersion = "0.1.10"
 
 lazy val root = project
   .in(file("."))
