@@ -199,6 +199,7 @@ As some may know, `java.net.HttpURLConnection` does not support PATCH request me
 If you use PATH method API calls such as [`PATCH https://api.notion.com/v1/pages/{page_id}`](https://developers.notion.com/reference/patch-page), we recommend other `httpClient` implementations listed below. If you don't use PATCH method APIs at all and don't want to add any extra dependencies, the default `httpClient` works fine for you.
 
 * [`java.net.HttpClient`](https://docs.oracle.com/en/java/javase/11/docs/api/java.net.http/java/net/http/HttpClient.html) in JDK 11+
+* `okhttp3.OkHttpClient` in [OkHttp](https://square.github.io/okhttp/) 5.x (still alpha)
 * `okhttp3.OkHttpClient` in [OkHttp](https://square.github.io/okhttp/) 4.x
 * `okhttp3.OkHttpClient` in [OkHttp](https://square.github.io/okhttp/) 3.x
 
@@ -206,6 +207,10 @@ If you use PATH method API calls such as [`PATCH https://api.notion.com/v1/pages
 // Add this if you use java.net.http.HttpClient in JDK 11+
 // Please note that this module does not work on Android runtime
 implementation("com.github.seratch:notion-sdk-jvm-httpclient:${notionSdkVersion}")
+
+// Add this if you use OkHttp 5.x (still alpha)
+// If you have other dependencies relying on okhttp 5.x (e.g., Retrofit)
+implementation("com.github.seratch:notion-sdk-jvm-okhttp5:${notionSdkVersion}")
 
 // Add this if you use OkHttp 4.x
 // Although the package name is `okhttp3`, the latest version is 4.x
