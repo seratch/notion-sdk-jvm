@@ -10,6 +10,7 @@ data class Page(
     val id: String,
     val createdTime: String,
     val lastEditedTime: String,
+    val url: String,
     val parent: PageParent? = null,
     val archived: Boolean? = false,
     val properties: Map<String, PageProperty>

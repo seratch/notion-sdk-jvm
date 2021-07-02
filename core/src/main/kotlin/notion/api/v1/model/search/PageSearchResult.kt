@@ -10,6 +10,7 @@ data class PageSearchResult(
     override val id: String,
     override val createdTime: String,
     override val lastEditedTime: String,
+    val url: String,
     val parent: PageParent? = null,
     val archived: Boolean? = false,
     val properties: Map<String, PageProperty>,

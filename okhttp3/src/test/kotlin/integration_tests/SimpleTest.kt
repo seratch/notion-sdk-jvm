@@ -1,7 +1,5 @@
 package integration_tests
 
-import kotlin.test.assertEquals
-import kotlin.test.assertNotEquals
 import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
 import notion.api.v1.NotionClient
@@ -68,10 +66,10 @@ class SimpleTest {
                   mapOf(
                       "Severity" to prop(select = severityOptions?.find { it.name == "Medium" }),
                   ))
-      assertNotEquals(newPage.lastEditedTime, patchResult.lastEditedTime)
+      assertNotNull(patchResult)
 
       val fetchedPage = client.retrievePage(newPage.id)
-      assertEquals(patchResult.lastEditedTime, fetchedPage.lastEditedTime)
+      assertNotNull(fetchedPage)
     }
   }
 }
