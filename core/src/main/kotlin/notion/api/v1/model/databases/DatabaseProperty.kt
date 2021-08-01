@@ -1,12 +1,13 @@
 package notion.api.v1.model.databases
 
+import java.util.*
 import notion.api.v1.model.common.*
 import notion.api.v1.model.pages.Page
 import notion.api.v1.model.users.User
 
 open class DatabaseProperty(
     val type: PropertyType,
-    val id: String,
+    val id: String = UUID.randomUUID().toString(),
     val name: String? = null,
     var title: RichText? = null,
     var richText: RichText? = null,
@@ -30,7 +31,7 @@ open class DatabaseProperty(
 ) {
   constructor(
       type: PropertyType,
-      id: String,
+      id: String = UUID.randomUUID().toString(),
   ) : this(
       type,
       id,

@@ -19,6 +19,7 @@ import notion.api.v1.model.search.SearchResults
 import notion.api.v1.model.users.User
 import notion.api.v1.model.users.Users
 import notion.api.v1.request.blocks.AppendBlockChildrenRequest
+import notion.api.v1.request.databases.CreateDatabaseRequest
 import notion.api.v1.request.databases.QueryDatabaseRequest
 import notion.api.v1.request.pages.CreatePageRequest
 import notion.api.v1.request.pages.UpdatePagePropertiesRequest
@@ -57,6 +58,7 @@ class GsonSerializer : NotionJsonSerializer {
   override fun toUser(body: String): User = gson.fromJson(body, User::class.java)
   override fun toUsers(body: String): Users = gson.fromJson(body, Users::class.java)
 
+  override fun toJsonString(request: CreateDatabaseRequest): String = gson.toJson(request)
   override fun toJsonString(request: AppendBlockChildrenRequest): String = gson.toJson(request)
   override fun toJsonString(request: CreatePageRequest): String = gson.toJson(request)
   override fun toJsonString(request: SearchRequest): String = gson.toJson(request)

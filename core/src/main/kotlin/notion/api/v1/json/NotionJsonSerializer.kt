@@ -11,6 +11,7 @@ import notion.api.v1.model.search.SearchResults
 import notion.api.v1.model.users.User
 import notion.api.v1.model.users.Users
 import notion.api.v1.request.blocks.AppendBlockChildrenRequest
+import notion.api.v1.request.databases.CreateDatabaseRequest
 import notion.api.v1.request.databases.QueryDatabaseRequest
 import notion.api.v1.request.pages.CreatePageRequest
 import notion.api.v1.request.pages.UpdatePagePropertiesRequest
@@ -29,6 +30,7 @@ interface NotionJsonSerializer {
   fun toUser(body: String): User
   fun toUsers(body: String): Users
 
+  fun toJsonString(request: CreateDatabaseRequest): String
   fun toJsonString(request: AppendBlockChildrenRequest): String
   fun toJsonString(request: CreatePageRequest): String
   fun toJsonString(request: SearchRequest): String
