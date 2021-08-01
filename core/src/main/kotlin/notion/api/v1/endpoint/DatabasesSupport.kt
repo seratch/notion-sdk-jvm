@@ -4,11 +4,10 @@ import notion.api.v1.exception.NotionAPIError
 import notion.api.v1.http.NotionHttpClient
 import notion.api.v1.json.NotionJsonSerializer
 import notion.api.v1.logging.NotionLogger
-import notion.api.v1.model.databases.Database
-import notion.api.v1.model.databases.Databases
-import notion.api.v1.model.databases.QueryResults
+import notion.api.v1.model.databases.*
 import notion.api.v1.model.databases.query.filter.QueryTopLevelFilter
 import notion.api.v1.model.databases.query.sort.QuerySort
+import notion.api.v1.request.databases.CreateDatabaseRequest
 import notion.api.v1.request.databases.ListDatabasesRequest
 import notion.api.v1.request.databases.QueryDatabaseRequest
 import notion.api.v1.request.databases.RetrieveDatabaseRequest
@@ -18,6 +17,36 @@ interface DatabasesSupport : EndpointsSupport {
   val jsonSerializer: NotionJsonSerializer
   val logger: NotionLogger
   val baseUrl: String
+
+  // -----------------------------------------------
+  // createDatabase
+  // -----------------------------------------------
+
+  fun createDatabase(
+      parent: DatabaseParent,
+      title: List<DatabaseProperty.RichText>,
+      properties: Map<String, DatabasePropertySchema>,
+  ): Database {
+    return createDatabase(
+        CreateDatabaseRequest(parent = parent, title = title, properties = properties))
+  }
+
+  fun createDatabase(database: CreateDatabaseRequest): Database {
+    val httpResponse =
+        httpClient.postTextBody(
+            logger = logger,
+            url = "$baseUrl/databases",
+            body = jsonSerializer.toJsonString(database),
+            headers = buildRequestHeaders(contentTypeJson()))
+    if (httpResponse.status == 200) {
+      return jsonSerializer.toDatabase(httpResponse.body)
+    } else {
+      throw NotionAPIError(
+          error = jsonSerializer.toError(httpResponse.body),
+          httpResponse = httpResponse,
+      )
+    }
+  }
 
   // -----------------------------------------------
   // listDatabases
