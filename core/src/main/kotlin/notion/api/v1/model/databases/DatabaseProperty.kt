@@ -7,6 +7,7 @@ import notion.api.v1.model.users.User
 open class DatabaseProperty(
     val type: PropertyType,
     val id: String,
+    val name: String? = null,
     var title: RichText? = null,
     var richText: RichText? = null,
     var number: Number? = null,
@@ -29,10 +30,11 @@ open class DatabaseProperty(
 ) {
   constructor(
       type: PropertyType,
-      id: String
+      id: String,
   ) : this(
       type,
       id,
+      null,
       null,
       null,
       null,
