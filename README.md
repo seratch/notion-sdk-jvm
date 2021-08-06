@@ -89,6 +89,7 @@ fun main() {
                 "Contact" to prop(email = "foo@example.com"),
             )
         )
+        val severityId = newPage.properties["Severity"]!!.id
 
         // Update properties in the page
         val updatedPage =
@@ -96,7 +97,7 @@ fun main() {
                 pageId = newPage.id,
                 // Update only "Severity" property
                 properties = mapOf(
-                    "Severity" to prop(select = severityOptions?.find { it.name == "Medium" }),
+                    serverityId to prop(select = severityOptions?.find { it.name == "Medium" }),
                 )
             )
 
