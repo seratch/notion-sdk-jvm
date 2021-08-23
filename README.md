@@ -78,7 +78,7 @@ fun main() {
             // Set values to the page's properties
             // (these must be pre-defined before this API call)
             properties = mapOf(
-                "Title" to prop(title = listOf(prop.RichText(text = prop.RichText.Text(content = "Fix a bug")))),
+                "title" to prop(title = listOf(prop.RichText(text = prop.RichText.Text(content = "Fix a bug")))),
                 "Severity" to prop(select = severityOptions?.find { it.name == "High" }),
                 "Tags" to prop(multiSelect = tagOptions),
                 "Due" to prop(date = prop.Date(start = "2021-05-13", end = "2021-12-31")),
