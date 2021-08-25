@@ -4,6 +4,8 @@ import notion.api.v1.exception.NotionAPIError
 import notion.api.v1.http.NotionHttpClient
 import notion.api.v1.json.NotionJsonSerializer
 import notion.api.v1.logging.NotionLogger
+import notion.api.v1.model.common.Cover
+import notion.api.v1.model.common.Icon
 import notion.api.v1.model.databases.*
 import notion.api.v1.model.databases.query.filter.QueryTopLevelFilter
 import notion.api.v1.model.databases.query.sort.QuerySort
@@ -26,9 +28,17 @@ interface DatabasesSupport : EndpointsSupport {
       parent: DatabaseParent,
       title: List<DatabaseProperty.RichText>,
       properties: Map<String, DatabasePropertySchema>,
+      icon: Icon? = null,
+      cover: Cover? = null,
   ): Database {
     return createDatabase(
-        CreateDatabaseRequest(parent = parent, title = title, properties = properties))
+        CreateDatabaseRequest(
+            parent = parent,
+            title = title,
+            properties = properties,
+            icon = icon,
+            cover = cover,
+        ))
   }
 
   fun createDatabase(database: CreateDatabaseRequest): Database {

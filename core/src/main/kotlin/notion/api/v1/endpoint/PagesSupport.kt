@@ -5,6 +5,8 @@ import notion.api.v1.http.NotionHttpClient
 import notion.api.v1.json.NotionJsonSerializer
 import notion.api.v1.logging.NotionLogger
 import notion.api.v1.model.blocks.Block
+import notion.api.v1.model.common.Cover
+import notion.api.v1.model.common.Icon
 import notion.api.v1.model.pages.Page
 import notion.api.v1.model.pages.PageParent
 import notion.api.v1.model.pages.PageProperty
@@ -26,12 +28,16 @@ interface PagesSupport : EndpointsSupport {
       parent: PageParent,
       properties: Map<String, PageProperty>,
       children: List<Block>? = null,
+      icon: Icon? = null,
+      cover: Cover? = null,
   ): Page {
     return createPage(
         CreatePageRequest(
             parent = parent,
             properties = properties,
             children = children,
+            icon = icon,
+            cover = cover,
         ))
   }
 
@@ -80,11 +86,18 @@ interface PagesSupport : EndpointsSupport {
   // updatePageProperties
   // -----------------------------------------------
 
-  fun updatePageProperties(pageId: String, properties: Map<String, PageProperty>): Page {
+  fun updatePageProperties(
+      pageId: String,
+      properties: Map<String, PageProperty>,
+      icon: Icon? = null,
+      cover: Cover? = null,
+  ): Page {
     return updatePageProperties(
         UpdatePagePropertiesRequest(
             pageId = pageId,
             properties = properties,
+            icon = icon,
+            cover = cover,
         ))
   }
 

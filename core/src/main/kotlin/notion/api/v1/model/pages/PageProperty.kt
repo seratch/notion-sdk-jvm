@@ -63,7 +63,12 @@ data class PageProperty(
 
   data class PageReference(val id: String)
 
-  data class File(var name: String? = null)
+  data class File(
+      var name: String? = null,
+      val type: FileType? = null,
+      val file: FileDetails? = null,
+      val external: ExternalFileDetails? = null,
+  )
 
   data class Date(var start: String? = null, var end: String? = null)
 

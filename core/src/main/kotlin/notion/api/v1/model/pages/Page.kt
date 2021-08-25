@@ -1,6 +1,8 @@
 package notion.api.v1.model.pages
 
 import com.google.gson.annotations.SerializedName
+import notion.api.v1.model.common.Cover
+import notion.api.v1.model.common.Icon
 import notion.api.v1.model.common.ObjectType
 import notion.api.v1.model.common.WithObjectType
 
@@ -8,6 +10,8 @@ import notion.api.v1.model.common.WithObjectType
 data class Page(
     @SerializedName("object") override val objectType: ObjectType = ObjectType.Page,
     val id: String,
+    val icon: Icon,
+    val cover: Cover,
     val createdTime: String,
     val lastEditedTime: String,
     val url: String,

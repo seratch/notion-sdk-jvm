@@ -4,11 +4,11 @@ import com.google.gson.FieldNamingPolicy
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import notion.api.Metadata.isLibraryMaintainerMode
-import notion.api.v1.json.gson.BlockParser
-import notion.api.v1.json.gson.GsonUnknownFieldDetection
-import notion.api.v1.json.gson.SearchResultParser
+import notion.api.v1.json.gson.*
 import notion.api.v1.model.blocks.Block
 import notion.api.v1.model.blocks.Blocks
+import notion.api.v1.model.common.Cover
+import notion.api.v1.model.common.Icon
 import notion.api.v1.model.databases.Database
 import notion.api.v1.model.databases.Databases
 import notion.api.v1.model.databases.QueryResults
@@ -34,6 +34,8 @@ class GsonSerializer : NotionJsonSerializer {
             .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
             .registerTypeAdapter(SearchResult::class.java, SearchResultParser())
             .registerTypeAdapter(Block::class.java, BlockParser())
+            .registerTypeAdapter(Icon::class.java, IconParser())
+            .registerTypeAdapter(Cover::class.java, CoverParser())
 
     gson =
         if (unknownPropertyDetection) {
