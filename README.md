@@ -97,7 +97,7 @@ fun main() {
                 pageId = newPage.id,
                 // Update only "Severity" property
                 properties = mapOf(
-                    serverityId to prop(select = severityOptions?.find { it.name == "Medium" }),
+                    severityId to prop(select = severityOptions?.find { it.name == "Medium" }),
                 )
             )
 
