@@ -178,11 +178,15 @@ case class ScalaNotionClient(
 
   def updatePageProperties(
       pageId: String,
-      properties: Map[String, PageProperty]
+      properties: Map[String, PageProperty],
+      icon: Icon = null,
+      cover: Cover = null
   ): Page = {
     val request = new UpdatePagePropertiesRequest(
       pageId,
-      properties.asJava
+      properties.asJava,
+      icon,
+      cover
     )
     val httpResponse = httpClient.patchTextBody(
       logger,
