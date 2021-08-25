@@ -19,4 +19,10 @@ data class CreatePageRequest(
       parent: PageParent,
       properties: Map<String, PageProperty>
   ) : this(parent, properties, null, null, null)
+
+  constructor(
+      parent: PageParent,
+      properties: Map<String, PageProperty>,
+      children: List<Block>? = null,
+  ) : this(parent, properties, children, null, null)
 }
