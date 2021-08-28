@@ -4,8 +4,7 @@ import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
 import notion.api.v1.NotionClient
-import notion.api.v1.model.common.ObjectType
-import notion.api.v1.model.common.PropertyType
+import notion.api.v1.model.common.*
 import notion.api.v1.model.databases.DatabaseParent
 import notion.api.v1.model.databases.DatabaseProperty as prop
 import notion.api.v1.model.databases.RichTextPropertySchema
@@ -35,7 +34,13 @@ class DatabasesTest {
           client.createPage(
               // Use the "Test Database" as this page's parent
               parent = PageParent.database(databaseId = testDatabase.id),
-              properties = mapOf("Link" to PageProperty(url = "https://www.example.com")))
+              properties = mapOf("Link" to PageProperty(url = "https://www.example.com")),
+              icon = Emoji(emoji = "\uD83C\uDF89"),
+              cover =
+                  File.external(
+                      url =
+                          "https://www.notion.so/front-static/external/readme/images/api-hanging@2x.png"),
+          )
 
       val title = "Test database ${System.currentTimeMillis()}"
       val database =
@@ -46,7 +51,13 @@ class DatabasesTest {
                       prop.RichText(text = prop.RichText.Text(content = title), plainText = title)),
               properties =
                   mapOf(
-                      "Title" to TitlePropertySchema(), "Description" to RichTextPropertySchema()))
+                      "Title" to TitlePropertySchema(), "Description" to RichTextPropertySchema()),
+              icon = Emoji(emoji = "\uD83C\uDF89"),
+              cover =
+                  File.external(
+                      url =
+                          "https://www.notion.so/front-static/external/readme/images/api-hanging@2x.png"),
+          )
       assertNotNull(database)
     }
   }

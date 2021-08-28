@@ -6,6 +6,7 @@ import notion.api.v1.http.{NotionHttpClient, UserAgent}
 import notion.api.v1.json.NotionJsonSerializer
 import notion.api.v1.logging.NotionLogger
 import notion.api.v1.model.blocks.Block
+import notion.api.v1.model.common.{Cover, Icon}
 import notion.api.v1.model.databases.query.filter.QueryTopLevelFilter
 import notion.api.v1.model.databases.query.sort.QuerySort
 import notion.api.v1.model.databases.{Database, Databases, QueryResults}
@@ -47,6 +48,8 @@ case class ScalaNotionClient(
   // ---------------------------------------------------------------
   // Databases
   // ---------------------------------------------------------------
+
+  // TODO: Database creation
 
   def listDatabases(
       startCursor: String = "",
@@ -128,12 +131,16 @@ case class ScalaNotionClient(
   def createPage(
       parent: PageParent,
       properties: Map[String, PageProperty],
-      children: List[Block] = List.empty
+      children: List[Block] = List.empty,
+      icon: Icon = null,
+      cover: Cover = null
   ): Page = {
     val request = new CreatePageRequest(
       parent,
       properties.asJava,
-      if (children.isEmpty) null else children.asJava
+      if (children.isEmpty) null else children.asJava,
+      icon,
+      cover
     )
     val httpResponse = httpClient.postTextBody(
       logger,
@@ -171,11 +178,15 @@ case class ScalaNotionClient(
 
   def updatePageProperties(
       pageId: String,
-      properties: Map[String, PageProperty]
+      properties: Map[String, PageProperty],
+      icon: Icon = null,
+      cover: Cover = null
   ): Page = {
     val request = new UpdatePagePropertiesRequest(
       pageId,
-      properties.asJava
+      properties.asJava,
+      icon,
+      cover
     )
     val httpResponse = httpClient.patchTextBody(
       logger,
