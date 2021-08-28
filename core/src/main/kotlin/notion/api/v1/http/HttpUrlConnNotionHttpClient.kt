@@ -8,7 +8,9 @@ import notion.api.v1.http.HttpUrlConnPatchMethodWorkaround.setPatchRequestMethod
 import notion.api.v1.logging.NotionLogger
 
 // TODO: proxy support
-class HttpUrlConnNotionHttpClient(
+class HttpUrlConnNotionHttpClient
+@JvmOverloads
+constructor(
     private val connectTimeoutMillis: Int = 3_000,
     private val readTimeoutMillis: Int = 30_000,
 ) : NotionHttpClient {

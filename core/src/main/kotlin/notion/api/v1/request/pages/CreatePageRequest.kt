@@ -6,7 +6,9 @@ import notion.api.v1.model.common.Icon
 import notion.api.v1.model.pages.PageParent
 import notion.api.v1.model.pages.PageProperty
 
-data class CreatePageRequest @JvmOverloads constructor(
+data class CreatePageRequest
+@JvmOverloads
+constructor(
     val parent: PageParent,
     val properties: Map<String, PageProperty>,
     var children: List<Block>? = null,

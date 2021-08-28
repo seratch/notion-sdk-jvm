@@ -3,7 +3,9 @@ package notion.api.v1.model.databases.query.filter
 import notion.api.v1.model.common.PropertyType
 import notion.api.v1.model.databases.query.filter.condition.*
 
-open class PropertyFilter(
+open class PropertyFilter
+@JvmOverloads
+constructor(
     var property: PropertyType? = null,
     var title: TextFilter? = null,
     var richText: TextFilter? = null,

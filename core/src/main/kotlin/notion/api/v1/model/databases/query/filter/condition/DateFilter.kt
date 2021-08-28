@@ -1,6 +1,8 @@
 package notion.api.v1.model.databases.query.filter.condition
 
-open class DateFilter(
+open class DateFilter
+@JvmOverloads
+constructor(
     var equals: String? = null,
     var before: String? = null,
     var after: String? = null,

@@ -3,7 +3,7 @@ package notion.api.v1.logging
 import java.util.logging.Level
 import java.util.logging.Logger
 
-class JavaUtilLogger(val logger: Logger) : NotionLogger {
+class JavaUtilLogger @JvmOverloads constructor(val logger: Logger) : NotionLogger {
 
   constructor() : this(Logger.getLogger(JavaUtilLogger::class.java.canonicalName)) {
     if (this.logger.level == null) {

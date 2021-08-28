@@ -9,7 +9,9 @@ import notion.api.v1.json.NotionJsonSerializer
 import notion.api.v1.logging.NotionLogger
 import notion.api.v1.logging.StdoutLogger
 
-class NotionClient(
+class NotionClient
+@JvmOverloads
+constructor(
     override var token: String,
     override var httpClient: NotionHttpClient = defaultHttpClient,
     override var logger: NotionLogger = defaultLogger,
@@ -30,18 +32,6 @@ class NotionClient(
     @JvmStatic val defaultLogger: NotionLogger = StdoutLogger()
     @JvmStatic val defaultJsonSerializer: NotionJsonSerializer = GsonSerializer()
   }
-
-  constructor(token: String) : this(token = token, httpClient = defaultHttpClient)
-  constructor(
-      token: String,
-      httpClient: NotionHttpClient,
-      logger: NotionLogger
-  ) : this(
-      token = token,
-      httpClient = httpClient,
-      logger = logger,
-      jsonSerializer = defaultJsonSerializer,
-  )
 
   override fun close() {
     httpClient.close()

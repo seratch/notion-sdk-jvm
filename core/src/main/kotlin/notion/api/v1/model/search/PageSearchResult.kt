@@ -7,7 +7,9 @@ import notion.api.v1.model.common.ObjectType
 import notion.api.v1.model.pages.PageParent
 import notion.api.v1.model.pages.PageProperty
 
-data class PageSearchResult(
+data class PageSearchResult
+@JvmOverloads
+constructor(
     @SerializedName("object") override val objectType: ObjectType = ObjectType.Page,
     override val id: String,
     override val icon: Icon,

@@ -5,7 +5,9 @@ import notion.api.v1.model.common.*
 import notion.api.v1.model.pages.Page
 import notion.api.v1.model.users.User
 
-open class DatabaseProperty(
+open class DatabaseProperty
+@JvmOverloads
+constructor(
     val type: PropertyType,
     val id: String = UUID.randomUUID().toString(),
     val name: String? = null,
@@ -29,35 +31,10 @@ open class DatabaseProperty(
     val createdTime: CreatedTime? = null,
     val lastEditedTime: LastEditedTime? = null,
 ) {
-  constructor(
-      type: PropertyType,
-      id: String = UUID.randomUUID().toString(),
-  ) : this(
-      type,
-      id,
-      null,
-      null,
-      null,
-      null,
-      null,
-      null,
-      null,
-      null,
-      null,
-      null,
-      null,
-      null,
-      null,
-      null,
-      null,
-      null,
-      null,
-      null,
-      null,
-      null,
-  )
 
-  open class RichText(
+  open class RichText
+  @JvmOverloads
+  constructor(
       var type: RichTextType = RichTextType.Text,
       var text: Text? = null,
       var annotations: Annotations? = null,
@@ -66,11 +43,15 @@ open class DatabaseProperty(
       val mention: Mention? = null,
   ) {
 
-    open class Text(var content: String? = null, var link: Link? = null)
+    open class Text @JvmOverloads constructor(var content: String? = null, var link: Link? = null)
 
-    open class Link(var type: RichTextLinkType? = null, var url: String? = null)
+    open class Link
+    @JvmOverloads
+    constructor(var type: RichTextLinkType? = null, var url: String? = null)
 
-    open class Annotations(
+    open class Annotations
+    @JvmOverloads
+    constructor(
         var bold: Boolean? = null,
         var italic: Boolean? = null,
         var strikethrough: Boolean? = null,
@@ -78,7 +59,9 @@ open class DatabaseProperty(
         var code: Boolean? = null,
         var color: RichTextColor? = null,
     )
-    open class Mention(
+    open class Mention
+    @JvmOverloads
+    constructor(
         var type: RichTextMentionType? = null,
         var user: User? = null,
         val page: Page? = null,
@@ -87,19 +70,25 @@ open class DatabaseProperty(
     )
   }
 
-  open class Number(
+  open class Number
+  @JvmOverloads
+  constructor(
       var format: String? = null,
   )
 
-  open class Date(var start: String? = null, var end: String? = null)
+  open class Date @JvmOverloads constructor(var start: String? = null, var end: String? = null)
 
-  open class Relation(
+  open class Relation
+  @JvmOverloads
+  constructor(
       var databaseId: String? = null,
       var syncedPropertyName: String? = null,
       var syncedPropertyId: String? = null,
   )
 
-  open class Rollup(
+  open class Rollup
+  @JvmOverloads
+  constructor(
       var relationPropertyName: String? = null,
       var relationPropertyId: String? = null,
       var rollupPropertyName: String? = null,
@@ -119,9 +108,9 @@ open class DatabaseProperty(
 
   class Email
 
-  open class Formula(var expression: String? = null)
+  open class Formula @JvmOverloads constructor(var expression: String? = null)
 
-  open class MultiSelect(var options: List<Option>? = null) {
+  open class MultiSelect @JvmOverloads constructor(var options: List<Option>? = null) {
     open class Option(
         var id: String? = null,
         var name: String? = null,
@@ -129,7 +118,7 @@ open class DatabaseProperty(
     )
   }
 
-  data class Select(val options: List<Option>? = null) {
+  data class Select @JvmOverloads constructor(val options: List<Option>? = null) {
     data class Option(
         val id: String? = null,
         val name: String? = null,

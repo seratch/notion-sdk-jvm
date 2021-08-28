@@ -1,6 +1,8 @@
 package notion.api.v1.model.databases.query.filter.condition
 
-open class NumberFilter(
+open class NumberFilter
+@JvmOverloads
+constructor(
     var equals: Int? = null,
     var doesNotEqual: Int? = null,
     var greaterThan: Int? = null,

@@ -2,7 +2,7 @@ package notion.api.v1.model.common
 
 import com.google.gson.annotations.SerializedName
 
-enum class OptionColor(val value: String) {
+enum class OptionColor @JvmOverloads constructor(val value: String) {
   @SerializedName("default") Default("default"),
   @SerializedName("gray") Gray("gray"),
   @SerializedName("brown") Brown("brown"),

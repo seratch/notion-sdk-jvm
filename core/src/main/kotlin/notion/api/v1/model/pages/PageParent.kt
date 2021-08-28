@@ -1,15 +1,14 @@
 package notion.api.v1.model.pages
 
-data class PageParent(
+data class PageParent
+@JvmOverloads
+constructor(
     // Notion stopped using type (as of May 19, 2021)
     val type: PageParentType? = null,
     var databaseId: String? = null, // type: database
     var pageId: String? = null, // type: page
     var workspace: Boolean? = null // type: workspace
 ) {
-
-  // for other JVM languages
-  constructor(type: PageParentType) : this(type, null, null)
 
   companion object {
     @JvmStatic

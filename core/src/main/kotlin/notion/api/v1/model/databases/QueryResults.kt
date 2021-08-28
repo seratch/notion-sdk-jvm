@@ -7,7 +7,9 @@ import notion.api.v1.model.common.WithObjectType
 import notion.api.v1.model.pages.Page
 
 // This data class does not have setters as developers never manually modify this
-data class QueryResults(
+data class QueryResults
+@JvmOverloads
+constructor(
     @SerializedName("object") override val objectType: ObjectType = ObjectType.List,
     val results: List<Page>,
     override val nextCursor: String? = null,

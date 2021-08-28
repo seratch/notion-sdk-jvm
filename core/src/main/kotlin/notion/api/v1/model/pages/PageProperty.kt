@@ -6,7 +6,9 @@ import notion.api.v1.model.databases.Database
 import notion.api.v1.model.databases.DatabaseProperty
 import notion.api.v1.model.users.User
 
-data class PageProperty(
+data class PageProperty
+@JvmOverloads
+constructor(
     val id: String = UUID.randomUUID().toString(),
     var type: PropertyType? = null,
     var title: List<RichText>? = null,
@@ -30,7 +32,9 @@ data class PageProperty(
     val lastEditedTime: String? = null,
 ) {
 
-  data class RichText(
+  data class RichText
+  @JvmOverloads
+  constructor(
       val type: RichTextType = RichTextType.Text,
       var text: Text? = null,
       var annotations: Annotations? = null,
@@ -39,11 +43,15 @@ data class PageProperty(
       val mention: Mention? = null,
   ) {
 
-    data class Text(var content: String? = null, var link: Link? = null)
+    data class Text @JvmOverloads constructor(var content: String? = null, var link: Link? = null)
 
-    data class Link(var type: RichTextLinkType? = null, var url: String? = null)
+    data class Link
+    @JvmOverloads
+    constructor(var type: RichTextLinkType? = null, var url: String? = null)
 
-    data class Annotations(
+    data class Annotations
+    @JvmOverloads
+    constructor(
         var bold: Boolean? = null,
         var italic: Boolean? = null,
         var strikethrough: Boolean? = null,
@@ -52,7 +60,9 @@ data class PageProperty(
         var color: RichTextColor? = null,
     )
 
-    open class Mention(
+    open class Mention
+    @JvmOverloads
+    constructor(
         var type: RichTextMentionType? = null,
         var user: User? = null,
         val page: Page? = null,
@@ -61,27 +71,28 @@ data class PageProperty(
     )
   }
 
-  data class PageReference(val id: String)
+  data class PageReference @JvmOverloads constructor(val id: String)
 
-  data class File(
+  data class File
+  @JvmOverloads
+  constructor(
       var name: String? = null,
       val type: FileType? = null,
       val file: FileDetails? = null,
       val external: ExternalFileDetails? = null,
   )
 
-  data class Date(var start: String? = null, var end: String? = null)
+  data class Date @JvmOverloads constructor(var start: String? = null, var end: String? = null)
 
-  data class Formula(
+  data class Formula
+  @JvmOverloads
+  constructor(
       val type: FormulaType,
       var boolean: Boolean? = null,
       var date: Date? = null,
       var string: String? = null,
       var number: Number? = null,
-  ) {
-    // For other JVM languages
-    constructor(type: FormulaType) : this(type, null, null, null, null)
-  }
+  )
 
-  data class Rollup(val type: String)
+  data class Rollup @JvmOverloads constructor(val type: String)
 }

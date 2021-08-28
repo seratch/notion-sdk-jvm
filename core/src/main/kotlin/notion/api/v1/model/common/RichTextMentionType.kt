@@ -2,7 +2,7 @@ package notion.api.v1.model.common
 
 import com.google.gson.annotations.SerializedName
 
-enum class RichTextMentionType(val value: String) {
+enum class RichTextMentionType @JvmOverloads constructor(val value: String) {
   @SerializedName("user") User("user"),
   @SerializedName("page") Page("page"),
   @SerializedName("database") Database("database"),

@@ -2,7 +2,7 @@ package notion.api.v1.model.blocks
 
 import com.google.gson.annotations.SerializedName
 
-enum class BlockType(val value: String) {
+enum class BlockType @JvmOverloads constructor(val value: String) {
   @SerializedName("paragraph") Paragraph("paragraph"),
   @SerializedName("heading_1") HeadingOne("heading_1"),
   @SerializedName("heading_2") HeadingTwo("heading_2"),

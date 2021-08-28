@@ -1,7 +1,9 @@
 package notion.api.v1.model.common
 
 // https://developers.notion.com/reference/file-object
-data class File(
+data class File
+@JvmOverloads
+constructor(
     val type: FileType,
     var external: ExternalFileDetails? = null,
     var file: FileDetails? = null,

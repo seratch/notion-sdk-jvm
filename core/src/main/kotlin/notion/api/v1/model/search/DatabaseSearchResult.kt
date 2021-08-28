@@ -6,7 +6,9 @@ import notion.api.v1.model.common.Icon
 import notion.api.v1.model.common.ObjectType
 import notion.api.v1.model.databases.DatabaseProperty
 
-data class DatabaseSearchResult(
+data class DatabaseSearchResult
+@JvmOverloads
+constructor(
     @SerializedName("object") override val objectType: ObjectType = ObjectType.Database,
     override val id: String,
     override val icon: Icon,

@@ -3,7 +3,9 @@ package notion.api.v1.logging
 import java.time.ZoneId
 import java.util.*
 
-class StdoutLogger(val name: String = StdoutLogger::class.java.canonicalName) : NotionLogger {
+class StdoutLogger
+@JvmOverloads
+constructor(val name: String = StdoutLogger::class.java.canonicalName) : NotionLogger {
 
   override fun isDebugEnabled(): Boolean = true
 

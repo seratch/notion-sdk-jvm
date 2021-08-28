@@ -1,3 +1,3 @@
 package notion.api.v1.request.databases
 
-data class RetrieveDatabaseRequest(val databaseId: String)
+data class RetrieveDatabaseRequest @JvmOverloads constructor(val databaseId: String)

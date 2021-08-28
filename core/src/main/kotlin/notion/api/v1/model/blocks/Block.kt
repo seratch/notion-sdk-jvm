@@ -54,7 +54,9 @@ interface Block : WithObjectType {
       else throw IllegalStateException("Failed to cast $type block to UnsupportedBlock")
 }
 
-open class ParagraphBlock(
+open class ParagraphBlock
+@JvmOverloads
+constructor(
     @SerializedName("object") override val objectType: ObjectType = ObjectType.Block,
     override var type: BlockType = BlockType.Paragraph,
     override var id: String? = UUID.randomUUID().toString(),
@@ -80,10 +82,14 @@ open class ParagraphBlock(
       hasChildren,
       paragraph)
 
-  open class Element(var text: List<PageProperty.RichText>, var children: List<Block>? = null)
+  open class Element
+  @JvmOverloads
+  constructor(var text: List<PageProperty.RichText>, var children: List<Block>? = null)
 }
 
-open class HeadingOneBlock(
+open class HeadingOneBlock
+@JvmOverloads
+constructor(
     @SerializedName("object") override val objectType: ObjectType = ObjectType.Block,
     override val type: BlockType = BlockType.HeadingOne,
     override var id: String? = UUID.randomUUID().toString(),
@@ -109,12 +115,16 @@ open class HeadingOneBlock(
       hasChildren,
       heading1)
 
-  open class Element(
+  open class Element
+  @JvmOverloads
+  constructor(
       var text: List<PageProperty.RichText>,
   )
 }
 
-open class HeadingTwoBlock(
+open class HeadingTwoBlock
+@JvmOverloads
+constructor(
     @SerializedName("object") override val objectType: ObjectType = ObjectType.Block,
     override val type: BlockType = BlockType.HeadingTwo,
     override var id: String? = UUID.randomUUID().toString(),
@@ -145,7 +155,9 @@ open class HeadingTwoBlock(
   )
 }
 
-open class HeadingThreeBlock(
+open class HeadingThreeBlock
+@JvmOverloads
+constructor(
     @SerializedName("object") override val objectType: ObjectType = ObjectType.Block,
     override val type: BlockType = BlockType.HeadingThree,
     override var id: String? = UUID.randomUUID().toString(),
@@ -171,12 +183,16 @@ open class HeadingThreeBlock(
       hasChildren,
       heading3)
 
-  open class Element(
+  open class Element
+  @JvmOverloads
+  constructor(
       var text: List<PageProperty.RichText>,
   )
 }
 
-open class BulletedListItemBlock(
+open class BulletedListItemBlock
+@JvmOverloads
+constructor(
     @SerializedName("object") override val objectType: ObjectType = ObjectType.Block,
     override val type: BlockType = BlockType.BulletedListItem,
     override var id: String? = UUID.randomUUID().toString(),
@@ -202,10 +218,14 @@ open class BulletedListItemBlock(
       hasChildren,
       bulletedListItem)
 
-  open class Element(var text: List<PageProperty.RichText>, var children: List<Block>? = null)
+  open class Element
+  @JvmOverloads
+  constructor(var text: List<PageProperty.RichText>, var children: List<Block>? = null)
 }
 
-open class NumberedListItemBlock(
+open class NumberedListItemBlock
+@JvmOverloads
+constructor(
     @SerializedName("object") override val objectType: ObjectType = ObjectType.Block,
     override val type: BlockType = BlockType.NumberedListItem,
     override var id: String? = UUID.randomUUID().toString(),
@@ -231,10 +251,14 @@ open class NumberedListItemBlock(
       hasChildren,
       numberedListItem)
 
-  open class Element(var text: List<PageProperty.RichText>, var children: List<Block>? = null)
+  open class Element
+  @JvmOverloads
+  constructor(var text: List<PageProperty.RichText>, var children: List<Block>? = null)
 }
 
-open class ToDoBlock(
+open class ToDoBlock
+@JvmOverloads
+constructor(
     @SerializedName("object") override val objectType: ObjectType = ObjectType.Block,
     override val type: BlockType = BlockType.ToDo,
     override var id: String? = UUID.randomUUID().toString(),
@@ -253,14 +277,18 @@ open class ToDoBlock(
       lastEditedTime: String? = null,
   ) : this(ObjectType.Block, BlockType.ToDo, id, createdTime, lastEditedTime, hasChildren, toDo)
 
-  open class Element(
+  open class Element
+  @JvmOverloads
+  constructor(
       var checked: Boolean = false,
       var text: List<PageProperty.RichText>? = null,
       var children: List<Block>? = null
   )
 }
 
-open class ToggleBlock(
+open class ToggleBlock
+@JvmOverloads
+constructor(
     @SerializedName("object") override val objectType: ObjectType = ObjectType.Block,
     override val type: BlockType = BlockType.Toggle,
     override var id: String? = UUID.randomUUID().toString(),
@@ -279,10 +307,14 @@ open class ToggleBlock(
       lastEditedTime: String? = null,
   ) : this(ObjectType.Block, BlockType.Toggle, id, createdTime, lastEditedTime, hasChildren, toggle)
 
-  open class Element(var text: List<PageProperty.RichText>, var children: List<Block>? = null)
+  open class Element
+  @JvmOverloads
+  constructor(var text: List<PageProperty.RichText>, var children: List<Block>? = null)
 }
 
-open class ChildPageBlock(
+open class ChildPageBlock
+@JvmOverloads
+constructor(
     @SerializedName("object") override val objectType: ObjectType = ObjectType.Block,
     override val type: BlockType = BlockType.ChildPage,
     override var id: String? = UUID.randomUUID().toString(),
@@ -308,10 +340,12 @@ open class ChildPageBlock(
       hasChildren,
       childPage)
 
-  open class Element(var title: String)
+  open class Element @JvmOverloads constructor(var title: String)
 }
 
-open class UnsupportedBlock(
+open class UnsupportedBlock
+@JvmOverloads
+constructor(
     @SerializedName("object") override val objectType: ObjectType = ObjectType.Block,
     override val type: BlockType = BlockType.Unsupported,
     override var id: String? = UUID.randomUUID().toString(),

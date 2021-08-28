@@ -4,7 +4,9 @@ import com.google.gson.annotations.SerializedName
 import notion.api.v1.model.common.*
 
 // This data class does not have setters as developers never manually modify this
-data class Database(
+data class Database
+@JvmOverloads
+constructor(
     @SerializedName("object") override val objectType: ObjectType = ObjectType.Database,
     val id: String,
     val icon: Icon,

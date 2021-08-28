@@ -6,7 +6,9 @@ import notion.api.v1.model.common.Pagination
 import notion.api.v1.model.common.WithObjectType
 
 // This data class does not have setters as developers never manually modify this
-data class Blocks(
+data class Blocks
+@JvmOverloads
+constructor(
     @SerializedName("object") override val objectType: ObjectType = ObjectType.List,
     val results: List<Block>,
     override val nextCursor: String? = null,

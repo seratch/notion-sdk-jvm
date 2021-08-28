@@ -5,7 +5,9 @@ import notion.api.v1.model.common.ObjectType
 import notion.api.v1.model.common.Pagination
 import notion.api.v1.model.common.WithObjectType
 
-data class SearchResults(
+data class SearchResults
+@JvmOverloads
+constructor(
     @SerializedName("object") override val objectType: ObjectType = ObjectType.List,
     val results: List<SearchResult>,
     override val nextCursor: String? = null,

@@ -1,13 +1,12 @@
 package notion.api.v1.model.databases
 
-data class DatabaseParent(
+data class DatabaseParent
+@JvmOverloads
+constructor(
     val type: DatabaseParentType? = null,
     var pageId: String? = null, // type: page
     var workspace: Boolean? = null // type: workspace
 ) {
-
-  // for other JVM languages
-  constructor() : this(null, null, null)
 
   companion object {
     @JvmStatic

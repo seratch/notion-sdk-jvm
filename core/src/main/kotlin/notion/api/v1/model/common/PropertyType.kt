@@ -2,7 +2,7 @@ package notion.api.v1.model.common
 
 import com.google.gson.annotations.SerializedName
 
-enum class PropertyType(val value: String) {
+enum class PropertyType @JvmOverloads constructor(val value: String) {
   @SerializedName("rich_text") RichText("rich_text"),
   @SerializedName("number") Number("number"),
   @SerializedName("select") Select("select"),

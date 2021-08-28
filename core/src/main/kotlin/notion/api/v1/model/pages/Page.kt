@@ -7,7 +7,9 @@ import notion.api.v1.model.common.ObjectType
 import notion.api.v1.model.common.WithObjectType
 
 // This data class does not have setters as developers never manually modify this
-data class Page(
+data class Page
+@JvmOverloads
+constructor(
     @SerializedName("object") override val objectType: ObjectType = ObjectType.Page,
     val id: String,
     val icon: Icon,
