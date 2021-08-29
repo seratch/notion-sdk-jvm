@@ -9,7 +9,7 @@ interface EndpointsSupport {
   fun buildRequestHeaders(additionalOnes: Map<String, String>): Map<String, String> {
     return mapOf(
             "Authorization" to "Bearer $token",
-            "Notion-Version" to "2021-05-13",
+            "Notion-Version" to "2021-08-16",
             "User-Agent" to UserAgent.buildUserAgent())
         .plus(additionalOnes)
   }
