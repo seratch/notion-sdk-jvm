@@ -48,11 +48,11 @@ interface BlocksSupport : EndpointsSupport {
   // appendBlockChildren
   // -----------------------------------------------
 
-  fun appendBlockChildren(blockId: String, children: List<Block>): Block {
+  fun appendBlockChildren(blockId: String, children: List<Block>): Blocks {
     return appendBlockChildren(AppendBlockChildrenRequest(blockId, children))
   }
 
-  fun appendBlockChildren(request: AppendBlockChildrenRequest): Block {
+  fun appendBlockChildren(request: AppendBlockChildrenRequest): Blocks {
     val httpResponse =
         httpClient.patchTextBody(
             logger = logger,
@@ -60,7 +60,7 @@ interface BlocksSupport : EndpointsSupport {
             body = jsonSerializer.toJsonString(request),
             headers = buildRequestHeaders(contentTypeJson()))
     if (httpResponse.status == 200) {
-      return jsonSerializer.toBlock(httpResponse.body)
+      return jsonSerializer.toBlocks(httpResponse.body)
     } else {
       throw NotionAPIError(
           error = jsonSerializer.toError(httpResponse.body),
