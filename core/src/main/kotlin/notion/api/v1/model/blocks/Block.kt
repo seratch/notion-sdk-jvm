@@ -11,6 +11,7 @@ interface Block : WithObjectType {
   var id: String?
   var createdTime: String?
   var lastEditedTime: String?
+  var archived: Boolean?
   var hasChildren: Boolean?
 
   fun asParagraph(): ParagraphBlock =
@@ -63,6 +64,7 @@ constructor(
     override var createdTime: String? = null,
     override var lastEditedTime: String? = null,
     override var hasChildren: Boolean? = null,
+    override var archived: Boolean? = null,
     val paragraph: Element,
 ) : Block {
 
@@ -74,13 +76,13 @@ constructor(
       createdTime: String? = null,
       lastEditedTime: String? = null,
   ) : this(
-      ObjectType.Block,
-      BlockType.Paragraph,
-      id,
-      createdTime,
-      lastEditedTime,
-      hasChildren,
-      paragraph)
+      objectType = ObjectType.Block,
+      type = BlockType.Paragraph,
+      id = id,
+      createdTime = createdTime,
+      lastEditedTime = lastEditedTime,
+      hasChildren = hasChildren,
+      paragraph = paragraph)
 
   open class Element
   @JvmOverloads
@@ -96,6 +98,7 @@ constructor(
     override var createdTime: String? = null,
     override var lastEditedTime: String? = null,
     override var hasChildren: Boolean? = null,
+    override var archived: Boolean? = null,
     @SerializedName("heading_1") val heading1: Element,
 ) : Block {
 
@@ -107,13 +110,13 @@ constructor(
       createdTime: String? = null,
       lastEditedTime: String? = null,
   ) : this(
-      ObjectType.Block,
-      BlockType.HeadingOne,
-      id,
-      createdTime,
-      lastEditedTime,
-      hasChildren,
-      heading1)
+      objectType = ObjectType.Block,
+      type = BlockType.HeadingOne,
+      id = id,
+      createdTime = createdTime,
+      lastEditedTime = lastEditedTime,
+      hasChildren = hasChildren,
+      heading1 = heading1)
 
   open class Element
   @JvmOverloads
@@ -131,6 +134,7 @@ constructor(
     override var createdTime: String? = null,
     override var lastEditedTime: String? = null,
     override var hasChildren: Boolean? = null,
+    override var archived: Boolean? = null,
     @SerializedName("heading_2") val heading2: Element,
 ) : Block {
 
@@ -142,13 +146,13 @@ constructor(
       createdTime: String? = null,
       lastEditedTime: String? = null,
   ) : this(
-      ObjectType.Block,
-      BlockType.HeadingTwo,
-      id,
-      createdTime,
-      lastEditedTime,
-      hasChildren,
-      heading2)
+      objectType = ObjectType.Block,
+      type = BlockType.HeadingTwo,
+      id = id,
+      createdTime = createdTime,
+      lastEditedTime = lastEditedTime,
+      hasChildren = hasChildren,
+      heading2 = heading2)
 
   open class Element(
       var text: List<PageProperty.RichText>,
@@ -164,6 +168,7 @@ constructor(
     override var createdTime: String? = null,
     override var lastEditedTime: String? = null,
     override var hasChildren: Boolean? = null,
+    override var archived: Boolean? = null,
     @SerializedName("heading_3") val heading3: Element,
 ) : Block {
 
@@ -175,13 +180,13 @@ constructor(
       createdTime: String? = null,
       lastEditedTime: String? = null,
   ) : this(
-      ObjectType.Block,
-      BlockType.HeadingThree,
-      id,
-      createdTime,
-      lastEditedTime,
-      hasChildren,
-      heading3)
+      objectType = ObjectType.Block,
+      type = BlockType.HeadingThree,
+      id = id,
+      createdTime = createdTime,
+      lastEditedTime = lastEditedTime,
+      hasChildren = hasChildren,
+      heading3 = heading3)
 
   open class Element
   @JvmOverloads
@@ -199,6 +204,7 @@ constructor(
     override var createdTime: String? = null,
     override var lastEditedTime: String? = null,
     override var hasChildren: Boolean? = null,
+    override var archived: Boolean? = null,
     val bulletedListItem: Element,
 ) : Block {
 
@@ -210,13 +216,13 @@ constructor(
       createdTime: String? = null,
       lastEditedTime: String? = null,
   ) : this(
-      ObjectType.Block,
-      BlockType.BulletedListItem,
-      id,
-      createdTime,
-      lastEditedTime,
-      hasChildren,
-      bulletedListItem)
+      objectType = ObjectType.Block,
+      type = BlockType.BulletedListItem,
+      id = id,
+      createdTime = createdTime,
+      lastEditedTime = lastEditedTime,
+      hasChildren = hasChildren,
+      bulletedListItem = bulletedListItem)
 
   open class Element
   @JvmOverloads
@@ -232,6 +238,7 @@ constructor(
     override var createdTime: String? = null,
     override var lastEditedTime: String? = null,
     override var hasChildren: Boolean? = null,
+    override var archived: Boolean? = null,
     val numberedListItem: Element,
 ) : Block {
 
@@ -243,13 +250,13 @@ constructor(
       createdTime: String? = null,
       lastEditedTime: String? = null,
   ) : this(
-      ObjectType.Block,
-      BlockType.NumberedListItem,
-      id,
-      createdTime,
-      lastEditedTime,
-      hasChildren,
-      numberedListItem)
+      objectType = ObjectType.Block,
+      type = BlockType.NumberedListItem,
+      id = id,
+      createdTime = createdTime,
+      lastEditedTime = lastEditedTime,
+      hasChildren = hasChildren,
+      numberedListItem = numberedListItem)
 
   open class Element
   @JvmOverloads
@@ -265,6 +272,7 @@ constructor(
     override var createdTime: String? = null,
     override var lastEditedTime: String? = null,
     override var hasChildren: Boolean? = null,
+    override var archived: Boolean? = null,
     val toDo: Element,
 ) : Block {
 
@@ -275,7 +283,14 @@ constructor(
       hasChildren: Boolean? = null,
       createdTime: String? = null,
       lastEditedTime: String? = null,
-  ) : this(ObjectType.Block, BlockType.ToDo, id, createdTime, lastEditedTime, hasChildren, toDo)
+  ) : this(
+      objectType = ObjectType.Block,
+      type = BlockType.ToDo,
+      id = id,
+      createdTime = createdTime,
+      lastEditedTime = lastEditedTime,
+      hasChildren = hasChildren,
+      toDo = toDo)
 
   open class Element
   @JvmOverloads
@@ -295,6 +310,7 @@ constructor(
     override var createdTime: String? = null,
     override var lastEditedTime: String? = null,
     override var hasChildren: Boolean? = null,
+    override var archived: Boolean? = null,
     val toggle: Element,
 ) : Block {
 
@@ -305,7 +321,14 @@ constructor(
       hasChildren: Boolean? = null,
       createdTime: String? = null,
       lastEditedTime: String? = null,
-  ) : this(ObjectType.Block, BlockType.Toggle, id, createdTime, lastEditedTime, hasChildren, toggle)
+  ) : this(
+      objectType = ObjectType.Block,
+      type = BlockType.Toggle,
+      id = id,
+      createdTime = createdTime,
+      lastEditedTime = lastEditedTime,
+      hasChildren = hasChildren,
+      toggle = toggle)
 
   open class Element
   @JvmOverloads
@@ -321,6 +344,7 @@ constructor(
     override var createdTime: String? = null,
     override var lastEditedTime: String? = null,
     override var hasChildren: Boolean? = null,
+    override var archived: Boolean? = null,
     val childPage: Element,
 ) : Block {
 
@@ -332,13 +356,13 @@ constructor(
       createdTime: String? = null,
       lastEditedTime: String? = null,
   ) : this(
-      ObjectType.Block,
-      BlockType.ChildPage,
-      id,
-      createdTime,
-      lastEditedTime,
-      hasChildren,
-      childPage)
+      objectType = ObjectType.Block,
+      type = BlockType.ChildPage,
+      id = id,
+      createdTime = createdTime,
+      lastEditedTime = lastEditedTime,
+      hasChildren = hasChildren,
+      childPage = childPage)
 
   open class Element @JvmOverloads constructor(var title: String)
 }
@@ -352,6 +376,7 @@ constructor(
     override var createdTime: String? = null,
     override var lastEditedTime: String? = null,
     override var hasChildren: Boolean? = null,
+    override var archived: Boolean? = null,
 ) : Block {
 
   // for other JVM languages
@@ -359,6 +384,14 @@ constructor(
       id: String? = UUID.randomUUID().toString(),
       hasChildren: Boolean? = null,
       createdTime: String? = null,
+      archived: Boolean? = null,
       lastEditedTime: String? = null,
-  ) : this(ObjectType.Block, BlockType.Unsupported, id, createdTime, lastEditedTime, hasChildren)
+  ) : this(
+      ObjectType.Block,
+      BlockType.Unsupported,
+      id,
+      createdTime,
+      lastEditedTime,
+      hasChildren,
+      archived)
 }
