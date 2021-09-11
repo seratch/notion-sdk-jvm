@@ -14,6 +14,7 @@ enum class PropertyType @JvmOverloads constructor(val value: String) {
   @SerializedName("title") Title("title"),
   @SerializedName("people") People("people"),
   @SerializedName("files") Files("files"),
+  @SerializedName("checkbox") Checkbox("checkbox"),
   @SerializedName("url") Url("url"),
   @SerializedName("email") Email("email"),
   @SerializedName("phone_number") PhoneNumber("phone_number"),
