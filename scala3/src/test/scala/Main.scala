@@ -27,7 +27,7 @@ object Main extends App {
     databaseId = databaseId,
     filter = {
       val filter = new PropertyFilter()
-      filter.setProperty(PropertyType.Title)
+      filter.setProperty("test")
       filter.setTitle {
         val title = new TextFilter()
         title.setContains("bug")
