@@ -1,6 +1,5 @@
 package notion.api.v1.model.databases.query.filter
 
-import notion.api.v1.model.common.PropertyType
 import notion.api.v1.model.databases.query.filter.condition.*
 
 open class PropertyFilter

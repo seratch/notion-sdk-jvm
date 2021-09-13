@@ -85,9 +85,7 @@ class DatabasesTest {
       val queryResult =
           client.queryDatabase(
               databaseId = database.id,
-              filter =
-                  PropertyFilter(
-                      property = "title", title = TextFilter(contains = "bug")),
+              filter = PropertyFilter(property = "title", title = TextFilter(contains = "bug")),
               sorts =
                   listOf(
                       QuerySort(property = "title"),
@@ -119,8 +117,7 @@ class DatabasesTest {
                       and =
                           listOf(
                               PropertyFilter(
-                                  property = "title",
-                                  title = TextFilter(contains = "bug")))),
+                                  property = "title", title = TextFilter(contains = "bug")))),
               pageSize = 1,
           )
       assertNotNull(queryResult)
