@@ -38,7 +38,7 @@ class SimpleTest {
           databaseId,
           filter = {
             val f = new PropertyFilter()
-            f.setProperty(PropertyType.Title)
+            f.setProperty("title")
             val title = new TextFilter()
             title.setContains("bug")
             f.setTitle(title)
