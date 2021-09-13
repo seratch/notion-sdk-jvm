@@ -87,10 +87,10 @@ class DatabasesTest {
               databaseId = database.id,
               filter =
                   PropertyFilter(
-                      property = PropertyType.Title, title = TextFilter(contains = "bug")),
+                      property = "title", title = TextFilter(contains = "bug")),
               sorts =
                   listOf(
-                      QuerySort(property = PropertyType.Title),
+                      QuerySort(property = "title"),
                       QuerySort(
                           timestamp = QuerySortTimestamp.LastEditedTime,
                           direction = QuerySortDirection.Descending)),
@@ -119,7 +119,7 @@ class DatabasesTest {
                       and =
                           listOf(
                               PropertyFilter(
-                                  property = PropertyType.Title,
+                                  property = "title",
                                   title = TextFilter(contains = "bug")))),
               pageSize = 1,
           )

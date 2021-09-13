@@ -5,7 +5,7 @@ import notion.api.v1.model.common.PropertyType
 open class QuerySort
 @JvmOverloads
 constructor(
-    var property: PropertyType? = null,
+    var property: String? = null,
     var timestamp: QuerySortTimestamp? = null,
     var direction: QuerySortDirection? = QuerySortDirection.Ascending,
 )

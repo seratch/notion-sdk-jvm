@@ -6,7 +6,7 @@ import notion.api.v1.model.databases.query.filter.condition.*
 open class PropertyFilter
 @JvmOverloads
 constructor(
-    var property: PropertyType? = null,
+    var property: String? = null, // The name or ID of the property to filter on.
     var title: TextFilter? = null,
     var richText: TextFilter? = null,
     var url: TextFilter? = null,
