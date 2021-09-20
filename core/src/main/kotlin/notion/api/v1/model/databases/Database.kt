@@ -11,6 +11,7 @@ constructor(
     val id: String,
     val icon: Icon,
     val cover: Cover,
+    val url: String,
     val createdTime: String,
     val lastEditedTime: String,
     val parent: DatabaseParent? = null,
