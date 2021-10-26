@@ -94,5 +94,11 @@ constructor(
       var number: Number? = null,
   )
 
-  data class Rollup @JvmOverloads constructor(val type: String)
+  data class Rollup
+  @JvmOverloads
+  constructor(
+      val type: String,
+      val number: Number? = null,
+      val function: String? = null,
+  )
 }
