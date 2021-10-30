@@ -1,5 +1,6 @@
 package integration_tests
 
+import kotlin.test.assertFalse
 import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
 import notion.api.v1.NotionClient
@@ -72,6 +73,11 @@ class SimpleTest {
 
       val fetchedPage = client.retrievePage(newPage.id)
       assertNotNull(fetchedPage)
+      assertFalse(fetchedPage.archived!!)
+
+      val archivedPage =
+          client.updatePageProperties(pageId = newPage.id, properties = emptyMap(), archived = true)
+      assertTrue(archivedPage.archived!!)
     }
   }
 }

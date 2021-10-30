@@ -1,9 +1,6 @@
 package integration_tests
 
-import kotlin.test.assertEquals
-import kotlin.test.assertNotEquals
-import kotlin.test.assertNotNull
-import kotlin.test.assertTrue
+import kotlin.test.*
 import notion.api.v1.NotionClient
 import notion.api.v1.model.pages.Page
 import notion.api.v1.model.pages.PageParent
@@ -72,6 +69,11 @@ class PagesTest {
 
       val fetchedPage = client.retrievePage(newPage.id)
       assertEquals(patchResult.lastEditedTime, fetchedPage.lastEditedTime)
+      assertFalse(fetchedPage.archived!!)
+
+      val archivedPage =
+          client.updatePageProperties(pageId = newPage.id, properties = emptyMap(), archived = true)
+      assertTrue(archivedPage.archived!!)
     }
   }
 }

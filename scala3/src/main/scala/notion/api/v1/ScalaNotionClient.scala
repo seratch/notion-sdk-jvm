@@ -179,12 +179,14 @@ case class ScalaNotionClient(
   def updatePageProperties(
       pageId: String,
       properties: Map[String, PageProperty],
+      archive: Boolean = false,
       icon: Icon = null,
       cover: Cover = null
   ): Page = {
     val request = new UpdatePagePropertiesRequest(
       pageId,
       properties.asJava,
+      if (archive) archive else null,
       icon,
       cover
     )

@@ -9,6 +9,7 @@ data class UpdatePagePropertiesRequest
 constructor(
     @Transient val pageId: String,
     val properties: Map<String, PageProperty>,
+    val archived: Boolean? = null,
     val icon: Icon? = null,
     val cover: Cover? = null,
 )
