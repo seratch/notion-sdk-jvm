@@ -89,6 +89,7 @@ interface PagesSupport : EndpointsSupport {
   fun updatePageProperties(
       pageId: String,
       properties: Map<String, PageProperty>,
+      archived: Boolean? = null,
       icon: Icon? = null,
       cover: Cover? = null,
   ): Page {
@@ -96,6 +97,7 @@ interface PagesSupport : EndpointsSupport {
         UpdatePagePropertiesRequest(
             pageId = pageId,
             properties = properties,
+            archived = archived,
             icon = icon,
             cover = cover,
         ))
