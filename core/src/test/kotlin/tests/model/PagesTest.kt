@@ -81,6 +81,37 @@ class PagesTest {
     "Done": {
       "id": "467a58f9-dccf-4cfb-a203-a995731da577",
       "checkbox": true
+    },
+    "Rollup Array": {
+      "id": "467a58f9-dccf-4cfb-a203-a995731da577",
+      "rollup": {
+        "type": "array",
+        "array": [
+          {
+            "type": "title",
+            "title": [
+              {
+                "type": "text",
+                "text": {
+                  "content": "Gamba intermezzo",
+                  "link": null
+                },
+                "annotations": {
+                  "bold": false,
+                  "italic": false,
+                  "strikethrough": false,
+                  "underline": false,
+                  "code": false,
+                  "color": "default"
+                },
+                "plain_text": "Gamba intermezzo",
+                "href": null
+              }
+            ]
+          }
+        ],
+        "function": "show_original"
+      }
     }
   }
 }
