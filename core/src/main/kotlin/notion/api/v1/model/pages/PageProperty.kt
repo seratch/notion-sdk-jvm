@@ -99,6 +99,7 @@ constructor(
   constructor(
       val type: String,
       val number: Number? = null,
+      val array: List<PageProperty>? = null,
       val function: String? = null,
   )
 }
