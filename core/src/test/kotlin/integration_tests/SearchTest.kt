@@ -13,4 +13,12 @@ class SearchTest {
       assertNotNull(searchResult.results)
     }
   }
+
+  @Test
+  fun database() {
+    NotionClient(token = System.getenv("NOTION_TOKEN")).use { client ->
+      val searchResult = client.search("Test Database")
+      assertNotNull(searchResult.results)
+    }
+  }
 }

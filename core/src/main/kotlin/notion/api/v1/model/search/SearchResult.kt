@@ -12,4 +12,16 @@ interface SearchResult : WithObjectType {
   val cover: Cover
   val createdTime: String
   val lastEditedTime: String
+
+  fun asDatabase(): DatabaseSearchResult =
+      if (objectType == ObjectType.Database) this as DatabaseSearchResult
+      else
+          throw IllegalStateException(
+              "Failed to cast $objectType search result to DatabaseSearchResult")
+
+  fun asPage(): PageSearchResult =
+      if (objectType == ObjectType.Page) this as PageSearchResult
+      else
+          throw IllegalStateException(
+              "Failed to cast $objectType search result to PageSearchResult")
 }

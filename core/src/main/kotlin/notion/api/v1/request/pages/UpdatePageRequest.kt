@@ -4,7 +4,7 @@ import notion.api.v1.model.common.Cover
 import notion.api.v1.model.common.Icon
 import notion.api.v1.model.pages.PageProperty
 
-data class UpdatePagePropertiesRequest
+data class UpdatePageRequest
 @JvmOverloads
 constructor(
     @Transient val pageId: String,

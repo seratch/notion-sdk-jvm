@@ -5,15 +5,87 @@ import notion.api.v1.http.NotionHttpClient
 import notion.api.v1.json.NotionJsonSerializer
 import notion.api.v1.logging.NotionLogger
 import notion.api.v1.model.blocks.Block
+import notion.api.v1.model.blocks.BlockElementUpdate
+import notion.api.v1.model.blocks.BlockType
 import notion.api.v1.model.blocks.Blocks
-import notion.api.v1.request.blocks.AppendBlockChildrenRequest
-import notion.api.v1.request.blocks.RetrieveBlockChildrenRequest
+import notion.api.v1.request.blocks.*
 
 interface BlocksSupport : EndpointsSupport {
   val httpClient: NotionHttpClient
   val jsonSerializer: NotionJsonSerializer
   val logger: NotionLogger
   val baseUrl: String
+
+  // -----------------------------------------------
+  // retrieveBlock
+  // -----------------------------------------------
+
+  fun retrieveBlock(blockId: String): Block {
+    return retrieveBlock(RetrieveBlockRequest(blockId = blockId))
+  }
+
+  fun retrieveBlock(request: RetrieveBlockRequest): Block {
+    val httpResponse =
+        httpClient.get(
+            logger = logger,
+            url = "$baseUrl/blocks/${urlEncode(request.blockId)}",
+            headers = buildRequestHeaders(emptyMap()))
+    if (httpResponse.status == 200) {
+      return jsonSerializer.toBlock(httpResponse.body)
+    } else {
+      throw NotionAPIError(
+          error = jsonSerializer.toError(httpResponse.body),
+          httpResponse = httpResponse,
+      )
+    }
+  }
+
+  // -----------------------------------------------
+  // updateBlock
+  // -----------------------------------------------
+
+  fun updateBlock(blockId: String, elements: Map<BlockType, BlockElementUpdate>): Block {
+    return updateBlock(UpdateBlockRequest(blockId = blockId, elements = elements))
+  }
+
+  fun updateBlock(request: UpdateBlockRequest): Block {
+    val httpResponse =
+        httpClient.patchTextBody(
+            logger = logger,
+            url = "$baseUrl/blocks/${urlEncode(request.blockId)}",
+            body = jsonSerializer.toJsonString(request.elements),
+            headers = buildRequestHeaders(contentTypeJson()))
+    if (httpResponse.status == 200) {
+      return jsonSerializer.toBlock(httpResponse.body)
+    } else {
+      throw NotionAPIError(
+          error = jsonSerializer.toError(httpResponse.body),
+          httpResponse = httpResponse,
+      )
+    }
+  }
+
+  // -----------------------------------------------
+  // deleteBlock
+  // -----------------------------------------------
+
+  fun deleteBlock(blockId: String) {
+    return deleteBlock(DeleteBlockRequest(blockId = blockId))
+  }
+
+  fun deleteBlock(request: DeleteBlockRequest) {
+    val httpResponse =
+        httpClient.delete(
+            logger = logger,
+            url = "$baseUrl/blocks/${urlEncode(request.blockId)}",
+            headers = buildRequestHeaders(emptyMap()))
+    if (httpResponse.status != 200) {
+      throw NotionAPIError(
+          error = jsonSerializer.toError(httpResponse.body),
+          httpResponse = httpResponse,
+      )
+    }
+  }
 
   // -----------------------------------------------
   // retrieveBlockChildren

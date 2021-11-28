@@ -9,6 +9,9 @@ class UsersTest {
   @Test
   fun fetchUsers() {
     NotionClient(token = System.getenv("NOTION_TOKEN")).use { client ->
+      val botUser = client.retrieveBotUser()
+      assertNotNull(botUser)
+
       val users = client.listUsers()
       assertNotNull(users.results)
 

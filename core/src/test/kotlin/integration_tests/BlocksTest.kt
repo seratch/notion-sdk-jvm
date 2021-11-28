@@ -12,6 +12,10 @@ class BlocksTest {
   fun allOps() {
     NotionClient(token = System.getenv("NOTION_TOKEN")).use { client ->
       val blockId = System.getenv("NOTION_SDK_TEST_BLOCK_ID") ?: "50a30e81202b498cb01857b0aa0c515c"
+
+      val block = client.retrieveBlock(blockId)
+      assertNotNull(block)
+
       val blocks = client.retrieveBlockChildren(blockId)
       assertNotNull(blocks)
 

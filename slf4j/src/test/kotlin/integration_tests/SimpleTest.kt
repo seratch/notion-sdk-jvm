@@ -61,7 +61,7 @@ class SimpleTest {
       assertNotNull(newPage)
 
       val patchResult =
-          client.updatePageProperties(
+          client.updatePage(
               pageId = newPage.id,
               // Update only "Severity" property
               properties =

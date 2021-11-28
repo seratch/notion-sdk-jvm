@@ -9,7 +9,7 @@ import notion.api.v1.request.databases.QueryDatabaseRequest;
 import notion.api.v1.request.databases.RetrieveDatabaseRequest;
 import notion.api.v1.request.pages.CreatePageRequest;
 import notion.api.v1.request.pages.RetrievePageRequest;
-import notion.api.v1.request.pages.UpdatePagePropertiesRequest;
+import notion.api.v1.request.pages.UpdatePageRequest;
 import notion.api.v1.request.search.SearchRequest;
 import notion.api.v1.request.users.RetrieveUserRequest;
 import org.junit.Test;
@@ -38,7 +38,7 @@ public class RequestsTest {
 
         assertNotNull(new RetrievePageRequest("page-id"));
 
-        assertNotNull(new UpdatePagePropertiesRequest("page-id", Collections.emptyMap()));
+        assertNotNull(new UpdatePageRequest("page-id", Collections.emptyMap()));
 
         assertNotNull(new SearchRequest("query"));
         assertNotNull(new SearchRequest("query", new SearchRequest.SearchFilter()));

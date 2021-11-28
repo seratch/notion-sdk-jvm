@@ -25,7 +25,6 @@
         <module>okhttp3</module>
         <module>okhttp4</module>
         <module>okhttp5</module>
-        <module>scala3</module>
         <module>slf4j</module>
     </modules>
 
@@ -41,7 +40,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <okhttp3.version>3.14.9</okhttp3.version>
         <okhttp4.version>4.9.1</okhttp4.version>
-        <okhttp5.version>5.0.0-alpha.2</okhttp5.version>
+        <okhttp5.version>5.0.0-alpha.3</okhttp5.version>
         <gson.version>2.8.9</gson.version>
         <slf4j.version>1.7.32</slf4j.version>
         <logback.version>1.2.5</logback.version>
@@ -59,8 +58,8 @@
         <maven-versions-plugin.version>2.8.1</maven-versions-plugin.version>
         <nexus-staging-maven-plugin.version>1.6.8</nexus-staging-maven-plugin.version>
         <jacoco-maven-plugin.version>0.8.7</jacoco-maven-plugin.version>
-        <dokka.version>1.4.32</dokka.version>
-        <spotless.version>2.11.1</spotless.version>
+        <dokka.version>1.6.0</dokka.version>
+        <spotless.version>2.17.4</spotless.version>
     </properties>
 
     <licenses>
@@ -224,7 +223,10 @@
                             <include>src/test/kotlin/tests/**/*.kt</include>
                             <include>src/test/kotlin/integration_tests/**/*.kt</include>
                         </includes>
-                        <ktfmt/>
+                        <ktfmt>
+                            <version>0.30</version>
+                            <style>DEFAULT</style>
+                        </ktfmt>
                     </kotlin>
                 </configuration>
             </plugin>

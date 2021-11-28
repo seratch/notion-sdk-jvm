@@ -10,9 +10,11 @@ import notion.api.v1.model.common.Icon
 import notion.api.v1.model.pages.Page
 import notion.api.v1.model.pages.PageParent
 import notion.api.v1.model.pages.PageProperty
+import notion.api.v1.model.pages.PagePropertyItem
 import notion.api.v1.request.pages.CreatePageRequest
+import notion.api.v1.request.pages.RetrievePagePropertyItemRequest
 import notion.api.v1.request.pages.RetrievePageRequest
-import notion.api.v1.request.pages.UpdatePagePropertiesRequest
+import notion.api.v1.request.pages.UpdatePageRequest
 
 interface PagesSupport : EndpointsSupport {
   val httpClient: NotionHttpClient
@@ -83,18 +85,18 @@ interface PagesSupport : EndpointsSupport {
   }
 
   // -----------------------------------------------
-  // updatePageProperties
+  // updatePage
   // -----------------------------------------------
 
-  fun updatePageProperties(
+  fun updatePage(
       pageId: String,
       properties: Map<String, PageProperty>,
       archived: Boolean? = null,
       icon: Icon? = null,
       cover: Cover? = null,
   ): Page {
-    return updatePageProperties(
-        UpdatePagePropertiesRequest(
+    return updatePage(
+        UpdatePageRequest(
             pageId = pageId,
             properties = properties,
             archived = archived,
@@ -103,7 +105,7 @@ interface PagesSupport : EndpointsSupport {
         ))
   }
 
-  fun updatePageProperties(request: UpdatePagePropertiesRequest): Page {
+  fun updatePage(request: UpdatePageRequest): Page {
     val httpResponse =
         httpClient.patchTextBody(
             logger = logger,
@@ -112,6 +114,71 @@ interface PagesSupport : EndpointsSupport {
             headers = buildRequestHeaders(contentTypeJson()))
     if (httpResponse.status == 200) {
       return jsonSerializer.toPage(httpResponse.body)
+    } else {
+      throw NotionAPIError(
+          error = jsonSerializer.toError(httpResponse.body),
+          httpResponse = httpResponse,
+      )
+    }
+  }
+
+  @Deprecated(
+      message = "Use updatePage method instead",
+      replaceWith = ReplaceWith(expression = "updatePage(...)"))
+  fun updatePageProperties(
+      pageId: String,
+      properties: Map<String, PageProperty>,
+      archived: Boolean? = null,
+      icon: Icon? = null,
+      cover: Cover? = null,
+  ): Page {
+    return updatePage(
+        UpdatePageRequest(
+            pageId = pageId,
+            properties = properties,
+            archived = archived,
+            icon = icon,
+            cover = cover,
+        ))
+  }
+
+  @Deprecated(
+      message = "Use updatePage method instead",
+      replaceWith = ReplaceWith(expression = "updatePage(UpdatePageRequest())"))
+  fun updatePageProperties(request: UpdatePageRequest): Page {
+    return updatePage(request)
+  }
+
+  // -----------------------------------------------
+  // retrievePagePropertyItem
+  // -----------------------------------------------
+
+  fun retrievePagePropertyItem(
+      pageId: String,
+      propertyId: String,
+      startCursor: String? = null,
+      pageSize: Int? = null,
+  ): PagePropertyItem {
+    return retrievePagePropertyItem(
+        RetrievePagePropertyItemRequest(
+            pageId = pageId,
+            propertyId = propertyId,
+            startCursor = startCursor,
+            pageSize = pageSize,
+        ))
+  }
+
+  fun retrievePagePropertyItem(request: RetrievePagePropertyItemRequest): PagePropertyItem {
+    val url =
+        "$baseUrl/pages/${urlEncode(request.pageId)}/properties/${urlEncode(request.propertyId)}"
+    val httpResponse =
+        httpClient.get(
+            logger = logger,
+            url = url,
+            query = request.toQuery(),
+            headers = buildRequestHeaders(emptyMap()))
+    if (httpResponse.status == 200) {
+      return jsonSerializer.toPagePropertyItem(httpResponse.body)
     } else {
       throw NotionAPIError(
           error = jsonSerializer.toError(httpResponse.body),

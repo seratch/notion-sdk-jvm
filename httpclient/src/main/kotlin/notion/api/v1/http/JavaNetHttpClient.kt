@@ -105,4 +105,33 @@ class JavaNetHttpClient(
       throw e
     }
   }
+
+  override fun delete(
+      logger: NotionLogger,
+      url: String,
+      query: Map<String, String>,
+      headers: Map<String, String>
+  ): NotionHttpResponse {
+    val startTimeMillis = System.currentTimeMillis()
+    val fullUrl = buildFullUrl(url, buildQueryString(query))
+    val req =
+        HttpRequest.newBuilder()
+            .DELETE()
+            .uri(URI(fullUrl))
+            .timeout(Duration.ofMillis(readTimeoutMillis.toLong()))
+    headers.forEach { (name, value) -> req.header(name, value) }
+    val request = req.build()
+    debugLogStart(logger, request.method(), fullUrl, "")
+    try {
+      val resp = client.send(request, HttpResponse.BodyHandlers.ofString())
+      val response =
+          NotionHttpResponse(
+              status = resp.statusCode(), headers = resp.headers().map(), body = resp.body())
+      debugLogSuccess(logger, startTimeMillis, response)
+      return response
+    } catch (e: Exception) {
+      warnLogFailure(logger, e)
+      throw e
+    }
+  }
 }

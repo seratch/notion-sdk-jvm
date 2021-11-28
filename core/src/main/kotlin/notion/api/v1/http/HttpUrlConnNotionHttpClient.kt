@@ -100,6 +100,33 @@ constructor(
     }
   }
 
+  override fun delete(
+      logger: NotionLogger,
+      url: String,
+      query: Map<String, String>,
+      headers: Map<String, String>
+  ): NotionHttpResponse {
+    val startTimeMillis = System.currentTimeMillis()
+    val q = buildQueryString(query)
+    val fullUrl = buildFullUrl(url, q)
+    val conn = buildConnectionObject(fullUrl, headers)
+    try {
+      conn.requestMethod = "DELETE"
+      debugLogStart(logger, conn.requestMethod, fullUrl, null)
+      connect(conn).use { input ->
+        val response =
+            NotionHttpResponse(
+                status = conn.responseCode,
+                body = readResponseBody(input),
+                headers = conn.headerFields)
+        debugLogSuccess(logger, startTimeMillis, response)
+        return response
+      }
+    } finally {
+      disconnect(conn, logger)
+    }
+  }
+
   // -----------------------------------------------
 
   private fun buildConnectionObject(

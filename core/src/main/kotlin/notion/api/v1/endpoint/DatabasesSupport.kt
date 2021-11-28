@@ -9,10 +9,7 @@ import notion.api.v1.model.common.Icon
 import notion.api.v1.model.databases.*
 import notion.api.v1.model.databases.query.filter.QueryTopLevelFilter
 import notion.api.v1.model.databases.query.sort.QuerySort
-import notion.api.v1.request.databases.CreateDatabaseRequest
-import notion.api.v1.request.databases.ListDatabasesRequest
-import notion.api.v1.request.databases.QueryDatabaseRequest
-import notion.api.v1.request.databases.RetrieveDatabaseRequest
+import notion.api.v1.request.databases.*
 
 interface DatabasesSupport : EndpointsSupport {
   val httpClient: NotionHttpClient
@@ -59,17 +56,60 @@ interface DatabasesSupport : EndpointsSupport {
   }
 
   // -----------------------------------------------
+  // updateDatabase
+  // -----------------------------------------------
+
+  fun updateDatabase(
+      databaseId: String,
+      title: List<DatabaseProperty.RichText>? = null,
+      properties: Map<String, DatabasePropertySchema>? = null,
+  ): Database {
+    return updateDatabase(
+        UpdateDatabaseRequest(
+            id = databaseId,
+            title = title,
+            properties = properties,
+        ))
+  }
+
+  fun updateDatabase(request: UpdateDatabaseRequest): Database {
+    val httpResponse =
+        httpClient.patchTextBody(
+            logger = logger,
+            url = "$baseUrl/databases/${urlEncode(request.id)}",
+            body = jsonSerializer.toJsonString(request),
+            headers = buildRequestHeaders(contentTypeJson()))
+    if (httpResponse.status == 200) {
+      return jsonSerializer.toDatabase(httpResponse.body)
+    } else {
+      throw NotionAPIError(
+          error = jsonSerializer.toError(httpResponse.body),
+          httpResponse = httpResponse,
+      )
+    }
+  }
+
+  // -----------------------------------------------
   // listDatabases
   // -----------------------------------------------
 
+  @Deprecated(
+      message = "This endpoint is no longer recommended, use search instead.",
+      replaceWith = ReplaceWith("search(query)"))
   fun listDatabases(): Databases {
     return listDatabases(ListDatabasesRequest())
   }
 
+  @Deprecated(
+      message = "This endpoint is no longer recommended, use search instead.",
+      replaceWith = ReplaceWith("search(query)"))
   fun listDatabases(pageSize: Int? = null, startCursor: String? = null): Databases {
     return listDatabases(ListDatabasesRequest(startCursor = startCursor, pageSize = pageSize))
   }
 
+  @Deprecated(
+      message = "This endpoint is no longer recommended, use search instead.",
+      replaceWith = ReplaceWith("search(query)"))
   fun listDatabases(request: ListDatabasesRequest): Databases {
     val httpResponse =
         httpClient.get(

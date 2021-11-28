@@ -59,6 +59,27 @@ class DatabasesTest {
                           "https://www.notion.so/front-static/external/readme/images/api-hanging@2x.png"),
           )
       assertNotNull(database)
+      val update1 =
+          client.updateDatabase(
+              databaseId = database.id,
+              title =
+                  listOf(
+                      prop.RichText(
+                          text = prop.RichText.Text(content = title + "_"),
+                          plainText = title + "_")))
+      assertNotNull(update1)
+      assertEquals(title + "_", update1.title[0].text?.content)
+
+      val update2 =
+          client.updateDatabase(
+              databaseId = database.id,
+              properties =
+                  mapOf(
+                      "Title" to TitlePropertySchema(),
+                      "Description___" to RichTextPropertySchema()))
+      assertNotNull(update2)
+      assertEquals(title + "_", update2.title[0].text?.content)
+      assertTrue(update2.properties.keys.contains("Description___"))
     }
   }
 
@@ -76,11 +97,18 @@ class DatabasesTest {
   @Test
   fun query_property() {
     NotionClient(token = System.getenv("NOTION_TOKEN")).use { client ->
-      val databases = client.listDatabases()
-      assertTrue { databases.results.isNotEmpty() }
-
+      // Find the "Test Database" from the list
       val database =
-          databases.results.find { it.title.any { t -> t.plainText.contains("Test Database") } }!!
+          client
+              .search("Test Database")
+              .results
+              .find {
+                it.objectType == ObjectType.Database &&
+                    it.asDatabase().properties.containsKey("Severity")
+              }
+              ?.asDatabase()
+              ?: throw IllegalStateException(
+                  "Create a database named 'Test Database' and invite this app's user!")
 
       val queryResult =
           client.queryDatabase(

@@ -1,4 +1,5 @@
 import notion.api.v1.NotionClient
+import notion.api.v1.model.common.ObjectType
 import notion.api.v1.model.pages.PageParent
 import notion.api.v1.model.pages.PageProperty as prop
 
@@ -6,11 +7,12 @@ import notion.api.v1.model.pages.PageProperty as prop
 fun main() {
     val client = NotionClient(token = System.getenv("NOTION_TOKEN"))
     client.use {
-
-        // Look up all databases that this app can access
-        val databases = client.listDatabases()
         // Find the "Test Database" from the list
-        val database = databases.results.find { it.title.any { t -> t.plainText.contains("Test Database") } }
+        val database = client.search("Test Database").results
+            .find {
+                it.objectType == ObjectType.Database &&
+                it.asDatabase().properties.containsKey("Severity")
+        }?.asDatabase()
             ?: throw IllegalStateException("Create a database named 'Test Database' and invite this app's user!")
 
         // All the options for "Severity" property (select type)

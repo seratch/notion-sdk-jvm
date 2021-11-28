@@ -29,6 +29,13 @@ interface NotionHttpClient : AutoCloseable, Closeable {
       headers: Map<String, String>
   ): NotionHttpResponse
 
+  fun delete(
+      logger: NotionLogger,
+      url: String,
+      query: Map<String, String> = emptyMap(),
+      headers: Map<String, String>,
+  ): NotionHttpResponse
+
   override fun close() {}
 
   // ------------------------------

@@ -15,7 +15,7 @@ Here is an [Notion API](https://developers.notion.com/) SDK for any JVM language
 
 This project aims to provide a Notion API client for any JVM language developers without hurdles. To realize the goal, its code is written in Kotlin with a nice consideration for Java compatibility.
 
-This SDK works on [Android runtime](https://developer.android.com/) and any distributions based on [OpenJDK](https://openjdk.java.net/). With regard to programming languages, this project provides out-of-the-box supports for Java (of course!), [Kotlin](https://kotlinlang.org/), and the novel [Scala 3](https://docs.scala-lang.org/scala3/)! We don't have nice wrappers for some other JVM lanaguages such as [Groovy](https://groovy-lang.org/) and [Clojure](https://clojure.org/), but your code using this library should work in the lanaguges too.
+This SDK works on [Android runtime](https://developer.android.com/) and any distributions based on [OpenJDK](https://openjdk.java.net/). With regard to programming languages, this project provides out-of-the-box supports for Java (of course!) and [Kotlin](https://kotlinlang.org/). We don't have nice wrappers for some other JVM languages such as [Scala](https://www.scala-lang.org/), [Groovy](https://groovy-lang.org/), and [Clojure](https://clojure.org/), but your code using this library should work in the languages too.
 
 ### Getting Started
 
@@ -51,17 +51,18 @@ As this library is in Kotlin, using in the same language is the smoothest :) Let
 
 ```kotlin
 import notion.api.v1.NotionClient
+import notion.api.v1.model.common.ObjectType
 import notion.api.v1.model.pages.PageParent
 import notion.api.v1.model.pages.PageProperty as prop
+
 
 fun main() {
     val client = NotionClient(token = System.getenv("NOTION_TOKEN"))
     client.use {
-
-        // Look up all databases that this app can access
-        val databases = client.listDatabases()
         // Find the "Test Database" from the list
-        val database = databases.results.find { it.title.any { t -> t.plainText.contains("Test Database") } }
+        val database = client.search("Test Database").results.find {
+              it.objectType == ObjectType.Database && it.asDatabase().properties.containsKey("Severity")
+            }?.asDatabase()
             ?: throw IllegalStateException("Create a database named 'Test Database' and invite this app's user!")
 
         // All the options for "Severity" property (select type)
@@ -78,7 +79,7 @@ fun main() {
             // Set values to the page's properties
             // (these must be pre-defined before this API call)
             properties = mapOf(
-                "title" to prop(title = listOf(prop.RichText(text = prop.RichText.Text(content = "Fix a bug")))),
+                "Title" to prop(title = listOf(prop.RichText(text = prop.RichText.Text(content = "Fix a bug")))),
                 "Severity" to prop(select = severityOptions?.find { it.name == "High" }),
                 "Tags" to prop(multiSelect = tagOptions),
                 "Due" to prop(date = prop.Date(start = "2021-05-13", end = "2021-12-31")),
@@ -121,69 +122,6 @@ public class Readme {
             Databases databases = client.listDatabases();
         }
     }
-}
-```
-
-#### Scala 3 Support
-
-Although many classes are still Java/Kotlin objects, you can seamlessly use this SDK in [Scala 3](https://docs.scala-lang.org/scala3/) too! Here is a simple `build.sbt` example:
-
-```sbt
-val notionSdkVersion = "0.1.19"
-
-lazy val root = project
-  .in(file("."))
-  .settings(
-    scalaVersion := "3.0.0",
-    libraryDependencies ++= Seq(
-      "com.github.seratch" % "notion-sdk-jvm-scala3" % notionSdkVersion,
-      "com.github.seratch" % "notion-sdk-jvm-httpclient" % notionSdkVersion,
-    )
-  )
-```
-
-Save the following source code as `Main.scala`. You can run the app by hitting `sbt run`.
-
-```scala
-import notion.api.v1.ScalaNotionClient
-import notion.api.v1.http.JavaNetHttpClient
-import notion.api.v1.model.common.PropertyType
-import notion.api.v1.model.databases.query.filter.PropertyFilter
-import notion.api.v1.model.databases.query.filter.condition.TextFilter
-
-import scala.jdk.CollectionConverters._
-
-@main def example: Unit = {
-
-  val client = ScalaNotionClient(
-    token = System.getenv("NOTION_TOKEN"),
-    httpClient = new JavaNetHttpClient()
-  )
-
-  val users = client.listUsers(pageSize = 2)
-
-  val databaseId = client
-    .listDatabases()
-    .getResults
-    .asScala
-    .find(_.getTitle.get(0).getPlainText == "Test Database")
-    .get
-    .getId
-
-  val queryResult = client.queryDatabase(
-    databaseId = databaseId,
-    filter = {
-      val filter = new PropertyFilter()
-      filter.setProperty(PropertyType.Title)
-      filter.setTitle {
-        val title = new TextFilter()
-        title.setContains("bug")
-        title
-      }
-      filter
-    },
-    pageSize = 3
-  )
 }
 ```
 

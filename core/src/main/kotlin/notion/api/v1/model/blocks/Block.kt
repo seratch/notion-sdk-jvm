@@ -377,6 +377,7 @@ constructor(
     override var lastEditedTime: String? = null,
     override var hasChildren: Boolean? = null,
     override var archived: Boolean? = null,
+    val unsupported: Element? = null,
 ) : Block {
 
   // for other JVM languages
@@ -394,4 +395,6 @@ constructor(
       lastEditedTime,
       hasChildren,
       archived)
+
+  open class Element
 }

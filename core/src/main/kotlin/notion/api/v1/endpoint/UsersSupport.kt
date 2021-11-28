@@ -16,6 +16,24 @@ interface UsersSupport : EndpointsSupport {
   val baseUrl: String
 
   // -----------------------------------------------
+  // retrieveBotUser
+  // -----------------------------------------------
+
+  fun retrieveBotUser(): User {
+    val httpResponse =
+        httpClient.get(
+            logger = logger, url = "$baseUrl/users/me", headers = buildRequestHeaders(emptyMap()))
+    if (httpResponse.status == 200) {
+      return jsonSerializer.toUser(httpResponse.body)
+    } else {
+      throw NotionAPIError(
+          error = jsonSerializer.toError(httpResponse.body),
+          httpResponse = httpResponse,
+      )
+    }
+  }
+
+  // -----------------------------------------------
   // retrieveUser
   // -----------------------------------------------
 

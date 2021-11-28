@@ -98,6 +98,18 @@ class OkHttp5Client : NotionHttpClient {
     return perform(req, body, logger)
   }
 
+  override fun delete(
+      logger: NotionLogger,
+      url: String,
+      query: Map<String, String>,
+      headers: Map<String, String>
+  ): NotionHttpResponse {
+    val fullUrl = buildFullUrl(url, buildQueryString(query))
+    val req = Request.Builder().url(fullUrl).delete()
+    headers.forEach { (name, value) -> req.header(name, value) }
+    return perform(req, "", logger)
+  }
+
   @Throws(Exception::class)
   override fun close() {
     this.client.dispatcher.executorService.shutdown()

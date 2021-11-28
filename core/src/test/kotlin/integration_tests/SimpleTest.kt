@@ -4,6 +4,9 @@ import kotlin.test.assertFalse
 import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
 import notion.api.v1.NotionClient
+import notion.api.v1.model.blocks.HeadingOneBlock
+import notion.api.v1.model.blocks.ToDoBlock
+import notion.api.v1.model.common.ObjectType
 import notion.api.v1.model.databases.DatabaseProperty
 import notion.api.v1.model.pages.Page
 import notion.api.v1.model.pages.PageParent
@@ -12,14 +15,40 @@ import org.junit.Test
 
 class SimpleTest {
 
+  private val pageChildren =
+      listOf(
+          HeadingOneBlock(
+              heading1 =
+                  HeadingOneBlock.Element(
+                      text =
+                          listOf(
+                              prop.RichText(text = prop.RichText.Text(content = "head1 text"))))),
+          ToDoBlock(
+              toDo =
+                  ToDoBlock.Element(
+                      checked = true,
+                      text =
+                          listOf(
+                              prop.RichText(
+                                  text =
+                                      prop.RichText.Text(content = "ToDo block element text"))))),
+      )
+
   @Test
   fun pages() {
     NotionClient(token = System.getenv("NOTION_TOKEN")).use { client ->
-      val databases = client.listDatabases()
-      assertTrue { databases.results.isNotEmpty() }
-
+      // Find the "Test Database" from the list
       val database =
-          databases.results.find { it.title.any { t -> t.plainText.contains("Test Database") } }!!
+          client
+              .search("Test Database")
+              .results
+              .find {
+                it.objectType == ObjectType.Database &&
+                    it.asDatabase().properties.containsKey("Severity")
+              }
+              ?.asDatabase()
+              ?: throw IllegalStateException(
+                  "Create a database named 'Test Database' and invite this app's user!")
 
       // All the options for "Severity" property (select type)
       val severityOptions = database.properties?.get("Severity")?.select?.options
@@ -36,6 +65,9 @@ class SimpleTest {
       // The user object for "Assignee" property (people type)
       val assignee = client.listUsers().results[0] // just picking the first user up
 
+      val titleProp =
+          prop(title = listOf(prop.RichText(text = prop.RichText.Text(content = "Fix a bug"))))
+      val severityProp = prop(select = severityOptions?.find { it.name == "High" })
       val newPage: Page =
           client.createPage(
               // Use the "Test Database" as this page's parent
@@ -44,13 +76,8 @@ class SimpleTest {
               // (these must be pre-defined before this API call)
               properties =
                   mapOf(
-                      "Title" to
-                          prop(
-                              title =
-                                  listOf(
-                                      prop.RichText(
-                                          text = prop.RichText.Text(content = "Fix a bug")))),
-                      "Severity" to prop(select = severityOptions?.find { it.name == "High" }),
+                      "Title" to titleProp,
+                      "Severity" to severityProp,
                       "Tags" to prop(multiSelect = tagOptions),
                       "Due" to prop(date = prop.Date(start = "2021-05-13", end = "2021-12-31")),
                       "Velocity Points" to prop(number = 3),
@@ -58,11 +85,22 @@ class SimpleTest {
                       "Done" to prop(checkbox = true),
                       "Link" to prop(url = "https://www.example.com"),
                       "Contact" to prop(email = "foo@example.com"),
-                  ))
+                  ),
+              children = pageChildren,
+          )
       assertNotNull(newPage)
 
+      // number type page property
+      val numberPagePropertyId = database.properties["Velocity Points"]!!.id
+      val numberProperty =
+          client.retrievePagePropertyItem(pageId = newPage.id, propertyId = numberPagePropertyId)
+      assertNotNull(numberProperty)
+      // list type page property
+      val listProperty = client.retrievePagePropertyItem(pageId = newPage.id, propertyId = "title")
+      assertNotNull(listProperty)
+
       val patchResult =
-          client.updatePageProperties(
+          client.updatePage(
               pageId = newPage.id,
               // Update only "Severity" property
               properties =
@@ -75,8 +113,12 @@ class SimpleTest {
       assertNotNull(fetchedPage)
       assertFalse(fetchedPage.archived!!)
 
+      // check child_page block
+      val block = client.retrieveBlock(newPage.id)
+      assertNotNull(block)
+
       val archivedPage =
-          client.updatePageProperties(pageId = newPage.id, properties = emptyMap(), archived = true)
+          client.updatePage(pageId = newPage.id, properties = emptyMap(), archived = true)
       assertTrue(archivedPage.archived!!)
     }
   }
