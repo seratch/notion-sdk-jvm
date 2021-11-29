@@ -36,10 +36,11 @@ class GsonSerializer : NotionJsonSerializer {
     val builder =
         GsonBuilder()
             .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-            .registerTypeAdapter(SearchResult::class.java, SearchResultParser())
-            .registerTypeAdapter(Block::class.java, BlockParser())
-            .registerTypeAdapter(Icon::class.java, IconParser())
-            .registerTypeAdapter(Cover::class.java, CoverParser())
+            .registerTypeAdapter(
+                SearchResult::class.java, SearchResultParser(unknownPropertyDetection))
+            .registerTypeAdapter(Block::class.java, BlockParser(unknownPropertyDetection))
+            .registerTypeAdapter(Icon::class.java, IconParser(unknownPropertyDetection))
+            .registerTypeAdapter(Cover::class.java, CoverParser(unknownPropertyDetection))
 
     gson =
         if (unknownPropertyDetection) {

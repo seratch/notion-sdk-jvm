@@ -6,7 +6,8 @@ import notion.api.v1.model.common.Emoji
 import notion.api.v1.model.common.File
 import notion.api.v1.model.common.Icon
 
-class IconParser : JsonDeserializer<Icon>, JsonSerializer<Icon> {
+class IconParser(private val unknownPropertyDetection: Boolean = false) :
+    JsonDeserializer<Icon>, JsonSerializer<Icon> {
 
   override fun deserialize(
       json: JsonElement,
@@ -18,7 +19,11 @@ class IconParser : JsonDeserializer<Icon>, JsonSerializer<Icon> {
       "external" -> return context.deserialize(json, File::class.java)
       "emoji" -> return context.deserialize(json, Emoji::class.java)
     }
-    return null
+    if (unknownPropertyDetection) {
+      throw IllegalArgumentException("Unsupported icon object detected: $json")
+    } else {
+      return null
+    }
   }
 
   override fun serialize(

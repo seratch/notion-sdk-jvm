@@ -5,7 +5,8 @@ import java.lang.reflect.Type
 import notion.api.v1.model.common.Cover
 import notion.api.v1.model.common.File
 
-class CoverParser : JsonDeserializer<Cover>, JsonSerializer<Cover> {
+class CoverParser(private val unknownPropertyDetection: Boolean = false) :
+    JsonDeserializer<Cover>, JsonSerializer<Cover> {
 
   override fun deserialize(
       json: JsonElement,
@@ -16,7 +17,11 @@ class CoverParser : JsonDeserializer<Cover>, JsonSerializer<Cover> {
       "file" -> return context.deserialize(json, File::class.java)
       "external" -> return context.deserialize(json, File::class.java)
     }
-    return null
+    if (unknownPropertyDetection) {
+      throw IllegalArgumentException("Unsupported cover object detected: $json")
+    } else {
+      return null
+    }
   }
 
   override fun serialize(

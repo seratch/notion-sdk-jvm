@@ -1,10 +1,6 @@
 package notion.api.v1.model.blocks
 
-import com.google.gson.annotations.SerializedName
-import java.util.*
-import notion.api.v1.model.common.ObjectType
-import notion.api.v1.model.common.WithObjectType
-import notion.api.v1.model.pages.PageProperty
+import notion.api.v1.model.common.*
 
 interface Block : WithObjectType {
   val type: BlockType
@@ -50,351 +46,87 @@ interface Block : WithObjectType {
       if (type == BlockType.ChildPage) this as ChildPageBlock
       else throw IllegalStateException("Failed to cast $type block to ChildPageBlock")
 
+  fun asLinkToPage(): LinkToPageBlock =
+      if (type == BlockType.LinkToPage) this as LinkToPageBlock
+      else throw IllegalStateException("Failed to cast $type block to LinkToPageBlock")
+
+  fun asQuote(): QuoteBlock =
+      if (type == BlockType.Quote) this as QuoteBlock
+      else throw IllegalStateException("Failed to cast $type block to QuoteBlock")
+
+  fun asCallout(): CalloutBlock =
+      if (type == BlockType.Callout) this as CalloutBlock
+      else throw IllegalStateException("Failed to cast $type block to CalloutBlock")
+
+  fun asVideo(): VideoBlock =
+      if (type == BlockType.Video) this as VideoBlock
+      else throw IllegalStateException("Failed to cast $type block to VideoBlock")
+
+  fun asDivider(): DividerBlock =
+      if (type == BlockType.Divider) this as DividerBlock
+      else throw IllegalStateException("Failed to cast $type block to DividerBlock")
+
+  fun asSyncedBlock(): SyncedBlock =
+      if (type == BlockType.SyncedBlock) this as SyncedBlock
+      else throw IllegalStateException("Failed to cast $type block to SyncedBlock")
+
+  fun asTemplate(): TemplateBlock =
+      if (type == BlockType.Template) this as TemplateBlock
+      else throw IllegalStateException("Failed to cast $type block to TemplateBlock")
+
+  fun asCode(): CodeBlock =
+      if (type == BlockType.Code) this as CodeBlock
+      else throw IllegalStateException("Failed to cast $type block to CodeBlock")
+
+  fun asLinkPreview(): LinkPreviewBlock =
+      if (type == BlockType.LinkPreview) this as LinkPreviewBlock
+      else throw IllegalStateException("Failed to cast $type block to LinkPreviewBlock")
+
+  fun asBookmark(): BookmarkBlock =
+      if (type == BlockType.Bookmark) this as BookmarkBlock
+      else throw IllegalStateException("Failed to cast $type block to BookmarkBlock")
+
+  fun asEquation(): EquationBlock =
+      if (type == BlockType.Equation) this as EquationBlock
+      else throw IllegalStateException("Failed to cast $type block to EquationBlock")
+
+  fun asTableOfContents(): TableOfContentsBlock =
+      if (type == BlockType.TableOfContents) this as TableOfContentsBlock
+      else throw IllegalStateException("Failed to cast $type block to TableOfContentsBlock")
+
+  fun asBreadcrumb(): BreadcrumbBlock =
+      if (type == BlockType.Breadcrumb) this as BreadcrumbBlock
+      else throw IllegalStateException("Failed to cast $type block to BreadcrumbBlock")
+
+  fun asColumn(): ColumnBlock =
+      if (type == BlockType.Column) this as ColumnBlock
+      else throw IllegalStateException("Failed to cast $type block to ColumnBlock")
+
+  fun asColumnList(): ColumnListBlock =
+      if (type == BlockType.ColumnList) this as ColumnListBlock
+      else throw IllegalStateException("Failed to cast $type block to ColumnListBlock")
+
+  fun asImage(): ImageBlock =
+      if (type == BlockType.Image) this as ImageBlock
+      else throw IllegalStateException("Failed to cast $type block to ImageBlock")
+
+  fun asFile(): FileBlock =
+      if (type == BlockType.File) this as FileBlock
+      else throw IllegalStateException("Failed to cast $type block to FileBlock")
+
+  fun asPDF(): PDFBlock =
+      if (type == BlockType.PDF) this as PDFBlock
+      else throw IllegalStateException("Failed to cast $type block to PDFBlock")
+
+  fun asEmbed(): EmbedBlock =
+      if (type == BlockType.Embed) this as EmbedBlock
+      else throw IllegalStateException("Failed to cast $type block to EmbedBlock")
+
+  fun asChildDatabase(): ChildDatabaseBlock =
+      if (type == BlockType.ChildDatabase) this as ChildDatabaseBlock
+      else throw IllegalStateException("Failed to cast $type block to ChildDatabaseBlock")
+
   fun asUnsupported(): UnsupportedBlock =
       if (type == BlockType.Unsupported) this as UnsupportedBlock
       else throw IllegalStateException("Failed to cast $type block to UnsupportedBlock")
-}
-
-open class ParagraphBlock
-@JvmOverloads
-constructor(
-    @SerializedName("object") override val objectType: ObjectType = ObjectType.Block,
-    override var type: BlockType = BlockType.Paragraph,
-    override var id: String? = UUID.randomUUID().toString(),
-    override var createdTime: String? = null,
-    override var lastEditedTime: String? = null,
-    override var hasChildren: Boolean? = null,
-    override var archived: Boolean? = null,
-    val paragraph: Element,
-) : Block {
-
-  // for other JVM languages
-  constructor(
-      paragraph: Element,
-      id: String? = UUID.randomUUID().toString(),
-      hasChildren: Boolean? = null,
-      createdTime: String? = null,
-      lastEditedTime: String? = null,
-  ) : this(
-      objectType = ObjectType.Block,
-      type = BlockType.Paragraph,
-      id = id,
-      createdTime = createdTime,
-      lastEditedTime = lastEditedTime,
-      hasChildren = hasChildren,
-      paragraph = paragraph)
-
-  open class Element
-  @JvmOverloads
-  constructor(var text: List<PageProperty.RichText>, var children: List<Block>? = null)
-}
-
-open class HeadingOneBlock
-@JvmOverloads
-constructor(
-    @SerializedName("object") override val objectType: ObjectType = ObjectType.Block,
-    override val type: BlockType = BlockType.HeadingOne,
-    override var id: String? = UUID.randomUUID().toString(),
-    override var createdTime: String? = null,
-    override var lastEditedTime: String? = null,
-    override var hasChildren: Boolean? = null,
-    override var archived: Boolean? = null,
-    @SerializedName("heading_1") val heading1: Element,
-) : Block {
-
-  // for other JVM languages
-  constructor(
-      heading1: Element,
-      id: String? = UUID.randomUUID().toString(),
-      hasChildren: Boolean? = null,
-      createdTime: String? = null,
-      lastEditedTime: String? = null,
-  ) : this(
-      objectType = ObjectType.Block,
-      type = BlockType.HeadingOne,
-      id = id,
-      createdTime = createdTime,
-      lastEditedTime = lastEditedTime,
-      hasChildren = hasChildren,
-      heading1 = heading1)
-
-  open class Element
-  @JvmOverloads
-  constructor(
-      var text: List<PageProperty.RichText>,
-  )
-}
-
-open class HeadingTwoBlock
-@JvmOverloads
-constructor(
-    @SerializedName("object") override val objectType: ObjectType = ObjectType.Block,
-    override val type: BlockType = BlockType.HeadingTwo,
-    override var id: String? = UUID.randomUUID().toString(),
-    override var createdTime: String? = null,
-    override var lastEditedTime: String? = null,
-    override var hasChildren: Boolean? = null,
-    override var archived: Boolean? = null,
-    @SerializedName("heading_2") val heading2: Element,
-) : Block {
-
-  // for other JVM languages
-  constructor(
-      heading2: Element,
-      id: String? = UUID.randomUUID().toString(),
-      hasChildren: Boolean? = null,
-      createdTime: String? = null,
-      lastEditedTime: String? = null,
-  ) : this(
-      objectType = ObjectType.Block,
-      type = BlockType.HeadingTwo,
-      id = id,
-      createdTime = createdTime,
-      lastEditedTime = lastEditedTime,
-      hasChildren = hasChildren,
-      heading2 = heading2)
-
-  open class Element(
-      var text: List<PageProperty.RichText>,
-  )
-}
-
-open class HeadingThreeBlock
-@JvmOverloads
-constructor(
-    @SerializedName("object") override val objectType: ObjectType = ObjectType.Block,
-    override val type: BlockType = BlockType.HeadingThree,
-    override var id: String? = UUID.randomUUID().toString(),
-    override var createdTime: String? = null,
-    override var lastEditedTime: String? = null,
-    override var hasChildren: Boolean? = null,
-    override var archived: Boolean? = null,
-    @SerializedName("heading_3") val heading3: Element,
-) : Block {
-
-  // for other JVM languages
-  constructor(
-      heading3: Element,
-      id: String? = UUID.randomUUID().toString(),
-      hasChildren: Boolean? = null,
-      createdTime: String? = null,
-      lastEditedTime: String? = null,
-  ) : this(
-      objectType = ObjectType.Block,
-      type = BlockType.HeadingThree,
-      id = id,
-      createdTime = createdTime,
-      lastEditedTime = lastEditedTime,
-      hasChildren = hasChildren,
-      heading3 = heading3)
-
-  open class Element
-  @JvmOverloads
-  constructor(
-      var text: List<PageProperty.RichText>,
-  )
-}
-
-open class BulletedListItemBlock
-@JvmOverloads
-constructor(
-    @SerializedName("object") override val objectType: ObjectType = ObjectType.Block,
-    override val type: BlockType = BlockType.BulletedListItem,
-    override var id: String? = UUID.randomUUID().toString(),
-    override var createdTime: String? = null,
-    override var lastEditedTime: String? = null,
-    override var hasChildren: Boolean? = null,
-    override var archived: Boolean? = null,
-    val bulletedListItem: Element,
-) : Block {
-
-  // for other JVM languages
-  constructor(
-      bulletedListItem: Element,
-      id: String? = UUID.randomUUID().toString(),
-      hasChildren: Boolean? = null,
-      createdTime: String? = null,
-      lastEditedTime: String? = null,
-  ) : this(
-      objectType = ObjectType.Block,
-      type = BlockType.BulletedListItem,
-      id = id,
-      createdTime = createdTime,
-      lastEditedTime = lastEditedTime,
-      hasChildren = hasChildren,
-      bulletedListItem = bulletedListItem)
-
-  open class Element
-  @JvmOverloads
-  constructor(var text: List<PageProperty.RichText>, var children: List<Block>? = null)
-}
-
-open class NumberedListItemBlock
-@JvmOverloads
-constructor(
-    @SerializedName("object") override val objectType: ObjectType = ObjectType.Block,
-    override val type: BlockType = BlockType.NumberedListItem,
-    override var id: String? = UUID.randomUUID().toString(),
-    override var createdTime: String? = null,
-    override var lastEditedTime: String? = null,
-    override var hasChildren: Boolean? = null,
-    override var archived: Boolean? = null,
-    val numberedListItem: Element,
-) : Block {
-
-  // for other JVM languages
-  constructor(
-      numberedListItem: Element,
-      id: String? = UUID.randomUUID().toString(),
-      hasChildren: Boolean? = null,
-      createdTime: String? = null,
-      lastEditedTime: String? = null,
-  ) : this(
-      objectType = ObjectType.Block,
-      type = BlockType.NumberedListItem,
-      id = id,
-      createdTime = createdTime,
-      lastEditedTime = lastEditedTime,
-      hasChildren = hasChildren,
-      numberedListItem = numberedListItem)
-
-  open class Element
-  @JvmOverloads
-  constructor(var text: List<PageProperty.RichText>, var children: List<Block>? = null)
-}
-
-open class ToDoBlock
-@JvmOverloads
-constructor(
-    @SerializedName("object") override val objectType: ObjectType = ObjectType.Block,
-    override val type: BlockType = BlockType.ToDo,
-    override var id: String? = UUID.randomUUID().toString(),
-    override var createdTime: String? = null,
-    override var lastEditedTime: String? = null,
-    override var hasChildren: Boolean? = null,
-    override var archived: Boolean? = null,
-    val toDo: Element,
-) : Block {
-
-  // for other JVM languages
-  constructor(
-      toDo: Element,
-      id: String? = UUID.randomUUID().toString(),
-      hasChildren: Boolean? = null,
-      createdTime: String? = null,
-      lastEditedTime: String? = null,
-  ) : this(
-      objectType = ObjectType.Block,
-      type = BlockType.ToDo,
-      id = id,
-      createdTime = createdTime,
-      lastEditedTime = lastEditedTime,
-      hasChildren = hasChildren,
-      toDo = toDo)
-
-  open class Element
-  @JvmOverloads
-  constructor(
-      var checked: Boolean = false,
-      var text: List<PageProperty.RichText>? = null,
-      var children: List<Block>? = null
-  )
-}
-
-open class ToggleBlock
-@JvmOverloads
-constructor(
-    @SerializedName("object") override val objectType: ObjectType = ObjectType.Block,
-    override val type: BlockType = BlockType.Toggle,
-    override var id: String? = UUID.randomUUID().toString(),
-    override var createdTime: String? = null,
-    override var lastEditedTime: String? = null,
-    override var hasChildren: Boolean? = null,
-    override var archived: Boolean? = null,
-    val toggle: Element,
-) : Block {
-
-  // for other JVM languages
-  constructor(
-      toggle: Element,
-      id: String? = UUID.randomUUID().toString(),
-      hasChildren: Boolean? = null,
-      createdTime: String? = null,
-      lastEditedTime: String? = null,
-  ) : this(
-      objectType = ObjectType.Block,
-      type = BlockType.Toggle,
-      id = id,
-      createdTime = createdTime,
-      lastEditedTime = lastEditedTime,
-      hasChildren = hasChildren,
-      toggle = toggle)
-
-  open class Element
-  @JvmOverloads
-  constructor(var text: List<PageProperty.RichText>, var children: List<Block>? = null)
-}
-
-open class ChildPageBlock
-@JvmOverloads
-constructor(
-    @SerializedName("object") override val objectType: ObjectType = ObjectType.Block,
-    override val type: BlockType = BlockType.ChildPage,
-    override var id: String? = UUID.randomUUID().toString(),
-    override var createdTime: String? = null,
-    override var lastEditedTime: String? = null,
-    override var hasChildren: Boolean? = null,
-    override var archived: Boolean? = null,
-    val childPage: Element,
-) : Block {
-
-  // for other JVM languages
-  constructor(
-      childPage: Element,
-      id: String? = UUID.randomUUID().toString(),
-      hasChildren: Boolean? = null,
-      createdTime: String? = null,
-      lastEditedTime: String? = null,
-  ) : this(
-      objectType = ObjectType.Block,
-      type = BlockType.ChildPage,
-      id = id,
-      createdTime = createdTime,
-      lastEditedTime = lastEditedTime,
-      hasChildren = hasChildren,
-      childPage = childPage)
-
-  open class Element @JvmOverloads constructor(var title: String)
-}
-
-open class UnsupportedBlock
-@JvmOverloads
-constructor(
-    @SerializedName("object") override val objectType: ObjectType = ObjectType.Block,
-    override val type: BlockType = BlockType.Unsupported,
-    override var id: String? = UUID.randomUUID().toString(),
-    override var createdTime: String? = null,
-    override var lastEditedTime: String? = null,
-    override var hasChildren: Boolean? = null,
-    override var archived: Boolean? = null,
-    val unsupported: Element? = null,
-) : Block {
-
-  // for other JVM languages
-  constructor(
-      id: String? = UUID.randomUUID().toString(),
-      hasChildren: Boolean? = null,
-      createdTime: String? = null,
-      archived: Boolean? = null,
-      lastEditedTime: String? = null,
-  ) : this(
-      ObjectType.Block,
-      BlockType.Unsupported,
-      id,
-      createdTime,
-      lastEditedTime,
-      hasChildren,
-      archived)
-
-  open class Element
 }

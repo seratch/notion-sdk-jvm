@@ -4,13 +4,17 @@ import com.google.gson.*
 import java.lang.reflect.Type
 import notion.api.v1.model.blocks.*
 
-class BlockParser : JsonDeserializer<Block>, JsonSerializer<Block> {
+class BlockParser(private val unknownPropertyDetection: Boolean = false) :
+    JsonDeserializer<Block>, JsonSerializer<Block> {
 
   override fun deserialize(
       json: JsonElement,
       typeOfT: Type,
       context: JsonDeserializationContext
   ): Block? {
+    if (json == null || json.asJsonObject.get("type") == null) {
+      return null
+    }
     when (json.asJsonObject.get("type").asString) {
       "paragraph" -> return context.deserialize(json, ParagraphBlock::class.java)
       "heading_1" -> return context.deserialize(json, HeadingOneBlock::class.java)
@@ -18,12 +22,36 @@ class BlockParser : JsonDeserializer<Block>, JsonSerializer<Block> {
       "heading_3" -> return context.deserialize(json, HeadingThreeBlock::class.java)
       "bulleted_list_item" -> return context.deserialize(json, BulletedListItemBlock::class.java)
       "numbered_list_item" -> return context.deserialize(json, NumberedListItemBlock::class.java)
+      "link_to_page" -> return context.deserialize(json, LinkToPageBlock::class.java)
+      "link_preview" -> return context.deserialize(json, LinkPreviewBlock::class.java)
+      "quote" -> return context.deserialize(json, QuoteBlock::class.java)
+      "bookmark" -> return context.deserialize(json, BookmarkBlock::class.java)
+      "equation" -> return context.deserialize(json, EquationBlock::class.java)
+      "table_of_contents" -> return context.deserialize(json, TableOfContentsBlock::class.java)
+      "breadcrumb" -> return context.deserialize(json, BreadcrumbBlock::class.java)
+      "column" -> return context.deserialize(json, ColumnBlock::class.java)
+      "column_list" -> return context.deserialize(json, ColumnListBlock::class.java)
+      "code" -> return context.deserialize(json, CodeBlock::class.java)
+      "image" -> return context.deserialize(json, ImageBlock::class.java)
+      "file" -> return context.deserialize(json, FileBlock::class.java)
+      "pdf" -> return context.deserialize(json, PDFBlock::class.java)
+      "embed" -> return context.deserialize(json, EmbedBlock::class.java)
+      "callout" -> return context.deserialize(json, CalloutBlock::class.java)
+      "video" -> return context.deserialize(json, VideoBlock::class.java)
+      "divider" -> return context.deserialize(json, DividerBlock::class.java)
       "to_do" -> return context.deserialize(json, ToDoBlock::class.java)
       "toggle" -> return context.deserialize(json, ToggleBlock::class.java)
+      "child_database" -> return context.deserialize(json, ChildDatabaseBlock::class.java)
       "child_page" -> return context.deserialize(json, ChildPageBlock::class.java)
+      "synced_block" -> return context.deserialize(json, SyncedBlock::class.java)
+      "template" -> return context.deserialize(json, TemplateBlock::class.java)
       "unsupported" -> return context.deserialize(json, UnsupportedBlock::class.java)
     }
-    return null
+    if (unknownPropertyDetection) {
+      throw IllegalArgumentException("Unsupported block detected: $json")
+    } else {
+      return null
+    }
   }
 
   override fun serialize(
