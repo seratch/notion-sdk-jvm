@@ -17,6 +17,7 @@ import notion.api.v1.model.databases.query.sort.QuerySortDirection
 import notion.api.v1.model.databases.query.sort.QuerySortTimestamp
 import notion.api.v1.model.pages.PageParent
 import notion.api.v1.model.pages.PageProperty
+import notion.api.v1.request.search.SearchRequest
 import org.junit.Test
 
 class DatabasesTest {
@@ -24,11 +25,16 @@ class DatabasesTest {
   @Test
   fun creation() {
     NotionClient(token = System.getenv("NOTION_TOKEN")).use { client ->
-      val databases = client.listDatabases()
-      assertTrue { databases.results.isNotEmpty() }
-
       val testDatabase =
-          databases.results.find { it.title.any { t -> t.plainText.contains("Test Database") } }!!
+          client
+              .search(
+                  query = "Test Database",
+                  filter = SearchRequest.SearchFilter("database", property = "object"))
+              .results
+              .find { it.asDatabase().properties.containsKey("Severity") }
+              ?.asDatabase()
+              ?: throw IllegalStateException(
+                  "Create a database named 'Test Database' and invite this app's user!")
 
       val page =
           client.createPage(

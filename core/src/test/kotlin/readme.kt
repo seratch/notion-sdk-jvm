@@ -1,6 +1,7 @@
 import notion.api.v1.NotionClient
 import notion.api.v1.model.common.ObjectType
 import notion.api.v1.model.pages.PageParent
+import notion.api.v1.request.search.SearchRequest
 import notion.api.v1.model.pages.PageProperty as prop
 
 
@@ -8,11 +9,10 @@ fun main() {
     val client = NotionClient(token = System.getenv("NOTION_TOKEN"))
     client.use {
         // Find the "Test Database" from the list
-        val database = client.search("Test Database").results
-            .find {
-                it.objectType == ObjectType.Database &&
-                it.asDatabase().properties.containsKey("Severity")
-        }?.asDatabase()
+        val database = client.search(
+            query = "Test Database",
+            filter = SearchRequest.SearchFilter("database", property = "object")
+        ).results.find { it.asDatabase().properties.containsKey("Severity") }?.asDatabase()
             ?: throw IllegalStateException("Create a database named 'Test Database' and invite this app's user!")
 
         // All the options for "Severity" property (select type)
@@ -43,8 +43,7 @@ fun main() {
         val severityId = newPage.properties["Severity"]!!.id
 
         // Update properties in the page
-        val updatedPage =
-            client.updatePageProperties(
+        val updatedPage = client.updatePage(
                 pageId = newPage.id,
                 // Update only "Severity" property
                 properties = mapOf(

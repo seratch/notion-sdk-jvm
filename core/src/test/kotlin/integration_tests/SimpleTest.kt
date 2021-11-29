@@ -6,11 +6,11 @@ import kotlin.test.assertTrue
 import notion.api.v1.NotionClient
 import notion.api.v1.model.blocks.HeadingOneBlock
 import notion.api.v1.model.blocks.ToDoBlock
-import notion.api.v1.model.common.ObjectType
 import notion.api.v1.model.databases.DatabaseProperty
 import notion.api.v1.model.pages.Page
 import notion.api.v1.model.pages.PageParent
 import notion.api.v1.model.pages.PageProperty as prop
+import notion.api.v1.request.search.SearchRequest
 import org.junit.Test
 
 class SimpleTest {
@@ -40,12 +40,11 @@ class SimpleTest {
       // Find the "Test Database" from the list
       val database =
           client
-              .search("Test Database")
+              .search(
+                  query = "Test Database",
+                  filter = SearchRequest.SearchFilter("database", property = "object"))
               .results
-              .find {
-                it.objectType == ObjectType.Database &&
-                    it.asDatabase().properties.containsKey("Severity")
-              }
+              .find { it.asDatabase().properties.containsKey("Severity") }
               ?.asDatabase()
               ?: throw IllegalStateException(
                   "Create a database named 'Test Database' and invite this app's user!")

@@ -1,13 +1,13 @@
 package integration_tests
 
 import kotlin.test.assertNotNull
-import kotlin.test.assertTrue
 import notion.api.v1.NotionClient
 import notion.api.v1.http.OkHttp3Client
 import notion.api.v1.logging.Slf4jLogger
 import notion.api.v1.model.pages.Page
 import notion.api.v1.model.pages.PageParent
 import notion.api.v1.model.pages.PageProperty
+import notion.api.v1.request.search.SearchRequest
 import org.junit.Test
 
 typealias prop = PageProperty
@@ -20,11 +20,16 @@ class SimpleTest {
       client.httpClient = OkHttp3Client()
       client.logger = Slf4jLogger()
 
-      val databases = client.listDatabases()
-      assertTrue { databases.results.isNotEmpty() }
-
       val database =
-          databases.results.find { it.title.any { t -> t.plainText.contains("Test Database") } }!!
+          client
+              .search(
+                  query = "Test Database",
+                  filter = SearchRequest.SearchFilter("database", property = "object"))
+              .results
+              .find { it.asDatabase().properties.containsKey("Severity") }
+              ?.asDatabase()
+              ?: throw IllegalStateException(
+                  "Create a database named 'Test Database' and invite this app's user!")
 
       // All the options for "Severity" property (select type)
       val severityOptions = database.properties?.get("Severity")?.select?.options
