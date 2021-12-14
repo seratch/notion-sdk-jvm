@@ -82,7 +82,9 @@ constructor(
       val external: ExternalFileDetails? = null,
   )
 
-  data class Date @JvmOverloads constructor(var start: String? = null, var end: String? = null)
+  data class Date
+  @JvmOverloads
+  constructor(var start: String? = null, var end: String? = null, var timeZone: String? = null)
 
   data class Formula
   @JvmOverloads
