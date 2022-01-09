@@ -126,6 +126,10 @@ interface Block : WithObjectType {
       if (type == BlockType.ChildDatabase) this as ChildDatabaseBlock
       else throw IllegalStateException("Failed to cast $type block to ChildDatabaseBlock")
 
+  fun asTable(): TableBlock =
+      if (type == BlockType.Table) this as TableBlock
+      else throw IllegalStateException("Failed to cast $type block to TableBlock")
+
   fun asUnsupported(): UnsupportedBlock =
       if (type == BlockType.Unsupported) this as UnsupportedBlock
       else throw IllegalStateException("Failed to cast $type block to UnsupportedBlock")

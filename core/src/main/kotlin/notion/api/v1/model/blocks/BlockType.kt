@@ -31,6 +31,7 @@ enum class BlockType @JvmOverloads constructor(val value: String) {
   @SerializedName("child_page") ChildPage("child_page"),
   @SerializedName("child_database") ChildDatabase("child_database"),
   @SerializedName("synced_block") SyncedBlock("synced_block"),
+  @SerializedName("table") Table("table"),
   @SerializedName("template") Template("template"),
   @SerializedName("unsupported") Unsupported("unsupported");
 
