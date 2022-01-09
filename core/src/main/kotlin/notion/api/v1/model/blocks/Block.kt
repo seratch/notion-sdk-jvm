@@ -130,6 +130,10 @@ interface Block : WithObjectType {
       if (type == BlockType.Table) this as TableBlock
       else throw IllegalStateException("Failed to cast $type block to TableBlock")
 
+  fun asTableRow(): TableRowBlock =
+      if (type == BlockType.TableRow) this as TableRowBlock
+      else throw IllegalStateException("Failed to cast $type block to TableRowBlock")
+
   fun asUnsupported(): UnsupportedBlock =
       if (type == BlockType.Unsupported) this as UnsupportedBlock
       else throw IllegalStateException("Failed to cast $type block to UnsupportedBlock")
