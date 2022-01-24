@@ -127,7 +127,7 @@ public class Readme {
 
 ### OAuth Support
 
-The Notion app installation via the OAuth flow is also supported. Refer to [the Ktor app example](https://github.com/seratch/notion-sdk-jvm/blob/main/core/src/test/kotlin/OAuthAppExample.kt) in the core library project.
+The Notion app installation via the OAuth flow is also supported. To learn how to implement it, please check [an example app built with Ktor web framework](https://github.com/seratch/notion-sdk-jvm/blob/main/core/src/test/kotlin/OAuthAppExample.kt) in the core library project.
 
 ### Plugins
 
