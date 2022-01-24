@@ -4,14 +4,22 @@ import java.net.URLEncoder
 import notion.api.v1.http.UserAgent
 
 interface EndpointsSupport {
-  val token: String
+  val token: String?
 
   fun buildRequestHeaders(additionalOnes: Map<String, String>): Map<String, String> {
-    return mapOf(
-            "Authorization" to "Bearer $token",
-            "Notion-Version" to "2021-08-16",
-            "User-Agent" to UserAgent.buildUserAgent())
-        .plus(additionalOnes)
+    val commonHeaders =
+        mapOf(
+                "Authorization" to "Bearer $token",
+                "Notion-Version" to "2021-08-16",
+                "User-Agent" to UserAgent.buildUserAgent(),
+            )
+            .plus(additionalOnes)
+
+    return if (token != null) {
+      commonHeaders.plus("Authorization" to "Bearer $token")
+    } else {
+      commonHeaders
+    }
   }
 
   fun urlEncode(value: String): String = URLEncoder.encode(value, "UTF-8")

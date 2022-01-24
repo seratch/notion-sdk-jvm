@@ -42,7 +42,7 @@
         <okhttp4.version>4.9.1</okhttp4.version>
         <okhttp5.version>5.0.0-alpha.3</okhttp5.version>
         <gson.version>2.8.9</gson.version>
-        <slf4j.version>1.7.32</slf4j.version>
+        <slf4j.version>1.7.33</slf4j.version>
         <logback.version>1.2.10</logback.version>
         <kotlin.version>1.6.10</kotlin.version>
         <kotlin.code.style>official</kotlin.code.style>

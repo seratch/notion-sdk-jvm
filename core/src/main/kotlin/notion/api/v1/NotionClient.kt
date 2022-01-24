@@ -12,7 +12,10 @@ import notion.api.v1.logging.StdoutLogger
 class NotionClient
 @JvmOverloads
 constructor(
-    override var token: String,
+    override var token: String? = null,
+    override var clientId: String? = null,
+    override var clientSecret: String? = null,
+    override var redirectUri: String? = null,
     override var httpClient: NotionHttpClient = defaultHttpClient,
     override var logger: NotionLogger = defaultLogger,
     override var jsonSerializer: NotionJsonSerializer = defaultJsonSerializer,
@@ -24,7 +27,8 @@ constructor(
     PagesSupport,
     BlocksSupport,
     SearchSupport,
-    UsersSupport {
+    UsersSupport,
+    OAuthSupport {
 
   companion object {
     @JvmStatic val defaultBaseUrl: String = "https://api.notion.com/v1"
