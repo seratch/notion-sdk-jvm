@@ -11,7 +11,7 @@
 [![Maven Central](https://img.shields.io/maven-central/v/com.github.seratch/notion-sdk-jvm-core.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22com.github.seratch%22%20AND%20a:%22notion-sdk-jvm-core%22)
 [![CI Build](https://github.com/seratch/notion-sdk-jvm/actions/workflows/ci-build.yml/badge.svg)](https://github.com/seratch/notion-sdk-jvm/actions/workflows/ci-build.yml)
 
-Here is an [Notion API](https://developers.notion.com/) SDK for any JVM language users :wave: 
+Here is a [Notion API](https://developers.notion.com/) SDK for any JVM language users :wave: 
 
 This project aims to provide a Notion API client for any JVM language developers without hurdles. To realize the goal, its code is written in Kotlin with a nice consideration for Java compatibility.
 
@@ -24,7 +24,7 @@ You can start using this library just by adding `notion-sdk-jvm-core` dependency
 For Gradle users:
 
 ```gradle
-ext.notionSdkVersion = "0.3.1"
+ext.notionSdkVersion = "0.4.0"
 dependencies {
   // This dependency is at least required
   implementation("com.github.seratch:notion-sdk-jvm-core:${notionSdkVersion}")
@@ -35,7 +35,7 @@ For Maven users:
 
 ```xml
 <properties>
-  <notion-sdk.version>0.3.1</notion-sdk.version>
+  <notion-sdk.version>0.4.0</notion-sdk.version>
 </properties>
 
 <dependencies>
@@ -124,6 +124,10 @@ public class Readme {
     }
 }
 ```
+
+### OAuth Support
+
+The Notion app installation via the OAuth flow is also supported. Refer to [the Ktor app example](https://github.com/seratch/notion-sdk-jvm/blob/main/core/src/test/kotlin/OAuthAppExample.kt) in the core library project.
 
 ### Plugins
 
