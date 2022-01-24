@@ -1,7 +1,7 @@
 package notion.api
 
 object Metadata {
-  const val VERSION: String = "0.4.0"
+  const val VERSION: String = "0.4.1-SNAPSHOT"
 
   fun isLibraryMaintainerMode(): Boolean {
     val value = System.getenv("NOTION_SDK_JVM_LIBRARY_MAINTAINER_MODE")
