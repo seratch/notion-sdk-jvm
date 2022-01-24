@@ -1,5 +1,4 @@
 import notion.api.v1.NotionClient
-import notion.api.v1.model.common.ObjectType
 import notion.api.v1.model.pages.PageParent
 import notion.api.v1.request.search.SearchRequest
 import notion.api.v1.model.pages.PageProperty as prop
