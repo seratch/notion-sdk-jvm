@@ -17,10 +17,6 @@ interface OAuthSupport : EndpointsSupport {
   val logger: NotionLogger
   val baseUrl: String
 
-  // -----------------------------------------------
-  // search
-  // -----------------------------------------------
-
   fun exchangeAuthCode(code: String, state: String): OAuthTokenResult {
     return exchangeAuthCode(
         ExchangeAuthCodeRequest(
