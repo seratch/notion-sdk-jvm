@@ -30,6 +30,7 @@ constructor(
   open class Element
   @JvmOverloads
   constructor(
+      var caption: List<PageProperty.RichText>? = null,
       var text: List<PageProperty.RichText>? = null,
       val language: String? = null,
   )
