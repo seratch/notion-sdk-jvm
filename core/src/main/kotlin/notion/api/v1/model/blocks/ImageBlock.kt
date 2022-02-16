@@ -32,11 +32,20 @@ constructor(
   constructor(
       val type: String? = null,
       val external: External? = null,
+      var file: File? = null,
+      var caption: List<String>? = emptyList(),
   )
 
   open class External
   @JvmOverloads
   constructor(
       val url: String? = null,
+  )
+
+  open class File
+  @JvmOverloads
+  constructor(
+      val url: String? = null,
+      var expiryTime: String? = null,
   )
 }

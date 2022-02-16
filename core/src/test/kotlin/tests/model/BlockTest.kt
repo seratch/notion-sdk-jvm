@@ -14,6 +14,7 @@ class BlockTest {
     assertNotNull(blocks.results[0].asHeadingTwo())
     assertNotNull(blocks.results[1].asParagraph())
     assertNotNull(blocks.results[2].asToggle())
+    assertNotNull(blocks.results[3].asImage())
   }
 
   // https://developers.notion.com/reference/get-block-children
@@ -126,6 +127,22 @@ class BlockTest {
             "href": null
           }
         ]
+      }
+    },
+    {
+      "object": "block",
+      "id": "9bc30ad4-9373-46a5-84ab-0a7845ee52e67",
+      "created_time": "2021-03-16T16:31:00.000Z",
+      "last_edited_time": "2021-03-16T16:32:00.000Z",
+      "has_children": false,
+      "type": "image",
+      "image": {
+        "caption": [],
+        "type": "file",
+        "file": {
+          "url": "https://www.example.com/image.png",
+          "expiry_time": "2022-03-03T12+34+56.111Z"
+        }
       }
     }
   ],
