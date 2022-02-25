@@ -6,6 +6,7 @@ import notion.api.v1.model.common.Icon
 import notion.api.v1.model.common.ObjectType
 import notion.api.v1.model.pages.PageParent
 import notion.api.v1.model.pages.PageProperty
+import notion.api.v1.model.users.User
 
 data class PageSearchResult
 @JvmOverloads
@@ -15,9 +16,11 @@ constructor(
     override val icon: Icon,
     override val cover: Cover,
     override val createdTime: String,
+    override val createdBy: User,
     override val lastEditedTime: String,
+    override val lastEditedBy: User,
     val url: String,
     val parent: PageParent? = null,
-    val archived: Boolean? = false,
+    override val archived: Boolean = false,
     val properties: Map<String, PageProperty>,
 ) : SearchResult

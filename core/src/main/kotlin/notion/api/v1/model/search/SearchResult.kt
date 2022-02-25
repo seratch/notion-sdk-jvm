@@ -4,6 +4,7 @@ import notion.api.v1.model.common.Cover
 import notion.api.v1.model.common.Icon
 import notion.api.v1.model.common.ObjectType
 import notion.api.v1.model.common.WithObjectType
+import notion.api.v1.model.users.User
 
 interface SearchResult : WithObjectType {
   override val objectType: ObjectType
@@ -12,6 +13,9 @@ interface SearchResult : WithObjectType {
   val cover: Cover
   val createdTime: String
   val lastEditedTime: String
+  val createdBy: User
+  val lastEditedBy: User
+  val archived: Boolean
 
   fun asDatabase(): DatabaseSearchResult =
       if (objectType == ObjectType.Database) this as DatabaseSearchResult

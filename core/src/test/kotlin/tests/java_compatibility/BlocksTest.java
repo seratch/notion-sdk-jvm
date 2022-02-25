@@ -21,7 +21,9 @@ public class BlocksTest {
                 "id",
                 false,
                 "2021-05-01",
-                "2021-05-02"
+                null,
+                "2021-05-02",
+                null
         );
         assertNotNull(block);
     }

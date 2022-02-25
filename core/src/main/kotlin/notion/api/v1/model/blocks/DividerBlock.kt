@@ -3,6 +3,7 @@ package notion.api.v1.model.blocks
 import com.google.gson.annotations.SerializedName
 import java.util.*
 import notion.api.v1.model.common.ObjectType
+import notion.api.v1.model.users.User
 
 open class DividerBlock
 @JvmOverloads
@@ -11,7 +12,9 @@ constructor(
     override val type: BlockType = BlockType.Divider,
     override var id: String? = UUID.randomUUID().toString(),
     override var createdTime: String? = null,
+    override var createdBy: User? = null,
     override var lastEditedTime: String? = null,
+    override var lastEditedBy: User? = null,
     override var hasChildren: Boolean? = null,
     override var archived: Boolean? = null,
     val divider: Element? = null,
@@ -22,10 +25,20 @@ constructor(
       id: String? = UUID.randomUUID().toString(),
       hasChildren: Boolean? = null,
       createdTime: String? = null,
+      createdBy: User? = null,
       archived: Boolean? = null,
       lastEditedTime: String? = null,
+      lastEditedBy: User? = null,
   ) : this(
-      ObjectType.Block, BlockType.Divider, id, createdTime, lastEditedTime, hasChildren, archived)
+      ObjectType.Block,
+      BlockType.Divider,
+      id,
+      createdTime,
+      createdBy,
+      lastEditedTime,
+      lastEditedBy,
+      hasChildren,
+      archived)
 
   open class Element
 }

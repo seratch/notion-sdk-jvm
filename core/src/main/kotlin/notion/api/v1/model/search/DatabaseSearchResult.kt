@@ -6,6 +6,7 @@ import notion.api.v1.model.common.Icon
 import notion.api.v1.model.common.ObjectType
 import notion.api.v1.model.databases.DatabaseParent
 import notion.api.v1.model.databases.DatabaseProperty
+import notion.api.v1.model.users.User
 
 data class DatabaseSearchResult
 @JvmOverloads
@@ -15,7 +16,10 @@ constructor(
     override val icon: Icon,
     override val cover: Cover,
     override val createdTime: String,
+    override val createdBy: User,
     override val lastEditedTime: String,
+    override val lastEditedBy: User,
+    override val archived: Boolean,
     val url: String,
     val parent: DatabaseParent,
     val title: List<DatabaseProperty.RichText>?,

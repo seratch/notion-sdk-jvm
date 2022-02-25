@@ -1,12 +1,15 @@
 package notion.api.v1.model.blocks
 
 import notion.api.v1.model.common.*
+import notion.api.v1.model.users.User
 
 interface Block : WithObjectType {
   val type: BlockType
   var id: String?
   var createdTime: String?
+  var createdBy: User?
   var lastEditedTime: String?
+  var lastEditedBy: User?
   var archived: Boolean?
   var hasChildren: Boolean?
 
