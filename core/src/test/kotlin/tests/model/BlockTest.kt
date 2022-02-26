@@ -31,7 +31,7 @@ class BlockTest {
       "has_children": false,
       "type": "heading_2",
       "heading_2": {
-        "text": [
+        "rich_text": [
           {
             "type": "text",
             "text": {
@@ -60,7 +60,7 @@ class BlockTest {
       "has_children": false,
       "type": "paragraph",
       "paragraph": {
-        "text": [
+        "rich_text": [
           {
             "type": "text",
             "text": {
@@ -108,7 +108,7 @@ class BlockTest {
       "has_children": true,
       "type": "toggle",
       "toggle": {
-        "text": [
+        "rich_text": [
           {
             "type": "text",
             "text": {

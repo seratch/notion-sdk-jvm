@@ -19,7 +19,7 @@ class BlockParserTest {
       "archived": false,
       "type": "paragraph",
       "paragraph": {
-        "text": [
+        "rich_text": [
           {
             "type": "text",
             "text": {
@@ -49,7 +49,7 @@ class BlockParserTest {
       "archived": false,
       "type": "to_do",
       "to_do": {
-        "text": [
+        "rich_text": [
           {
             "type": "text",
             "text": {
@@ -80,7 +80,7 @@ class BlockParserTest {
       "archived": false,
       "type": "bulleted_list_item",
       "bulleted_list_item": {
-        "text": [
+        "rich_text": [
           {
             "type": "text",
             "text": {
@@ -146,7 +146,7 @@ class BlockParserTest {
       "archived": false,
       "type": "callout",
       "callout": {
-        "text": [
+        "rich_text": [
           {
             "type": "text",
             "text": {
@@ -180,7 +180,7 @@ class BlockParserTest {
       "archived": false,
       "type": "toggle",
       "toggle": {
-        "text": [
+        "rich_text": [
           {
             "type": "text",
             "text": {
@@ -210,7 +210,7 @@ class BlockParserTest {
       "archived": false,
       "type": "quote",
       "quote": {
-        "text": [
+        "rich_text": [
           {
             "type": "text",
             "text": {
@@ -265,7 +265,7 @@ class BlockParserTest {
       "archived": false,
       "type": "heading_1",
       "heading_1": {
-        "text": [
+        "rich_text": [
           {
             "type": "text",
             "text": {
@@ -295,7 +295,7 @@ class BlockParserTest {
       "archived": false,
       "type": "heading_2",
       "heading_2": {
-        "text": [
+        "rich_text": [
           {
             "type": "text",
             "text": {
@@ -325,7 +325,7 @@ class BlockParserTest {
       "archived": false,
       "type": "heading_3",
       "heading_3": {
-        "text": [
+        "rich_text": [
           {
             "type": "text",
             "text": {
@@ -365,7 +365,7 @@ class BlockParserTest {
       "archived": false,
       "type": "numbered_list_item",
       "numbered_list_item": {
-        "text": [
+        "rich_text": [
           {
             "type": "text",
             "text": {
@@ -394,7 +394,7 @@ class BlockParserTest {
           {
             "type": "callout",
             "callout": {
-              "text": [
+              "rich_text": [
                 {
                   "type": "text",
                   "text": {
@@ -418,7 +418,7 @@ class BlockParserTest {
     {
       "type": "template",
       "template": {
-        "text": [
+        "rich_text": [
           {
             "type": "text",
             "text": {
@@ -429,7 +429,7 @@ class BlockParserTest {
         "children": [
           {
             "callout": {
-              "text": [
+              "rich_text": [
                 {
                   "type": "text",
                   "text": {
@@ -445,7 +445,7 @@ class BlockParserTest {
     {
       "type": "code",
       "code": {
-        "text": [{
+        "rich_text": [{
           "type": "text",
           "text": {
             "content": "const a = 3"
