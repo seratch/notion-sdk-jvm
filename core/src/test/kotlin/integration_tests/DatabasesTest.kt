@@ -18,6 +18,7 @@ import notion.api.v1.model.databases.query.sort.QuerySortTimestamp
 import notion.api.v1.model.pages.PageParent
 import notion.api.v1.model.pages.PageProperty
 import notion.api.v1.request.search.SearchRequest
+import org.junit.Ignore
 import org.junit.Test
 
 class DatabasesTest {
@@ -89,6 +90,10 @@ class DatabasesTest {
     }
   }
 
+  // notion.api.v1.exception.NotionAPIError:
+  // Got an error from Notion (status: 400, code: validation_error, message: This API is
+  // deprecated.)
+  @Ignore
   @Test
   fun list() {
     NotionClient(token = System.getenv("NOTION_TOKEN")).use { client ->
@@ -137,11 +142,14 @@ class DatabasesTest {
   @Test
   fun query_compound() {
     NotionClient(token = System.getenv("NOTION_TOKEN")).use { client ->
-      val databases = client.listDatabases()
-      assertTrue { databases.results.isNotEmpty() }
-
       val database =
-          databases.results.find { it.title.any { t -> t.plainText.contains("Test Database") } }!!
+          client
+              .search(
+                  query = "Test Database",
+                  filter = SearchRequest.SearchFilter("database", property = "object"))
+              .results
+              .find { it.asDatabase().properties.containsKey("Severity") }
+              ?.asDatabase()!!
 
       val queryResult =
           client.queryDatabase(

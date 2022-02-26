@@ -12,6 +12,9 @@ data class QueryResults
 constructor(
     @SerializedName("object") override val objectType: ObjectType = ObjectType.List,
     val results: List<Page>,
+    val type: String,
     override val nextCursor: String? = null,
     override val hasMore: Boolean = false,
+    var page: Object? = null,
+    var database: Object? = null,
 ) : WithObjectType, Pagination

@@ -12,4 +12,7 @@ constructor(
     val results: List<SearchResult>,
     override val nextCursor: String? = null,
     override val hasMore: Boolean = false,
+    val type: String,
+    val block: Object? = null,
+    var pageOrDatabase: Object? = null,
 ) : WithObjectType, Pagination

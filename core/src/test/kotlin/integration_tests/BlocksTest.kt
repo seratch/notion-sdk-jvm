@@ -39,14 +39,14 @@ class BlocksTest {
                       BlockType.ToDo to
                           BlockElementUpdate(
                               checked = true,
-                              text =
+                              richText =
                                   listOf(
                                       PageProperty.RichText(
                                           text =
                                               PageProperty.RichText.Text(content = updatedText))),
                           )))
       assertTrue { updatedBlock.asToDo().toDo.checked }
-      assertEquals(updatedText, updatedBlock.asToDo().toDo.text?.get(0)?.text?.content)
+      assertEquals(updatedText, updatedBlock.asToDo().toDo.richText?.get(0)?.text?.content)
 
       // Until the Notion platform provides a way to create a block via API,
       // we don't run the deletion in tests
@@ -72,59 +72,59 @@ class BlocksTest {
                   listOf(
                       ParagraphBlock(
                           ParagraphBlock.Element(
-                              text =
+                              richText =
                                   listOf(
                                       PageProperty.RichText(
                                           text = PageProperty.RichText.Text("foo"))))),
                       HeadingOneBlock(
                           HeadingOneBlock.Element(
-                              text =
+                              richText =
                                   listOf(
                                       PageProperty.RichText(
                                           text = PageProperty.RichText.Text("heading 1"))))),
                       HeadingTwoBlock(
                           HeadingTwoBlock.Element(
-                              text =
+                              richText =
                                   listOf(
                                       PageProperty.RichText(
                                           text = PageProperty.RichText.Text("heading 2"))))),
                       HeadingThreeBlock(
                           HeadingThreeBlock.Element(
-                              text =
+                              richText =
                                   listOf(
                                       PageProperty.RichText(
                                           text = PageProperty.RichText.Text("heading 3"))))),
                       BulletedListItemBlock(
                           BulletedListItemBlock.Element(
-                              text =
+                              richText =
                                   listOf(
                                       PageProperty.RichText(
                                           text = PageProperty.RichText.Text("item1")),
                                   ))),
                       BulletedListItemBlock(
                           BulletedListItemBlock.Element(
-                              text =
+                              richText =
                                   listOf(
                                       PageProperty.RichText(
                                           text = PageProperty.RichText.Text("item2")),
                                   ))),
                       NumberedListItemBlock(
                           NumberedListItemBlock.Element(
-                              text =
+                              richText =
                                   listOf(
                                       PageProperty.RichText(
                                           text = PageProperty.RichText.Text("item1")),
                                   ))),
                       NumberedListItemBlock(
                           NumberedListItemBlock.Element(
-                              text =
+                              richText =
                                   listOf(
                                       PageProperty.RichText(
                                           text = PageProperty.RichText.Text("item2")),
                                   ))),
                       ToDoBlock(
                           ToDoBlock.Element(
-                              text =
+                              richText =
                                   listOf(
                                       PageProperty.RichText(
                                           text = PageProperty.RichText.Text("todo1")),
@@ -133,7 +133,7 @@ class BlocksTest {
                                   ))),
                       ToggleBlock(
                           ToggleBlock.Element(
-                              text =
+                              richText =
                                   listOf(
                                       PageProperty.RichText(
                                           text = PageProperty.RichText.Text("toggle"))))),

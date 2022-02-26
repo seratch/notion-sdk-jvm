@@ -21,7 +21,8 @@ enum class PropertyType @JvmOverloads constructor(val value: String) {
   @SerializedName("created_time") CreatedTime("created_time"),
   @SerializedName("created_by") CreatedBy("created_by"),
   @SerializedName("last_edited_time") LastEditedTime("last_edited_time"),
-  @SerializedName("last_edited_by") LastEditedBy("last_edited_by");
+  @SerializedName("last_edited_by") LastEditedBy("last_edited_by"),
+  @SerializedName("property_item") PropertyItem("property_item");
 
   override fun toString(): String = value
 }

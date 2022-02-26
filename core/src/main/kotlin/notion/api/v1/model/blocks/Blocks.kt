@@ -13,4 +13,6 @@ constructor(
     val results: List<Block>,
     override val nextCursor: String? = null,
     override val hasMore: Boolean = false,
+    val type: String = "block",
+    val block: Object = Object(),
 ) : WithObjectType, Pagination

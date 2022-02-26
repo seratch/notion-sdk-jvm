@@ -12,4 +12,6 @@ constructor(
     val results: List<User>,
     override val nextCursor: String? = null,
     override val hasMore: Boolean = false,
+    val type: String,
+    var user: Object? = null,
 ) : WithObjectType, Pagination

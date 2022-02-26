@@ -20,14 +20,14 @@ class SimpleTest {
           HeadingOneBlock(
               heading1 =
                   HeadingOneBlock.Element(
-                      text =
+                      richText =
                           listOf(
                               prop.RichText(text = prop.RichText.Text(content = "head1 text"))))),
           ToDoBlock(
               toDo =
                   ToDoBlock.Element(
                       checked = true,
-                      text =
+                      richText =
                           listOf(
                               prop.RichText(
                                   text =

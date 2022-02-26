@@ -45,7 +45,7 @@ constructor(
   @JvmOverloads
   constructor(
       var caption: List<PageProperty.RichText>? = null,
-      var text: List<PageProperty.RichText>? = null,
+      var richText: List<PageProperty.RichText>? = null,
       val language: String? = null,
   )
 }

@@ -44,6 +44,6 @@ constructor(
   open class Element
   @JvmOverloads
   constructor(
-      var text: List<PageProperty.RichText>,
+      var richText: List<PageProperty.RichText>,
   )
 }

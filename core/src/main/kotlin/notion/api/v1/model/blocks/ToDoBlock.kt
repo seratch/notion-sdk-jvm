@@ -45,7 +45,7 @@ constructor(
   @JvmOverloads
   constructor(
       var checked: Boolean = false,
-      var text: List<PageProperty.RichText>? = null,
+      var richText: List<PageProperty.RichText>? = null,
       var children: List<Block>? = null
   )
 }

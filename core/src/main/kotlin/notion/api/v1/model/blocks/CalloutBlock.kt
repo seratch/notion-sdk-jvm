@@ -45,7 +45,7 @@ constructor(
   open class Element
   @JvmOverloads
   constructor(
-      var text: List<PageProperty.RichText>? = null,
+      var richText: List<PageProperty.RichText>? = null,
       val icon: Icon? = null,
   )
 }

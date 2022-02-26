@@ -42,6 +42,6 @@ constructor(
       heading2 = heading2)
 
   open class Element(
-      var text: List<PageProperty.RichText>,
+      var richText: List<PageProperty.RichText>,
   )
 }
