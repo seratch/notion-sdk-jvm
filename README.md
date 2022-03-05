@@ -113,15 +113,22 @@ fun main() {
 Even when you use this SDK in Java and other languages, all the classes/methods should be accessible. If you find issues, please let us know the issue in [this project's issue tracker](https://github.com/seratch/notion-sdk-jvm/issues).
 
 ```java
+package integration_tests;
+
 import notion.api.v1.NotionClient;
-import notion.api.v1.model.databases.Databases;
+import notion.api.v1.model.search.SearchResults;
+import org.junit.Assert;
 
 public class Readme {
-    public static void main(String[] args) {
-        try (NotionClient client = new NotionClient(System.getenv("NOTION_TOKEN"))) {
-            Databases databases = client.listDatabases();
-        }
+  public static void main(String[] args) {
+    NotionClient client = new NotionClient(System.getenv("NOTION_TOKEN"));
+    try {
+      SearchResults results = client.search("Test Database");
+      Assert.assertNotNull(results);
+    } finally {
+      client.close();
     }
+  }
 }
 ```
 
