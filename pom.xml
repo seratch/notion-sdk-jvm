@@ -5,7 +5,7 @@
 
     <groupId>com.github.seratch</groupId>
     <artifactId>notion-sdk-jvm-parent</artifactId>
-    <version>0.5.0</version>
+    <version>1.0.0</version>
     <packaging>pom</packaging>
 
     <name>Notion SDK Project</name>
