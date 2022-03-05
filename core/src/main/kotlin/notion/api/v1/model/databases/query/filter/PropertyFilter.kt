@@ -10,7 +10,7 @@ constructor(
     var richText: TextFilter? = null,
     var url: TextFilter? = null,
     var email: TextFilter? = null,
-    var phone: TextFilter? = null,
+    var phoneNumber: TextFilter? = null,
     var number: NumberFilter? = null,
     var checkbox: CheckboxFilter? = null,
     var select: SelectFilter? = null,
