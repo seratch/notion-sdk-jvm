@@ -2,6 +2,7 @@ package notion.api.v1.model.blocks
 
 import com.google.gson.annotations.SerializedName
 import java.util.*
+import notion.api.v1.model.common.BlockColor
 import notion.api.v1.model.common.ObjectType
 import notion.api.v1.model.pages.PageProperty
 import notion.api.v1.model.users.User
@@ -46,6 +47,7 @@ constructor(
   constructor(
       var checked: Boolean = false,
       var richText: List<PageProperty.RichText>? = null,
-      var children: List<Block>? = null
+      var children: List<Block>? = null,
+      var color: BlockColor? = null
   )
 }
