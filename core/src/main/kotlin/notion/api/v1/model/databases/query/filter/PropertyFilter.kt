@@ -23,4 +23,4 @@ constructor(
     var file: FilesFilter? = null,
     var relation: RelationFilter? = null,
     var formula: FormulaFilter? = null,
-) : QueryTopLevelFilter
+) : QueryTopLevelFilter, CompoundFilterElement
