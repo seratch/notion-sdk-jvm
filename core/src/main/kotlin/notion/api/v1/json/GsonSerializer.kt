@@ -14,6 +14,7 @@ import notion.api.v1.model.common.Icon
 import notion.api.v1.model.databases.Database
 import notion.api.v1.model.databases.Databases
 import notion.api.v1.model.databases.QueryResults
+import notion.api.v1.model.databases.query.filter.CompoundFilterElement
 import notion.api.v1.model.error.Error
 import notion.api.v1.model.error.OAuthError
 import notion.api.v1.model.oauth.OAuthTokenResult
@@ -44,6 +45,9 @@ class GsonSerializer : NotionJsonSerializer {
             .registerTypeAdapter(Block::class.java, BlockParser(unknownPropertyDetection))
             .registerTypeAdapter(Icon::class.java, IconParser(unknownPropertyDetection))
             .registerTypeAdapter(Cover::class.java, CoverParser(unknownPropertyDetection))
+            .registerTypeAdapter(
+                CompoundFilterElement::class.java,
+                CompoundFilterElementParser(unknownPropertyDetection))
 
     gson =
         if (unknownPropertyDetection) {

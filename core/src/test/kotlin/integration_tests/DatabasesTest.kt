@@ -165,6 +165,58 @@ class DatabasesTest {
       assertNotNull(queryResult)
       assertTrue { queryResult.results.isNotEmpty() }
       assertEquals(ObjectType.Page, queryResult.results[0].objectType)
+
+      val nestedCompoundQuery1 =
+          CompoundFilter(
+              and =
+                  listOf(PropertyFilter(property = "title", title = TextFilter(contains = "bug"))))
+      val nestedCompoundQuery2 =
+          CompoundFilter(
+              and =
+                  listOf(PropertyFilter(property = "title", title = TextFilter(contains = "test"))))
+
+      val nestedQueryResult =
+          client.queryDatabase(
+              databaseId = database.id,
+              filter = CompoundFilter(or = listOf(nestedCompoundQuery1, nestedCompoundQuery2)),
+              pageSize = 1,
+          )
+      assertNotNull(nestedQueryResult)
+      assertTrue { nestedQueryResult.results.isNotEmpty() }
+      assertEquals(ObjectType.Page, nestedQueryResult.results[0].objectType)
+    }
+  }
+
+  @Test
+  fun query_nested_compound() {
+    NotionClient(token = System.getenv("NOTION_TOKEN")).use { client ->
+      val database =
+          client
+              .search(
+                  query = "Test Database",
+                  filter = SearchRequest.SearchFilter("database", property = "object"))
+              .results
+              .find { it.asDatabase().properties.containsKey("Severity") }
+              ?.asDatabase()!!
+
+      val nestedCompoundQuery1 =
+          CompoundFilter(
+              and =
+                  listOf(PropertyFilter(property = "title", title = TextFilter(contains = "bug"))))
+      val nestedCompoundQuery2 =
+          CompoundFilter(
+              and =
+                  listOf(PropertyFilter(property = "title", title = TextFilter(contains = "test"))))
+
+      val nestedQueryResult =
+          client.queryDatabase(
+              databaseId = database.id,
+              filter = CompoundFilter(or = listOf(nestedCompoundQuery1, nestedCompoundQuery2)),
+              pageSize = 1,
+          )
+      assertNotNull(nestedQueryResult)
+      assertTrue { nestedQueryResult.results.isNotEmpty() }
+      assertEquals(ObjectType.Page, nestedQueryResult.results[0].objectType)
     }
   }
 }
