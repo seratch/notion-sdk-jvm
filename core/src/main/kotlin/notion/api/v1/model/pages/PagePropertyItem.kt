@@ -15,6 +15,7 @@ constructor(
     val nextCursor: String? = null, // for pagination
     val hasMore: Boolean? = null, // for pagination
     val propertyItem: Element? = null,
+    var id: String? = null,
     var title: PageProperty.RichText? = null,
     var richText: List<PageProperty.RichText>? = null,
     var select: DatabaseProperty.Select.Option? = null,
@@ -38,6 +39,7 @@ constructor(
   data class Element(
       val type: PropertyType, // can be "property_item"
       val nextUrl: String,
+      var id: String? = null,
       var title: PageProperty.RichText? = null,
       var richText: List<PageProperty.RichText>? = null,
       var select: DatabaseProperty.Select.Option? = null,
