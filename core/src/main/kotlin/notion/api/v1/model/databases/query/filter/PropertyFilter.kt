@@ -16,8 +16,9 @@ constructor(
     var select: SelectFilter? = null,
     var multiSelect: MultiSelectFilter? = null,
     var date: DateFilter? = null,
-    var createdDate: DateFilter? = null,
-    var lastEditedDate: DateFilter? = null,
+    var timestamp: String? = null, // "created_time", "last_edited_time"
+    var createdTime: TimestampFilter? = null,
+    var lastEditedTime: TimestampFilter? = null,
     var createdBy: PeopleFilter? = null,
     var lastEditedBy: PeopleFilter? = null,
     var file: FilesFilter? = null,

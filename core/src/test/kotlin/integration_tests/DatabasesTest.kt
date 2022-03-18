@@ -1,5 +1,7 @@
 package integration_tests
 
+import java.time.LocalDate
+import java.time.ZoneId
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
@@ -11,7 +13,9 @@ import notion.api.v1.model.databases.RichTextPropertySchema
 import notion.api.v1.model.databases.TitlePropertySchema
 import notion.api.v1.model.databases.query.filter.CompoundFilter
 import notion.api.v1.model.databases.query.filter.PropertyFilter
+import notion.api.v1.model.databases.query.filter.condition.DateFilter
 import notion.api.v1.model.databases.query.filter.condition.TextFilter
+import notion.api.v1.model.databases.query.filter.condition.TimestampFilter
 import notion.api.v1.model.databases.query.sort.QuerySort
 import notion.api.v1.model.databases.query.sort.QuerySortDirection
 import notion.api.v1.model.databases.query.sort.QuerySortTimestamp
@@ -136,6 +140,43 @@ class DatabasesTest {
       assertNotNull(queryResult)
       assertTrue { queryResult.results.isNotEmpty() }
       assertEquals(ObjectType.Page, queryResult.results[0].objectType)
+    }
+  }
+
+  @Test
+  fun query_date_timestamp() {
+    NotionClient(token = System.getenv("NOTION_TOKEN")).use { client ->
+      // Find the "Test Database" from the list
+      val database =
+          client
+              .search("Test Database")
+              .results
+              .find {
+                it.objectType == ObjectType.Database &&
+                    it.asDatabase().properties.containsKey("Severity")
+              }
+              ?.asDatabase()
+              ?: throw IllegalStateException(
+                  "Create a database named 'Test Database' and invite this app's user!")
+
+      val today = LocalDate.now(ZoneId.of("UTC")).toString()
+
+      // timestamp filter
+      assertNotNull(
+          client.queryDatabase(
+              databaseId = database.id,
+              filter =
+                  PropertyFilter(
+                      timestamp = "created_time", createdTime = TimestampFilter(equals = today)),
+              pageSize = 1,
+          ))
+      // date filter
+      assertNotNull(
+          client.queryDatabase(
+              databaseId = database.id,
+              filter = PropertyFilter(property = "Created Time", date = DateFilter(equals = today)),
+              pageSize = 1,
+          ))
     }
   }
 
