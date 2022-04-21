@@ -7,4 +7,5 @@ data class BlockElementUpdate
 constructor(
     val richText: List<PageProperty.RichText>? = null,
     val checked: Boolean? = null,
+    val cells: List<List<PageProperty.RichText>>? = null,
 )
