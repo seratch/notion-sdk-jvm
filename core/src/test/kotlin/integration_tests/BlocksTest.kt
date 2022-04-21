@@ -48,6 +48,21 @@ class BlocksTest {
       assertTrue { updatedBlock.asToDo().toDo.checked }
       assertEquals(updatedText, updatedBlock.asToDo().toDo.richText?.get(0)?.text?.content)
 
+      val tableRowBlock = rows.results[0].asTableRow()
+
+      // The table row must have three columns in a row
+      val text = PageProperty.RichText(text = PageProperty.RichText.Text(content = "foo"))
+      val updatedBlockWithCells =
+          client.updateBlock(
+              blockId = tableRowBlock.id!!,
+              elements =
+                  mapOf(
+                      BlockType.TableRow to
+                          BlockElementUpdate(
+                              cells = listOf(listOf(text), listOf(text), listOf(text)),
+                          )))
+      assertTrue { updatedBlockWithCells.asTableRow().tableRow.cells.isNotEmpty() }
+
       // Until the Notion platform provides a way to create a block via API,
       // we don't run the deletion in tests
       // client.deleteBlock(todoBlock.id!!)
