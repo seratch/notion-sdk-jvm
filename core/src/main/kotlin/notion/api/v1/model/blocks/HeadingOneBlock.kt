@@ -44,5 +44,9 @@ constructor(
 
   open class Element
   @JvmOverloads
-  constructor(var richText: List<PageProperty.RichText>, var color: BlockColor? = null)
+  constructor(
+      var richText: List<PageProperty.RichText>,
+      var color: BlockColor? = null,
+      var children: List<Block>? = null,
+  )
 }

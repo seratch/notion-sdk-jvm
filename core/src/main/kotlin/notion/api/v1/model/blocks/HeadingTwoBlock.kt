@@ -42,5 +42,9 @@ constructor(
       hasChildren = hasChildren,
       heading2 = heading2)
 
-  open class Element(var richText: List<PageProperty.RichText>, var color: BlockColor? = null)
+  open class Element(
+      var richText: List<PageProperty.RichText>,
+      var color: BlockColor? = null,
+      var children: List<Block>? = null,
+  )
 }
