@@ -2,6 +2,8 @@ package notion.api.v1.model.blocks
 
 import com.google.gson.annotations.SerializedName
 import java.util.*
+import notion.api.v1.model.common.ExternalFileDetails
+import notion.api.v1.model.common.FileDetails
 import notion.api.v1.model.common.ObjectType
 import notion.api.v1.model.users.User
 
@@ -44,21 +46,8 @@ constructor(
   @JvmOverloads
   constructor(
       val type: String? = null,
-      val external: External? = null,
-      var file: File? = null,
-      var caption: List<String>? = emptyList(),
-  )
-
-  open class External
-  @JvmOverloads
-  constructor(
-      val url: String? = null,
-  )
-
-  open class File
-  @JvmOverloads
-  constructor(
-      val url: String? = null,
-      var expiryTime: String? = null,
+      val external: ExternalFileDetails? = null,
+      val file: FileDetails? = null,
+      val caption: List<String>? = null,
   )
 }

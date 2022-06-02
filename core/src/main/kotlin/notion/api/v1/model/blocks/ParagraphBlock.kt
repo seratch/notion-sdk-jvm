@@ -47,6 +47,6 @@ constructor(
   constructor(
       var richText: List<PageProperty.RichText>,
       var children: List<Block>? = null,
-      var color: BlockColor? = null
+      var color: BlockColor? = null,
   )
 }

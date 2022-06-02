@@ -41,6 +41,7 @@ constructor(
       var plainText: String? = null,
       var href: String? = null,
       val mention: Mention? = null,
+      var equation: Equation? = null,
   ) {
 
     data class Text @JvmOverloads constructor(var content: String? = null, var link: Link? = null)

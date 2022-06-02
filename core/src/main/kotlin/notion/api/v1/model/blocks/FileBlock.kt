@@ -2,7 +2,10 @@ package notion.api.v1.model.blocks
 
 import com.google.gson.annotations.SerializedName
 import java.util.*
+import notion.api.v1.model.common.ExternalFileDetails
+import notion.api.v1.model.common.FileDetails
 import notion.api.v1.model.common.ObjectType
+import notion.api.v1.model.pages.PageProperty
 import notion.api.v1.model.users.User
 
 open class FileBlock
@@ -43,13 +46,9 @@ constructor(
   open class Element
   @JvmOverloads
   constructor(
-      val type: String? = null,
-      val external: External? = null,
-  )
-
-  open class External
-  @JvmOverloads
-  constructor(
-      val url: String? = null,
+      val caption: List<PageProperty.RichText>? = null,
+      val type: String? = null, // "file", "external",
+      val file: FileDetails? = null,
+      val external: ExternalFileDetails? = null,
   )
 }

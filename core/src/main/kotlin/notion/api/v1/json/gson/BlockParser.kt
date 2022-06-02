@@ -47,6 +47,7 @@ class BlockParser(private val unknownPropertyDetection: Boolean = false) :
       "template" -> return context.deserialize(json, TemplateBlock::class.java)
       "table" -> return context.deserialize(json, TableBlock::class.java)
       "table_row" -> return context.deserialize(json, TableRowBlock::class.java)
+      "audio" -> return context.deserialize(json, AudioBlock::class.java)
       "unsupported" -> return context.deserialize(json, UnsupportedBlock::class.java)
     }
     if (unknownPropertyDetection) {

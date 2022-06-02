@@ -3,6 +3,7 @@ package notion.api.v1.model.blocks
 import com.google.gson.annotations.SerializedName
 import java.util.*
 import notion.api.v1.model.common.ObjectType
+import notion.api.v1.model.pages.PageProperty
 import notion.api.v1.model.users.User
 
 open class EmbedBlock
@@ -44,5 +45,6 @@ constructor(
   @JvmOverloads
   constructor(
       val url: String? = null,
+      val caption: List<PageProperty.RichText>? = null,
   )
 }

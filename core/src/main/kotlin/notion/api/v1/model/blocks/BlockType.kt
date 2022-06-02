@@ -34,6 +34,7 @@ enum class BlockType @JvmOverloads constructor(val value: String) {
   @SerializedName("table") Table("table"),
   @SerializedName("table_row") TableRow("table_row"),
   @SerializedName("template") Template("template"),
+  @SerializedName("audio") Audio("audio"),
   @SerializedName("unsupported") Unsupported("unsupported");
 
   override fun toString(): String = value

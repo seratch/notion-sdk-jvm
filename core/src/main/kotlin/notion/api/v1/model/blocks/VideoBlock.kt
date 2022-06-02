@@ -44,8 +44,8 @@ constructor(
   open class Element
   @JvmOverloads
   constructor(
-      var caption: List<String>? = emptyList(),
-      var type: String? = "external",
-      var external: ExternalFileDetails? = null,
+      val caption: List<String>? = null,
+      val type: String? = "external",
+      val external: ExternalFileDetails? = null,
   )
 }

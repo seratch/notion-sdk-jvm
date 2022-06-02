@@ -2,6 +2,7 @@ package notion.api.v1.model.blocks
 
 import com.google.gson.annotations.SerializedName
 import java.util.*
+import notion.api.v1.model.common.Equation
 import notion.api.v1.model.common.ObjectType
 import notion.api.v1.model.users.User
 
@@ -17,7 +18,7 @@ constructor(
     override var lastEditedBy: User? = null,
     override var hasChildren: Boolean? = null,
     override var archived: Boolean? = null,
-    val equation: Element? = null,
+    val equation: Equation? = null,
 ) : Block {
 
   // for other JVM languages
@@ -39,10 +40,4 @@ constructor(
       lastEditedBy,
       hasChildren,
       archived)
-
-  open class Element
-  @JvmOverloads
-  constructor(
-      val expression: String? = null,
-  )
 }
