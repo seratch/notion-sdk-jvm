@@ -2,6 +2,7 @@ package notion.api.v1.model.blocks
 
 import com.google.gson.annotations.SerializedName
 import java.util.*
+import notion.api.v1.model.common.LinkToPage
 import notion.api.v1.model.common.ObjectType
 import notion.api.v1.model.users.User
 
@@ -17,7 +18,7 @@ constructor(
     override var lastEditedBy: User? = null,
     override var hasChildren: Boolean? = null,
     override var archived: Boolean? = null,
-    val linkToPage: Element? = null,
+    val linkToPage: LinkToPage? = null,
 ) : Block {
 
   // for other JVM languages
@@ -39,12 +40,4 @@ constructor(
       lastEditedBy,
       hasChildren,
       archived)
-
-  open class Element
-  @JvmOverloads
-  constructor(
-      val type: String? = null,
-      val pageId: String? = null,
-      val databaseId: String? = null,
-  )
 }

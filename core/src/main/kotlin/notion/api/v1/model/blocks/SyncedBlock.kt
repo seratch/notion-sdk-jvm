@@ -3,6 +3,7 @@ package notion.api.v1.model.blocks
 import com.google.gson.annotations.SerializedName
 import java.util.*
 import notion.api.v1.model.common.ObjectType
+import notion.api.v1.model.common.SyncedFrom
 import notion.api.v1.model.users.User
 
 open class SyncedBlock
@@ -45,10 +46,5 @@ constructor(
   constructor(
       val syncedFrom: SyncedFrom? = null,
       val children: List<Block>? = null,
-  )
-  open class SyncedFrom
-  @JvmOverloads
-  constructor(
-      val blockId: String? = null,
   )
 }

@@ -1,8 +1,6 @@
 package notion.api.v1.json
 
 import notion.api.v1.model.blocks.Block
-import notion.api.v1.model.blocks.BlockElementUpdate
-import notion.api.v1.model.blocks.BlockType
 import notion.api.v1.model.blocks.Blocks
 import notion.api.v1.model.databases.Database
 import notion.api.v1.model.databases.Databases
@@ -42,7 +40,7 @@ interface NotionJsonSerializer {
 
   fun toJsonString(request: CreateDatabaseRequest): String
   fun toJsonString(request: UpdateDatabaseRequest): String
-  fun toJsonString(blockProperties: Map<BlockType, BlockElementUpdate>): String
+  fun toJsonString(blockProperties: Map<String, Any>): String
   fun toJsonString(request: AppendBlockChildrenRequest): String
   fun toJsonString(request: CreatePageRequest): String
   fun toJsonString(request: SearchRequest): String

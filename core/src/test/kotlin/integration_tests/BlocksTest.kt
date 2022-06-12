@@ -20,16 +20,25 @@ class BlocksTest {
       val pageId = client.search(title).results[0].id
       val page = client.retrievePage(pageId)
       assertEquals(pageId, page.id)
-      val children = client.retrieveBlockChildren(pageId, pageSize = 1000)
-      assertNotNull(children)
+      val blocks = mutableListOf<Block>()
+      var cursor: String? = ""
+      while (cursor != null) {
+        if (cursor == "") {
+          cursor = null
+        }
+        val children = client.retrieveBlockChildren(pageId, startCursor = cursor, pageSize = 1000)
+        assertNotNull(children)
+        blocks += children.results
+        cursor = children.nextCursor
+      }
 
-      val tableBlock = children.results.find { it.type == BlockType.Table }!!
+      val tableBlock = blocks.find { it.type == BlockType.Table }!!
       assertNotNull(tableBlock)
       // check table_row blocks
       val rows = client.retrieveBlockChildren(tableBlock?.id!!)
       assertNotNull(rows)
 
-      val todoBlock = children.results.find { it.type == BlockType.ToDo }!!
+      val todoBlock = blocks.find { it.type == BlockType.ToDo }!!
       val updatedText = "Updated (${ZonedDateTime.now()})"
       val updatedBlock =
           client.updateBlock(
