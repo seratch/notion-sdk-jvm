@@ -49,11 +49,24 @@ interface BlocksSupport : EndpointsSupport {
   }
 
   fun updateBlock(request: UpdateBlockRequest): Block {
+    val body = mutableMapOf<String, Any>()
+    for (key in request.elements.keys) {
+      val value = request.elements[key]
+      if (value != null) {
+        body[key.value] = value
+      }
+    }
+    if (request.type != null) {
+      body["type"] = request.type
+    }
+    if (request.archived != null) {
+      body["archived"] = request.archived
+    }
     val httpResponse =
         httpClient.patchTextBody(
             logger = logger,
             url = "$baseUrl/blocks/${urlEncode(request.blockId)}",
-            body = jsonSerializer.toJsonString(request.elements),
+            body = jsonSerializer.toJsonString(body),
             headers = buildRequestHeaders(contentTypeJson()))
     if (httpResponse.status == 200) {
       return jsonSerializer.toBlock(httpResponse.body)

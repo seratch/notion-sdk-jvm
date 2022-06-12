@@ -6,8 +6,6 @@ import com.google.gson.GsonBuilder
 import notion.api.Metadata.isLibraryMaintainerMode
 import notion.api.v1.json.gson.*
 import notion.api.v1.model.blocks.Block
-import notion.api.v1.model.blocks.BlockElementUpdate
-import notion.api.v1.model.blocks.BlockType
 import notion.api.v1.model.blocks.Blocks
 import notion.api.v1.model.common.Cover
 import notion.api.v1.model.common.Icon
@@ -83,7 +81,7 @@ class GsonSerializer : NotionJsonSerializer {
   override fun toJsonString(request: CreateDatabaseRequest): String = gson.toJson(request)
   override fun toJsonString(request: UpdateDatabaseRequest): String = gson.toJson(request)
 
-  override fun toJsonString(blockProperties: Map<BlockType, BlockElementUpdate>): String =
+  override fun toJsonString(blockProperties: Map<String, Any>): String =
       gson.toJson(blockProperties)
 
   override fun toJsonString(request: AppendBlockChildrenRequest): String = gson.toJson(request)
