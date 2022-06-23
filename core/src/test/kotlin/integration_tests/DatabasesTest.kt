@@ -60,6 +60,10 @@ class DatabasesTest {
               title =
                   listOf(
                       prop.RichText(text = prop.RichText.Text(content = title), plainText = title)),
+              description =
+                  listOf(
+                      prop.RichText(text = prop.RichText.Text(content = title), plainText = title)),
+              isInline = true,
               properties =
                   mapOf(
                       "Title" to TitlePropertySchema(), "Description" to RichTextPropertySchema()),

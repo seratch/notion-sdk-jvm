@@ -23,5 +23,7 @@ constructor(
     val url: String,
     val parent: DatabaseParent,
     val title: List<DatabaseProperty.RichText>?,
+    val description: List<DatabaseProperty.RichText>?,
+    @SerializedName("is_inline") val inline: Boolean,
     val properties: Map<String, DatabaseProperty>,
 ) : SearchResult

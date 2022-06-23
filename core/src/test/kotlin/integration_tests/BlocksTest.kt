@@ -7,6 +7,7 @@ import kotlin.test.assertTrue
 import notion.api.v1.NotionClient
 import notion.api.v1.model.blocks.*
 import notion.api.v1.model.pages.PageProperty
+import notion.api.v1.request.search.SearchRequest
 import org.junit.Test
 
 class BlocksTest {
@@ -17,18 +18,28 @@ class BlocksTest {
     // And then, invite your app to the page
     val title = "Test Page for SDK"
     NotionClient(token = System.getenv("NOTION_TOKEN")).use { client ->
-      val pageId = client.search(title).results[0].id
+      val pageId =
+          client.search(
+                      query = title,
+                      filter =
+                          SearchRequest.SearchFilter(
+                              property = "object",
+                              value = "page",
+                          ))
+                  .results
+                  .find { it.asPage().properties["title"]?.title?.get(0)?.plainText == title }!!
+              .id
       val page = client.retrievePage(pageId)
       assertEquals(pageId, page.id)
       val blocks = mutableListOf<Block>()
-      var cursor: String? = ""
+      var children = client.retrieveBlockChildren(pageId, pageSize = 1000)
+      assertNotNull(children)
+      blocks.addAll(children.results)
+      var cursor = children.nextCursor
       while (cursor != null) {
-        if (cursor == "") {
-          cursor = null
-        }
-        val children = client.retrieveBlockChildren(pageId, startCursor = cursor, pageSize = 1000)
+        var children = client.retrieveBlockChildren(pageId, startCursor = cursor, pageSize = 1000)
         assertNotNull(children)
-        blocks += children.results
+        blocks.addAll(children.results)
         cursor = children.nextCursor
       }
 

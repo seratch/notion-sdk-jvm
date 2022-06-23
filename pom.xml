@@ -39,8 +39,8 @@
         <maven.compiler.target>1.8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <okhttp3.version>3.14.9</okhttp3.version>
-        <okhttp4.version>4.9.1</okhttp4.version>
-        <okhttp5.version>5.0.0-alpha.8</okhttp5.version>
+        <okhttp4.version>4.10.0</okhttp4.version>
+        <okhttp5.version>5.0.0-alpha.9</okhttp5.version>
         <gson.version>2.9.0</gson.version>
         <slf4j.version>1.7.36</slf4j.version>
         <logback.version>1.2.10</logback.version>

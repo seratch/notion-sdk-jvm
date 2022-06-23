@@ -25,6 +25,8 @@ interface DatabasesSupport : EndpointsSupport {
       parent: DatabaseParent,
       title: List<DatabaseProperty.RichText>,
       properties: Map<String, DatabasePropertySchema>,
+      description: List<DatabaseProperty.RichText>? = null,
+      isInline: Boolean? = null,
       icon: Icon? = null,
       cover: Cover? = null,
   ): Database {
@@ -33,6 +35,8 @@ interface DatabasesSupport : EndpointsSupport {
             parent = parent,
             title = title,
             properties = properties,
+            description = description,
+            isInline = isInline,
             icon = icon,
             cover = cover,
         ))

@@ -12,6 +12,8 @@ constructor(
     val parent: DatabaseParent,
     val title: List<DatabaseProperty.RichText>,
     val properties: Map<String, DatabasePropertySchema>,
+    val description: List<DatabaseProperty.RichText>? = null,
+    val isInline: Boolean? = null,
     val icon: Icon? = null,
     val cover: Cover? = null,
 )

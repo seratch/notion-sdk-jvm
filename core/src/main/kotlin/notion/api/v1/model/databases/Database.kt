@@ -19,6 +19,8 @@ constructor(
     val lastEditedBy: User,
     val parent: DatabaseParent? = null,
     val title: List<DatabaseProperty.RichText>,
+    val description: List<DatabaseProperty.RichText>,
+    @SerializedName("is_inline") val inline: Boolean,
     val properties: Map<String, DatabaseProperty>,
     val archived: Boolean,
 ) : WithObjectType
