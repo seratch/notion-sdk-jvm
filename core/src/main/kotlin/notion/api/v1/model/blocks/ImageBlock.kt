@@ -5,6 +5,7 @@ import java.util.*
 import notion.api.v1.model.common.ExternalFileDetails
 import notion.api.v1.model.common.FileDetails
 import notion.api.v1.model.common.ObjectType
+import notion.api.v1.model.pages.PageProperty
 import notion.api.v1.model.users.User
 
 open class ImageBlock
@@ -48,6 +49,6 @@ constructor(
       val type: String? = null,
       val external: ExternalFileDetails? = null,
       val file: FileDetails? = null,
-      val caption: List<String>? = null,
+      val caption: List<PageProperty.RichText>? = null,
   )
 }

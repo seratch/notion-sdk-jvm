@@ -476,6 +476,49 @@ class BlockParserTest {
       }
     },
     {
+        "object": "block",
+        "id": "f325c9c4-ffdb-43ae-b45d-4836cb54d570",
+        "created_time": "2022-06-21T11:39:00.000Z",
+        "last_edited_time": "2022-06-21T11:41:00.000Z",
+        "created_by": {
+            "object": "user",
+            "id": "085d81d9-f6bc-4fb2-ad91-cac7c64d64d5"
+        },
+        "last_edited_by": {
+            "object": "user",
+            "id": "085d81d9-f6bc-4fb2-ad91-cac7c64d64d5"
+        },
+        "has_children": false,
+        "archived": false,
+        "type": "image",
+        "image": {
+            "caption": [
+                {
+                    "type": "text",
+                    "text": {
+                        "content": "Any kind of caption",
+                        "link": null
+                    },
+                    "annotations": {
+                        "bold": false,
+                        "italic": false,
+                        "strikethrough": false,
+                        "underline": false,
+                        "code": false,
+                        "color": "default"
+                    },
+                    "plain_text": "Any kind of caption",
+                    "href": null
+                }
+            ],
+            "type": "file",
+            "file": {
+                "url": "https://any-url.com",
+                "expiry_time": "2022-06-25T22:56:28.669Z"
+            }
+        }
+    },
+    {
       "type": "file",
       "file": {
         "type": "external",
@@ -483,6 +526,82 @@ class BlockParserTest {
           "url": "https://website.domain/files/doc.txt"
         }
       }
+    },
+    {
+        "object": "block",
+        "id": "a379f8db-38f4-4e1d-8985-2001c33fff82",
+        "created_time": "2022-06-25T22:23:00.000Z",
+        "last_edited_time": "2022-06-25T22:24:00.000Z",
+        "created_by": {
+            "object": "user",
+            "id": "a613fdcd-8a8a-4893-a1bc-2fddf2eb1f37"
+        },
+        "last_edited_by": {
+            "object": "user",
+            "id": "a613fdcd-8a8a-4893-a1bc-2fddf2eb1f37"
+        },
+        "has_children": false,
+        "archived": false,
+        "type": "video",
+        "video": {
+            "caption": [
+                {
+                    "type": "text",
+                    "text": {
+                        "content": "A caption ",
+                        "link": null
+                    },
+                    "annotations": {
+                        "bold": false,
+                        "italic": false,
+                        "strikethrough": false,
+                        "underline": false,
+                        "code": false,
+                        "color": "default"
+                    },
+                    "plain_text": "A caption ",
+                    "href": null
+                },
+                {
+                    "type": "text",
+                    "text": {
+                        "content": "about",
+                        "link": null
+                    },
+                    "annotations": {
+                        "bold": true,
+                        "italic": false,
+                        "strikethrough": false,
+                        "underline": false,
+                        "code": false,
+                        "color": "default"
+                    },
+                    "plain_text": "about",
+                    "href": null
+                },
+                {
+                    "type": "text",
+                    "text": {
+                        "content": " a video",
+                        "link": null
+                    },
+                    "annotations": {
+                        "bold": false,
+                        "italic": false,
+                        "strikethrough": false,
+                        "underline": false,
+                        "code": false,
+                        "color": "default"
+                    },
+                    "plain_text": " a video",
+                    "href": null
+                }
+            ],
+            "type": "external",
+            "external": {
+                "url": "https://www.youtube.com/watch?v=aA7si7AmPkY"
+            }
+        }
     },
     {
       "type": "pdf",

@@ -4,6 +4,7 @@ import com.google.gson.annotations.SerializedName
 import java.util.*
 import notion.api.v1.model.common.ExternalFileDetails
 import notion.api.v1.model.common.ObjectType
+import notion.api.v1.model.pages.PageProperty
 import notion.api.v1.model.users.User
 
 open class VideoBlock
@@ -44,7 +45,7 @@ constructor(
   open class Element
   @JvmOverloads
   constructor(
-      val caption: List<String>? = null,
+      val caption: List<PageProperty.RichText>? = null,
       val type: String? = "external",
       val external: ExternalFileDetails? = null,
   )
