@@ -45,8 +45,8 @@ constructor(
   open class Element
   @JvmOverloads
   constructor(
-    val caption: List<PageProperty.RichText>? = null,
-    val type: String? = "external",
-    val external: ExternalFileDetails? = null,
+      val caption: List<PageProperty.RichText>? = null,
+      val type: String? = "external",
+      val external: ExternalFileDetails? = null,
   )
 }
