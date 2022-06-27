@@ -14,6 +14,7 @@ constructor(
     var title: List<RichText>? = null,
     var richText: List<RichText>? = null,
     var select: DatabaseProperty.Select.Option? = null,
+    var status: DatabaseProperty.Status.Option? = null,
     var multiSelect: List<DatabaseProperty.MultiSelect.Option>? = null,
     var number: Number? = null,
     var date: Date? = null,

@@ -15,6 +15,7 @@ constructor(
     var richText: RichText? = null,
     var number: Number? = null,
     var select: Select? = null,
+    var status: Status? = null,
     var multiSelect: MultiSelect? = null,
     var date: Date? = null,
     var people: People? = null,
@@ -119,6 +120,14 @@ constructor(
   }
 
   data class Select @JvmOverloads constructor(val options: List<Option>? = null) {
+    data class Option(
+        val id: String? = null,
+        val name: String? = null,
+        val color: OptionColor? = null,
+    )
+  }
+
+  data class Status @JvmOverloads constructor(val options: List<Option>? = null) {
     data class Option(
         val id: String? = null,
         val name: String? = null,
