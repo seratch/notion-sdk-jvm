@@ -10,7 +10,8 @@ import notion.api.v1.logging.NotionLogger
 import notion.api.v1.logging.StdoutLogger
 
 class NotionClient
-@JvmOverloads
+// We don't intentionally use @JvmOverloads here. Refer to the following constructors for details.
+// @JvmOverloads
 constructor(
     override var token: String? = null,
     override var clientId: String? = null,
@@ -29,6 +30,30 @@ constructor(
     SearchSupport,
     UsersSupport,
     OAuthSupport {
+
+  // Internal app initialization
+  // This constructor is for Java and other languages
+  constructor(
+      token: String
+  ) : this(
+      token = token,
+      clientId = null,
+      clientSecret = null,
+      redirectUri = null,
+  )
+
+  // OAuth wired app initialization
+  // This constructor is for Java and other languages
+  constructor(
+      clientId: String,
+      clientSecret: String,
+      redirectUri: String
+  ) : this(
+      token = null,
+      clientId = clientId,
+      clientSecret = clientSecret,
+      redirectUri = redirectUri,
+  )
 
   companion object {
     @JvmStatic val defaultBaseUrl: String = "https://api.notion.com/v1"
