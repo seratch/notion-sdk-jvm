@@ -65,6 +65,10 @@ interface Block : WithObjectType {
       if (type == BlockType.Video) this as VideoBlock
       else throw IllegalStateException("Failed to cast $type block to VideoBlock")
 
+  fun asAudio(): AudioBlock =
+      if (type == BlockType.Audio) this as AudioBlock
+      else throw IllegalStateException("Failed to cast $type block to AudioBlock")
+
   fun asDivider(): DividerBlock =
       if (type == BlockType.Divider) this as DividerBlock
       else throw IllegalStateException("Failed to cast $type block to DividerBlock")
