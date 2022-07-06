@@ -19,6 +19,7 @@ constructor(
     override var lastEditedBy: User? = null,
     override var hasChildren: Boolean? = null,
     override var archived: Boolean? = null,
+    override var parent: BlockParent? = null,
     @SerializedName("heading_1") val heading1: Element,
 ) : Block {
 
@@ -31,6 +32,7 @@ constructor(
       createdBy: User? = null,
       lastEditedTime: String? = null,
       lastEditedBy: User? = null,
+      parent: BlockParent? = null,
   ) : this(
       objectType = ObjectType.Block,
       type = BlockType.HeadingOne,
@@ -40,6 +42,7 @@ constructor(
       lastEditedTime = lastEditedTime,
       lastEditedBy = lastEditedBy,
       hasChildren = hasChildren,
+      parent = parent,
       heading1 = heading1)
 
   open class Element

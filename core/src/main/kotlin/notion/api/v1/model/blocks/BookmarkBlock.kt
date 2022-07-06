@@ -18,11 +18,13 @@ constructor(
     override var lastEditedBy: User? = null,
     override var hasChildren: Boolean? = null,
     override var archived: Boolean? = null,
+    override var parent: BlockParent? = null,
     val bookmark: Element? = null,
 ) : Block {
 
   // for other JVM languages
   constructor(
+      bookmark: Element,
       id: String? = UUID.randomUUID().toString(),
       hasChildren: Boolean? = null,
       createdTime: String? = null,
@@ -30,6 +32,7 @@ constructor(
       archived: Boolean? = null,
       lastEditedTime: String? = null,
       lastEditedBy: User? = null,
+      parent: BlockParent? = null,
   ) : this(
       ObjectType.Block,
       BlockType.Bookmark,
@@ -39,7 +42,9 @@ constructor(
       lastEditedTime,
       lastEditedBy,
       hasChildren,
-      archived)
+      archived,
+      parent,
+      bookmark)
 
   open class Element
   @JvmOverloads
