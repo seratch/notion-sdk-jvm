@@ -1,10 +1,10 @@
 package notion.api.v1.model.blocks
 
 import com.google.gson.annotations.SerializedName
+import java.util.*
 import notion.api.v1.model.common.ObjectType
 import notion.api.v1.model.pages.PageProperty
 import notion.api.v1.model.users.User
-import java.util.*
 
 open class TemplateBlock
 @JvmOverloads
