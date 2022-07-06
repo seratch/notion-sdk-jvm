@@ -1,11 +1,11 @@
 package notion.api.v1.model.blocks
 
 import com.google.gson.annotations.SerializedName
-import java.util.*
 import notion.api.v1.model.common.BlockColor
 import notion.api.v1.model.common.ObjectType
 import notion.api.v1.model.pages.PageProperty
 import notion.api.v1.model.users.User
+import java.util.*
 
 open class ToggleBlock
 @JvmOverloads
@@ -19,6 +19,7 @@ constructor(
     override var lastEditedBy: User? = null,
     override var hasChildren: Boolean? = null,
     override var archived: Boolean? = null,
+    override var parent: BlockParent? = null,
     val toggle: Element,
 ) : Block {
 
@@ -31,6 +32,7 @@ constructor(
       createdBy: User? = null,
       lastEditedTime: String? = null,
       lastEditedBy: User? = null,
+      parent: BlockParent? = null,
   ) : this(
       objectType = ObjectType.Block,
       type = BlockType.Toggle,
@@ -40,6 +42,7 @@ constructor(
       lastEditedTime = lastEditedTime,
       lastEditedBy = lastEditedBy,
       hasChildren = hasChildren,
+      parent = parent,
       toggle = toggle)
 
   open class Element

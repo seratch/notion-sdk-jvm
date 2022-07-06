@@ -19,11 +19,13 @@ constructor(
     override var lastEditedBy: User? = null,
     override var hasChildren: Boolean? = null,
     override var archived: Boolean? = null,
+    override var parent: BlockParent? = null,
     val quote: Element? = null,
 ) : Block {
 
   // for other JVM languages
   constructor(
+      quote: Element,
       id: String? = UUID.randomUUID().toString(),
       hasChildren: Boolean? = null,
       createdTime: String? = null,
@@ -31,6 +33,7 @@ constructor(
       archived: Boolean? = null,
       lastEditedTime: String? = null,
       lastEditedBy: User? = null,
+      parent: BlockParent? = null,
   ) : this(
       ObjectType.Block,
       BlockType.Quote,
@@ -40,7 +43,9 @@ constructor(
       lastEditedTime,
       lastEditedBy,
       hasChildren,
-      archived)
+      archived,
+      parent,
+      quote)
 
   open class Element
   @JvmOverloads

@@ -1,6 +1,6 @@
 package notion.api.v1.model.blocks
 
-import notion.api.v1.model.common.*
+import notion.api.v1.model.common.WithObjectType
 import notion.api.v1.model.users.User
 
 interface Block : WithObjectType {
@@ -12,6 +12,7 @@ interface Block : WithObjectType {
   var lastEditedBy: User?
   var archived: Boolean?
   var hasChildren: Boolean?
+  var parent: BlockParent?
 
   fun asParagraph(): ParagraphBlock =
       if (type == BlockType.Paragraph) this as ParagraphBlock

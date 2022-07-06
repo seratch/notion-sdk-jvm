@@ -1,12 +1,12 @@
 package notion.api.v1.model.blocks
 
 import com.google.gson.annotations.SerializedName
-import java.util.*
 import notion.api.v1.model.common.ExternalFileDetails
 import notion.api.v1.model.common.FileDetails
 import notion.api.v1.model.common.ObjectType
 import notion.api.v1.model.pages.PageProperty
 import notion.api.v1.model.users.User
+import java.util.*
 
 open class FileBlock
 @JvmOverloads
@@ -20,11 +20,13 @@ constructor(
     override var lastEditedBy: User? = null,
     override var hasChildren: Boolean? = null,
     override var archived: Boolean? = null,
+    override var parent: BlockParent? = null,
     val file: Element? = null,
 ) : Block {
 
   // for other JVM languages
   constructor(
+      file: Element,
       id: String? = UUID.randomUUID().toString(),
       hasChildren: Boolean? = null,
       createdTime: String? = null,
@@ -32,6 +34,7 @@ constructor(
       archived: Boolean? = null,
       lastEditedTime: String? = null,
       lastEditedBy: User? = null,
+      parent: BlockParent? = null,
   ) : this(
       ObjectType.Block,
       BlockType.File,
@@ -41,7 +44,9 @@ constructor(
       lastEditedTime,
       lastEditedBy,
       hasChildren,
-      archived)
+      archived,
+      parent,
+      file)
 
   open class Element
   @JvmOverloads

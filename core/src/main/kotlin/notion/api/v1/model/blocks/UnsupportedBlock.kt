@@ -1,9 +1,9 @@
 package notion.api.v1.model.blocks
 
 import com.google.gson.annotations.SerializedName
-import java.util.*
 import notion.api.v1.model.common.ObjectType
 import notion.api.v1.model.users.User
+import java.util.*
 
 open class UnsupportedBlock
 @JvmOverloads
@@ -17,6 +17,7 @@ constructor(
     override var lastEditedBy: User? = null,
     override var hasChildren: Boolean? = null,
     override var archived: Boolean? = null,
+    override var parent: BlockParent? = null,
     val unsupported: Element? = null,
 ) : Block {
 
@@ -29,6 +30,7 @@ constructor(
       archived: Boolean? = null,
       lastEditedTime: String? = null,
       lastEditedBy: User? = null,
+      parent: BlockParent? = null,
   ) : this(
       ObjectType.Block,
       BlockType.Unsupported,
@@ -38,7 +40,8 @@ constructor(
       lastEditedTime,
       lastEditedBy,
       hasChildren,
-      archived)
+      archived,
+      parent)
 
   open class Element
 }
