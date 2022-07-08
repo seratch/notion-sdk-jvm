@@ -23,7 +23,5 @@ constructor(
     val properties: Map<String, PagePropertyMetadata>,
 ) : SearchResult {
 
-    open class PagePropertyMetadata
-    @JvmOverloads
-    constructor(val id: String)
+  open class PagePropertyMetadata @JvmOverloads constructor(val id: String)
 }
