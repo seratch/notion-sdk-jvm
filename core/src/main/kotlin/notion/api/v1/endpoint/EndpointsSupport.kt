@@ -10,7 +10,7 @@ interface EndpointsSupport {
     val commonHeaders =
         mapOf(
                 "Authorization" to "Bearer $token",
-                "Notion-Version" to "2022-02-22",
+                "Notion-Version" to "2022-06-28",
                 "User-Agent" to UserAgent.buildUserAgent(),
             )
             .plus(additionalOnes)

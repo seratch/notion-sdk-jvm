@@ -7,7 +7,6 @@ import kotlin.test.assertTrue
 import notion.api.v1.NotionClient
 import notion.api.v1.model.blocks.*
 import notion.api.v1.model.pages.PageProperty
-import notion.api.v1.request.search.SearchRequest
 import org.junit.Test
 
 class BlocksTest {
@@ -19,16 +18,8 @@ class BlocksTest {
     val title = "Test Page for SDK"
     NotionClient(token = System.getenv("NOTION_TOKEN")).use { client ->
       val pageId =
-          client.search(
-                      query = title,
-                      filter =
-                          SearchRequest.SearchFilter(
-                              property = "object",
-                              value = "page",
-                          ))
-                  .results
-                  .find { it.asPage().properties["title"]?.title?.get(0)?.plainText == title }!!
-              .id
+          if (System.getenv("NOTION_TEST_PAGE_ID") != null) System.getenv("NOTION_TEST_PAGE_ID")
+          else "98461275-5a90-4640-a273-3923b5a3dca5"
       val page = client.retrievePage(pageId)
       assertEquals(pageId, page.id)
       val blocks = mutableListOf<Block>()

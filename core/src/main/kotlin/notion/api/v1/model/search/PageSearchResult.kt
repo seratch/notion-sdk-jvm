@@ -4,7 +4,6 @@ import com.google.gson.annotations.SerializedName
 import notion.api.v1.model.common.Cover
 import notion.api.v1.model.common.Icon
 import notion.api.v1.model.common.ObjectType
-import notion.api.v1.model.pages.PageParent
 import notion.api.v1.model.pages.PageProperty
 import notion.api.v1.model.users.User
 
@@ -20,7 +19,7 @@ constructor(
     override val lastEditedTime: String,
     override val lastEditedBy: User,
     val url: String,
-    val parent: PageParent? = null,
+    val parent: PageSearchResultParent? = null,
     override val archived: Boolean = false,
     val properties: Map<String, PageProperty>,
 ) : SearchResult
