@@ -5,7 +5,6 @@ data class PageParent
 constructor(
     // Notion stopped using type (as of May 19, 2021)
     val type: PageParentType? = null,
-    var blockId: String? = null, // type: database
     var databaseId: String? = null, // type: database
     var pageId: String? = null, // type: page
     var workspace: Boolean? = null // type: workspace
