@@ -25,7 +25,7 @@ interface CommentsSupport : EndpointsSupport {
       parent: PageParent,
       richText: List<PageProperty.RichText>
   ): Comment {
-    return createPage(
+    return createComment(
         CreateCommentRequest(
             parent = parent,
             richText = richText
@@ -35,14 +35,14 @@ interface CommentsSupport : EndpointsSupport {
       discussionId: String,
       richText: List<PageProperty.RichText>
   ): Comment {
-    return createPage(
+    return createComment(
         CreateCommentRequest(
             discussionId = discussionId,
             richText = richText
         ))
   }
 
-  fun createPage(comment: CreateCommentRequest): Comment {
+  fun createComment(comment: CreateCommentRequest): Comment {
     val httpResponse =
         httpClient.postTextBody(
             logger = logger,
