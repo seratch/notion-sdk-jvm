@@ -28,3 +28,4 @@ verificationToken.txt
 
 *.hprof
 .env
+.sdkmanrc
