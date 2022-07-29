@@ -27,6 +27,7 @@ constructor(
     DatabasesSupport,
     PagesSupport,
     BlocksSupport,
+    CommentsSupport,
     SearchSupport,
     UsersSupport,
     OAuthSupport {
