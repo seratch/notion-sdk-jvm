@@ -2,6 +2,8 @@ package notion.api.v1.json
 
 import notion.api.v1.model.blocks.Block
 import notion.api.v1.model.blocks.Blocks
+import notion.api.v1.model.comments.Comment
+import notion.api.v1.model.comments.Comments
 import notion.api.v1.model.databases.Database
 import notion.api.v1.model.databases.Databases
 import notion.api.v1.model.databases.QueryResults
@@ -21,11 +23,15 @@ import notion.api.v1.request.oauth.ExchangeAuthCodeRequest
 import notion.api.v1.request.pages.CreatePageRequest
 import notion.api.v1.request.pages.UpdatePageRequest
 import notion.api.v1.request.search.SearchRequest
+import notion.api.v1.request.comments.RetrieveCommentsRequest
+import notion.api.v1.request.comments.CreateCommentRequest
 
 interface NotionJsonSerializer {
 
   fun toBlock(body: String): Block
   fun toBlocks(body: String): Blocks
+  fun toComment(body: String): Comment
+  fun toComments(body: String): Comments
   fun toDatabase(body: String): Database
   fun toDatabases(body: String): Databases
   fun toError(body: String): Error
@@ -43,6 +49,7 @@ interface NotionJsonSerializer {
   fun toJsonString(blockProperties: Map<String, Any>): String
   fun toJsonString(request: AppendBlockChildrenRequest): String
   fun toJsonString(request: CreatePageRequest): String
+  fun toJsonString(request: CreateCommentRequest): String
   fun toJsonString(request: SearchRequest): String
   fun toJsonString(request: QueryDatabaseRequest): String
   fun toJsonString(request: UpdatePageRequest): String

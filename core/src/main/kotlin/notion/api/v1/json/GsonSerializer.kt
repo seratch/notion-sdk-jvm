@@ -22,6 +22,8 @@ import notion.api.v1.model.search.SearchResult
 import notion.api.v1.model.search.SearchResults
 import notion.api.v1.model.users.User
 import notion.api.v1.model.users.Users
+import notion.api.v1.model.comments.Comment
+import notion.api.v1.model.comments.Comments
 import notion.api.v1.request.blocks.AppendBlockChildrenRequest
 import notion.api.v1.request.databases.CreateDatabaseRequest
 import notion.api.v1.request.databases.QueryDatabaseRequest
@@ -30,6 +32,7 @@ import notion.api.v1.request.oauth.ExchangeAuthCodeRequest
 import notion.api.v1.request.pages.CreatePageRequest
 import notion.api.v1.request.pages.UpdatePageRequest
 import notion.api.v1.request.search.SearchRequest
+import notion.api.v1.request.comments.CreateCommentRequest
 
 class GsonSerializer : NotionJsonSerializer {
   private val gson: Gson
@@ -57,6 +60,8 @@ class GsonSerializer : NotionJsonSerializer {
 
   override fun toBlock(body: String): Block = gson.fromJson(body, Block::class.java)
   override fun toBlocks(body: String): Blocks = gson.fromJson(body, Blocks::class.java)
+  override fun toComment(body: String): Comment = gson.fromJson(body, Comment::class.java)
+  override fun toComments(body: String): Comments = gson.fromJson(body, Comments::class.java)
   override fun toDatabase(body: String): Database = gson.fromJson(body, Database::class.java)
   override fun toDatabases(body: String): Databases = gson.fromJson(body, Databases::class.java)
   override fun toError(body: String): Error = gson.fromJson(body, Error::class.java)
@@ -90,4 +95,5 @@ class GsonSerializer : NotionJsonSerializer {
   override fun toJsonString(request: QueryDatabaseRequest): String = gson.toJson(request)
   override fun toJsonString(request: UpdatePageRequest): String = gson.toJson(request)
   override fun toJsonString(request: ExchangeAuthCodeRequest): String = gson.toJson(request)
+  override fun toJsonString(request: CreateCommentRequest): String = gson.toJson(request)
 }
