@@ -27,3 +27,4 @@ appConfig_*.json
 verificationToken.txt
 
 *.hprof
+.env
