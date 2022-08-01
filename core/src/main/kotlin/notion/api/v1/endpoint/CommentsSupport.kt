@@ -5,10 +5,9 @@ import notion.api.v1.http.NotionHttpClient
 import notion.api.v1.json.NotionJsonSerializer
 import notion.api.v1.logging.NotionLogger
 import notion.api.v1.model.comments.*
-import notion.api.v1.request.comments.*
-
 import notion.api.v1.model.pages.PageParent
 import notion.api.v1.model.pages.PageProperty
+import notion.api.v1.request.comments.*
 
 interface CommentsSupport : EndpointsSupport {
   val httpClient: NotionHttpClient
@@ -16,30 +15,15 @@ interface CommentsSupport : EndpointsSupport {
   val logger: NotionLogger
   val baseUrl: String
 
-
   // -----------------------------------------------
   // createComment
   // -----------------------------------------------
 
-  fun createComment(
-      parent: PageParent,
-      richText: List<PageProperty.RichText>
-  ): Comment {
-    return createComment(
-        CreateCommentRequest(
-            parent = parent,
-            richText = richText
-        ))
+  fun createComment(parent: PageParent, richText: List<PageProperty.RichText>): Comment {
+    return createComment(CreateCommentRequest(parent = parent, richText = richText))
   }
-  fun createComment(
-      discussionId: String,
-      richText: List<PageProperty.RichText>
-  ): Comment {
-    return createComment(
-        CreateCommentRequest(
-            discussionId = discussionId,
-            richText = richText
-        ))
+  fun createComment(discussionId: String, richText: List<PageProperty.RichText>): Comment {
+    return createComment(CreateCommentRequest(discussionId = discussionId, richText = richText))
   }
 
   fun createComment(comment: CreateCommentRequest): Comment {
@@ -63,15 +47,20 @@ interface CommentsSupport : EndpointsSupport {
   // retrieveComments
   // -----------------------------------------------
 
-  fun retrieveComments(blockId: String,
-    pageSize: Int? = null,): Comments {
+  fun retrieveComments(
+      blockId: String,
+      pageSize: Int? = null,
+  ): Comments {
     return retrieveComments(RetrieveCommentsRequest(blockId = blockId, pageSize = pageSize))
   }
 
-  fun retrieveComments(blockId: String,
-    startCursor: String? = null,
-    pageSize: Int? = null,): Comments {
-    return retrieveComments(RetrieveCommentsRequest(blockId = blockId, startCursor = startCursor, pageSize = pageSize))
+  fun retrieveComments(
+      blockId: String,
+      startCursor: String? = null,
+      pageSize: Int? = null,
+  ): Comments {
+    return retrieveComments(
+        RetrieveCommentsRequest(blockId = blockId, startCursor = startCursor, pageSize = pageSize))
   }
 
   fun retrieveComments(request: RetrieveCommentsRequest): Comments {
@@ -90,5 +79,4 @@ interface CommentsSupport : EndpointsSupport {
       )
     }
   }
-
 }

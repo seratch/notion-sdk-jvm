@@ -7,6 +7,8 @@ import notion.api.Metadata.isLibraryMaintainerMode
 import notion.api.v1.json.gson.*
 import notion.api.v1.model.blocks.Block
 import notion.api.v1.model.blocks.Blocks
+import notion.api.v1.model.comments.Comment
+import notion.api.v1.model.comments.Comments
 import notion.api.v1.model.common.Cover
 import notion.api.v1.model.common.Icon
 import notion.api.v1.model.databases.Database
@@ -22,9 +24,8 @@ import notion.api.v1.model.search.SearchResult
 import notion.api.v1.model.search.SearchResults
 import notion.api.v1.model.users.User
 import notion.api.v1.model.users.Users
-import notion.api.v1.model.comments.Comment
-import notion.api.v1.model.comments.Comments
 import notion.api.v1.request.blocks.AppendBlockChildrenRequest
+import notion.api.v1.request.comments.CreateCommentRequest
 import notion.api.v1.request.databases.CreateDatabaseRequest
 import notion.api.v1.request.databases.QueryDatabaseRequest
 import notion.api.v1.request.databases.UpdateDatabaseRequest
@@ -32,7 +33,6 @@ import notion.api.v1.request.oauth.ExchangeAuthCodeRequest
 import notion.api.v1.request.pages.CreatePageRequest
 import notion.api.v1.request.pages.UpdatePageRequest
 import notion.api.v1.request.search.SearchRequest
-import notion.api.v1.request.comments.CreateCommentRequest
 
 class GsonSerializer : NotionJsonSerializer {
   private val gson: Gson

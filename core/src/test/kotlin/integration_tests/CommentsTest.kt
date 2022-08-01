@@ -1,14 +1,13 @@
 package integration_tests
 
 import java.util.*
-import java.time.ZonedDateTime
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
 import notion.api.v1.NotionClient
 import notion.api.v1.model.comments.*
-import notion.api.v1.model.pages.PageProperty
 import notion.api.v1.model.pages.PageParent
+import notion.api.v1.model.pages.PageProperty
 import org.junit.Test
 
 class CommentsTest {
@@ -39,14 +38,14 @@ class CommentsTest {
       }
 
       var found = false
-      val itr = comments.listIterator()    // or, use `iterator()`
+      val itr = comments.listIterator() // or, use `iterator()`
       while (itr.hasNext()) {
-          var comment = itr.next()
-          for(richText in comment.richText) {
-              if(richText.plainText == "Hello World!") {
-                  found = true
-              }
+        var comment = itr.next()
+        for (richText in comment.richText) {
+          if (richText.plainText == "Hello World!") {
+            found = true
           }
+        }
       }
 
       assertTrue(found, "Could not find \"Hello World!\" comment on test page")
@@ -69,9 +68,7 @@ class CommentsTest {
       val newComment: Comment =
           client.createComment(
               parent = PageParent.page(page.id),
-              richText = listOf(
-                PageProperty.RichText(
-                    text = PageProperty.RichText.Text(text))))
+              richText = listOf(PageProperty.RichText(text = PageProperty.RichText.Text(text))))
       assertNotNull(newComment)
 
       var children = client.retrieveComments(pageId, pageSize = 1000)
@@ -86,18 +83,17 @@ class CommentsTest {
       }
 
       var found = false
-      val itr = comments.listIterator()    // or, use `iterator()`
+      val itr = comments.listIterator() // or, use `iterator()`
       while (itr.hasNext()) {
-          var comment = itr.next()
-          for(richText in comment.richText) {
-              if(richText.plainText == text) {
-                  found = true
-              }
+        var comment = itr.next()
+        for (richText in comment.richText) {
+          if (richText.plainText == text) {
+            found = true
           }
+        }
       }
 
       assertTrue(found, "Could not find generated comment on test page")
     }
   }
-
 }

@@ -16,6 +16,7 @@ import notion.api.v1.model.search.SearchResults
 import notion.api.v1.model.users.User
 import notion.api.v1.model.users.Users
 import notion.api.v1.request.blocks.AppendBlockChildrenRequest
+import notion.api.v1.request.comments.CreateCommentRequest
 import notion.api.v1.request.databases.CreateDatabaseRequest
 import notion.api.v1.request.databases.QueryDatabaseRequest
 import notion.api.v1.request.databases.UpdateDatabaseRequest
@@ -23,8 +24,6 @@ import notion.api.v1.request.oauth.ExchangeAuthCodeRequest
 import notion.api.v1.request.pages.CreatePageRequest
 import notion.api.v1.request.pages.UpdatePageRequest
 import notion.api.v1.request.search.SearchRequest
-import notion.api.v1.request.comments.RetrieveCommentsRequest
-import notion.api.v1.request.comments.CreateCommentRequest
 
 interface NotionJsonSerializer {
 
