@@ -33,7 +33,7 @@ class StateManager {
   }
 }
 
-fun urlEncode(v: String?): String = URLEncoder.encode(v, "UTF-8")
+fun urlEncode(v: String?): String = URLEncoder.encode(v, Charsets.UTF_8)
 
 fun main() {
   val logger = LoggerFactory.getLogger("main")
