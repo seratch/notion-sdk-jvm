@@ -43,7 +43,6 @@ class CommentsTest {
       while (itr.hasNext()) {
           var comment = itr.next()
           for(richText in comment.richText) {
-              println(richText.text)
               if(richText.plainText == "Hello World!") {
                   found = true
               }
@@ -91,7 +90,6 @@ class CommentsTest {
       while (itr.hasNext()) {
           var comment = itr.next()
           for(richText in comment.richText) {
-              println(richText.text)
               if(richText.plainText == text) {
                   found = true
               }
