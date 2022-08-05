@@ -26,7 +26,9 @@ constructor(val select: List<SelectOptionSchema>? = null) : DatabasePropertySche
 
 open class MultiSelectPropertySchema
 @JvmOverloads
-constructor(val multiSelect: List<SelectOptionSchema>? = null) : DatabasePropertySchema
+constructor(multiSelect: List<SelectOptionSchema>? = null) : DatabasePropertySchema {
+  val multiSelect = mapOf("options" to multiSelect)
+}
 
 class DatePropertySchema @JvmOverloads constructor(val date: Map<String, Any> = emptyMap()) :
     DatabasePropertySchema
