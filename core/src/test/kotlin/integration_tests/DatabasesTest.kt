@@ -66,6 +66,14 @@ class DatabasesTest {
                   mapOf(
                       "Title" to TitlePropertySchema(),
                       "Description" to RichTextPropertySchema(),
+                      "Type" to
+                          SelectPropertySchema(
+                              listOf(
+                                  SelectOptionSchema(name = "TODO", color = OptionColor.Brown),
+                                  SelectOptionSchema(
+                                      name = "In progress", color = OptionColor.Blue),
+                                  SelectOptionSchema(name = "Done", color = OptionColor.Orange),
+                              )),
                       "Tags" to
                           MultiSelectPropertySchema(
                               listOf(
