@@ -14,5 +14,6 @@ constructor(
     override val nextCursor: String? = null,
     override val hasMore: Boolean = false,
     val type: String = "comment",
-    val comment: Any? = null, // We may revisit Any type here once the Notion API uses it in a meaningful way
+    // We may revisit Any type here once the Notion API uses it in a meaningful way
+    val comment: Any? = null,
 ) : WithObjectType, Pagination
