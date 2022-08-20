@@ -42,7 +42,7 @@ class CommentsTest {
       while (itr.hasNext()) {
         var comment = itr.next()
         for (richText in comment.richText) {
-          if (richText.plainText == "Hello World!") {
+          if (richText.plainText?.startsWith("Hello World!") == true) {
             found = true
           }
         }
