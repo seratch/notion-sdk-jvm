@@ -76,6 +76,13 @@ class SimpleTest {
               properties =
                   mapOf(
                       "Title" to titleProp,
+                      "Description" to
+                          prop(
+                              richText =
+                                  listOf(
+                                      prop.RichText(text = prop.RichText.Text(content = "test1")),
+                                      prop.RichText(text = prop.RichText.Text(content = "test2")),
+                                  )),
                       "Severity" to severityProp,
                       "Tags" to prop(multiSelect = tagOptions),
                       "Due" to prop(date = prop.Date(start = "2021-05-13", end = "2021-12-31")),
@@ -97,6 +104,9 @@ class SimpleTest {
       // list type page property
       val listProperty = client.retrievePagePropertyItem(pageId = newPage.id, propertyId = "title")
       assertNotNull(listProperty)
+      val listProperty2 =
+          client.retrievePagePropertyItem(pageId = newPage.id, propertyId = "Description")
+      assertNotNull(listProperty2)
 
       val patchResult =
           client.updatePage(
