@@ -49,6 +49,7 @@ constructor(
   @JvmOverloads
   constructor(
       var richText: List<PageProperty.RichText>,
+      var isToggleable: Boolean? = null,
       var color: BlockColor? = null,
       var children: List<Block>? = null,
   )
