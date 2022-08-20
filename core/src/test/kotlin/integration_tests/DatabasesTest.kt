@@ -7,10 +7,8 @@ import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
 import notion.api.v1.NotionClient
 import notion.api.v1.model.common.*
-import notion.api.v1.model.databases.DatabaseParent
+import notion.api.v1.model.databases.*
 import notion.api.v1.model.databases.DatabaseProperty as prop
-import notion.api.v1.model.databases.RichTextPropertySchema
-import notion.api.v1.model.databases.TitlePropertySchema
 import notion.api.v1.model.databases.query.filter.CompoundFilter
 import notion.api.v1.model.databases.query.filter.PropertyFilter
 import notion.api.v1.model.databases.query.filter.condition.DateFilter
@@ -66,7 +64,16 @@ class DatabasesTest {
               isInline = true,
               properties =
                   mapOf(
-                      "Title" to TitlePropertySchema(), "Description" to RichTextPropertySchema()),
+                      "Title" to TitlePropertySchema(),
+                      "Description" to RichTextPropertySchema(),
+                      "Tags" to
+                          MultiSelectPropertySchema(
+                              listOf(
+                                  SelectOptionSchema(name = "One", color = OptionColor.Brown),
+                                  SelectOptionSchema(name = "Two", color = OptionColor.Blue),
+                                  SelectOptionSchema(name = "Three", color = OptionColor.Orange),
+                              )),
+                  ),
               icon = Emoji(emoji = "\uD83C\uDF89"),
               cover =
                   File.external(
