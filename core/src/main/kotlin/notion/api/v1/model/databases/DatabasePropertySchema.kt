@@ -22,7 +22,9 @@ constructor(val name: String, val color: OptionColor? = null)
 
 open class SelectPropertySchema
 @JvmOverloads
-constructor(val select: List<SelectOptionSchema>? = null) : DatabasePropertySchema
+constructor(select: List<SelectOptionSchema>? = null) : DatabasePropertySchema {
+  val select = mapOf("options" to select)
+}
 
 open class MultiSelectPropertySchema
 @JvmOverloads
