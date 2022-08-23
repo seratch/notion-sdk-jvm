@@ -195,11 +195,11 @@ client.httpClient = OkHttp3Client()
 
 #### Pluggable Logging
 
-You can change the `logger` property of a `NotionClient` instances Currently, this libarary supports its own stdout logger (default), `java.util.logging`, and slf4j-api based ones. Here are the steps to switch to an slf4j-api logger. Add the following optional module along with your favorite implementation (e.g., logback-classic, slf4j-simple).
+You can change the `logger` property of a `NotionClient` instances Currently, this library supports its own stdout logger (default), `java.util.logging`, and slf4j-api based ones. Here are the steps to switch to an slf4j-api logger. Add the following optional module along with your favorite implementation (e.g., logback-classic, slf4j-simple).
 
 ```gradle
 implementation("com.github.seratch:notion-sdk-jvm-slf4j:${notionSdkVersion}") // slf4j-api 1.7
-implementation("org.slf4j:slf4j-simple:1.7.30")
+implementation("org.slf4j:slf4j-simple:1.7.36")
 ```
 
 Now you can switch to your slf4j logger. As with the `httpClient` example, you can use the setter method too.
@@ -217,6 +217,13 @@ val client = NotionClient(
     httpClient = JavaNetHttpClient(),
     logger = Slf4jLogger(),
 )
+```
+
+If you desire to use slf4j-api v2 instead, you can use the module for the major version as below:
+
+```gradle
+implementation("com.github.seratch:notion-sdk-jvm-slf4j2:${notionSdkVersion}") // slf4j-api 2.0
+implementation("org.slf4j:slf4j-simple:2.0.0")
 ```
 
 #### Why isn't JSON serialization pluggable?
