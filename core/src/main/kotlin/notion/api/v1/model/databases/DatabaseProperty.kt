@@ -127,11 +127,22 @@ constructor(
     )
   }
 
-  data class Status @JvmOverloads constructor(val options: List<Option>? = null) {
+  data class Status
+  @JvmOverloads
+  constructor(
+      val options: List<Option>? = null,
+      val groups: List<OptionGroup>? = null,
+  ) {
     data class Option(
         val id: String? = null,
         val name: String? = null,
         val color: OptionColor? = null,
+    )
+    data class OptionGroup(
+        val id: String? = null,
+        val name: String? = null,
+        val color: OptionColor? = null,
+        val optionIds: List<String>? = null,
     )
   }
 
