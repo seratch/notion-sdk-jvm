@@ -18,7 +18,7 @@ open class NumberPropertySchema @JvmOverloads constructor(val number: Number = N
 
 open class SelectOptionSchema
 @JvmOverloads
-constructor(val name: String, val color: OptionColor? = null)
+constructor(val name: String, val color: OptionColor? = null, val id: String? = null)
 
 open class SelectPropertySchema
 @JvmOverloads
