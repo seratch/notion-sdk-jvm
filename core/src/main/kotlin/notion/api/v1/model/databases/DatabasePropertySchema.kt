@@ -32,6 +32,33 @@ constructor(multiSelect: List<SelectOptionSchema>? = null) : DatabasePropertySch
   val multiSelect = mapOf("options" to multiSelect)
 }
 
+open class StatusOptionSchema
+@JvmOverloads
+constructor(
+    val id: String? = null,
+    val name: String,
+    val color: OptionColor? = null,
+)
+
+open class StatusOptionGroupSchema
+@JvmOverloads
+constructor(
+    val id: String? = null,
+    val name: String,
+    val color: OptionColor? = null,
+    val optionIds: List<String>? = null,
+)
+
+open class StatusPropertySchema
+@JvmOverloads
+constructor(
+    options: List<StatusOptionSchema>? = null,
+    groups: List<StatusOptionGroupSchema>? = null,
+) : DatabasePropertySchema {
+  val status = mapOf("options" to options, "groups" to groups)
+  //    val status = emptyMap<String, Any>()
+}
+
 class DatePropertySchema @JvmOverloads constructor(val date: Map<String, Any> = emptyMap()) :
     DatabasePropertySchema
 

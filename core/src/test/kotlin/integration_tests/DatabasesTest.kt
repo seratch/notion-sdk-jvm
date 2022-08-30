@@ -2,6 +2,7 @@ package integration_tests
 
 import java.time.LocalDate
 import java.time.ZoneId
+import java.util.*
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
@@ -52,6 +53,11 @@ class DatabasesTest {
           )
 
       val title = "Test database ${System.currentTimeMillis()}"
+
+      val statusTODOID = UUID.randomUUID().toString()
+      val statusInProgressID = UUID.randomUUID().toString()
+      val statusDoneID = UUID.randomUUID().toString()
+      val statusWontFixID = UUID.randomUUID().toString()
       val database =
           client.createDatabase(
               parent = DatabaseParent.page(page.id),
@@ -74,6 +80,48 @@ class DatabasesTest {
                                       name = "In progress", color = OptionColor.Blue),
                                   SelectOptionSchema(name = "Done", color = OptionColor.Orange),
                               )),
+                      "My Status" to
+                          StatusPropertySchema(
+                              options =
+                                  listOf(
+                                      StatusOptionSchema(
+                                          id = statusTODOID,
+                                          name = "TODO",
+                                          color = OptionColor.Brown),
+                                      StatusOptionSchema(
+                                          id = statusInProgressID,
+                                          name = "In progress",
+                                          color = OptionColor.Blue),
+                                      StatusOptionSchema(
+                                          id = statusDoneID,
+                                          name = "Done",
+                                          color = OptionColor.Gray),
+                                      StatusOptionSchema(
+                                          id = statusWontFixID,
+                                          name = "Won't fix",
+                                          color = OptionColor.Gray),
+                                  ),
+                              groups =
+                                  listOf(
+                                      StatusOptionGroupSchema(
+                                          id = UUID.randomUUID().toString(),
+                                          name = "TODO",
+                                          color = OptionColor.Brown,
+                                          optionIds = listOf(statusTODOID),
+                                      ),
+                                      StatusOptionGroupSchema(
+                                          id = UUID.randomUUID().toString(),
+                                          name = "In Progress",
+                                          color = OptionColor.Brown,
+                                          optionIds = listOf(statusInProgressID),
+                                      ),
+                                      StatusOptionGroupSchema(
+                                          id = UUID.randomUUID().toString(),
+                                          name = "Done",
+                                          color = OptionColor.Brown,
+                                          optionIds = listOf(statusDoneID, statusWontFixID),
+                                      ),
+                                  )),
                       "Tags" to
                           MultiSelectPropertySchema(
                               listOf(
