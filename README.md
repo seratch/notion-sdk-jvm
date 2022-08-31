@@ -24,7 +24,7 @@ You can start using this library just by adding `notion-sdk-jvm-core` dependency
 For Gradle users:
 
 ```gradle
-ext.notionSdkVersion = "1.7.0"
+ext.notionSdkVersion = "1.7.1"
 dependencies {
   // This dependency is at least required
   implementation("com.github.seratch:notion-sdk-jvm-core:${notionSdkVersion}")
@@ -35,7 +35,7 @@ For Maven users:
 
 ```xml
 <properties>
-  <notion-sdk.version>1.7.0</notion-sdk.version>
+  <notion-sdk.version>1.7.1</notion-sdk.version>
 </properties>
 
 <dependencies>
