@@ -31,6 +31,7 @@ constructor(
     val lastEditedBy: User? = null,
     val createdTime: String? = null,
     val lastEditedTime: String? = null,
+    val hasMore: Boolean? = null, // for relation type ones
 ) {
 
   data class RichText
