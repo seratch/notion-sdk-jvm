@@ -57,19 +57,22 @@ import notion.api.v1.request.search.SearchRequest
 import notion.api.v1.model.pages.PageProperty as prop
 
 fun main() {
-  val client = NotionClient(token = System.getenv("NOTION_TOKEN"))
-  client.use {
+  NotionClient(token = System.getenv("NOTION_TOKEN")).use { client ->
     // Find the "Test Database" from the list
-    val database = client.search(
-      query = "Test Database",
-      filter = SearchRequest.SearchFilter("database", property = "object")
-    ).results.find { it.asDatabase().properties.containsKey("Severity") }?.asDatabase()
-      ?: throw IllegalStateException("Create a database named 'Test Database' and invite this app's user!")
+    val database = client
+      .search(
+        query = "Test Database",
+        filter = SearchRequest.SearchFilter("database", property = "object")
+      )
+      .results
+      .find { it.asDatabase().properties.containsKey("Severity") }
+      ?.asDatabase()
+      ?: error("Create a database named 'Test Database' and invite this app's user!")
 
     // All the options for "Severity" property (select type)
-    val severityOptions = database.properties?.get("Severity")?.select?.options
+    val severityOptions = database.properties["Severity"]?.select?.options
     // All the options for "Tags" property (multi_select type)
-    val tagOptions = database.properties?.get("Tags")?.multiSelect?.options
+    val tagOptions = database.properties["Tags"]?.multiSelect?.options
     // The user object for "Assignee" property (people type)
     val assignee = client.listUsers().results[0] // just picking the first user up
 
