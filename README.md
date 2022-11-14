@@ -70,11 +70,11 @@ fun main() {
       ?: error("Create a database named 'Test Database' and invite this app's user!")
 
     // All the options for "Severity" property (select type)
-    val severityOptions = database.properties["Severity"]?.select?.options
+    val severityOptions = database.properties["Severity"]!!.select!!.options!!
     // All the options for "Tags" property (multi_select type)
-    val tagOptions = database.properties["Tags"]?.multiSelect?.options
-    // The user object for "Assignee" property (people type)
-    val assignee = client.listUsers().results[0] // just picking the first user up
+    val tagOptions = database.properties["Tags"]!!.multiSelect!!.options!!
+    // A user object for "Assignee" property (people type)
+    val assignee = client.listUsers().results.first() // Just picking a random user.
 
     // Create a new page in the database
     val newPage = client.createPage(
@@ -84,7 +84,7 @@ fun main() {
       // (these must be pre-defined before this API call)
       properties = mapOf(
         "Title" to prop(title = listOf(prop.RichText(text = prop.RichText.Text(content = "Fix a bug")))),
-        "Severity" to prop(select = severityOptions?.find { it.name == "High" }),
+        "Severity" to prop(select = severityOptions.single { it.name == "High" }),
         "Tags" to prop(multiSelect = tagOptions),
         "Due" to prop(date = prop.Date(start = "2021-05-13", end = "2021-12-31")),
         "Velocity Points" to prop(number = 3),
@@ -94,6 +94,8 @@ fun main() {
         "Contact" to prop(email = "foo@example.com"),
       )
     )
+    
+    // Properties can be addressed by their ID too.
     val severityId = newPage.properties["Severity"]!!.id
 
     // Update properties in the page
@@ -101,7 +103,7 @@ fun main() {
         pageId = newPage.id,
         // Update only "Severity" property
         properties = mapOf(
-          severityId to prop(select = severityOptions?.find { it.name == "Medium" }),
+          severityId to prop(select = severityOptions.single { it.name == "Medium" }),
         )
       )
 
