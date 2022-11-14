@@ -54,7 +54,7 @@ import notion.api.v1.NotionClient
 import notion.api.v1.model.common.ObjectType
 import notion.api.v1.model.pages.PageParent
 import notion.api.v1.request.search.SearchRequest
-import notion.api.v1.model.pages.PageProperty as prop
+import notion.api.v1.model.pages.PageProperty
 
 fun main() {
   NotionClient(token = System.getenv("NOTION_TOKEN")).use { client ->
@@ -84,15 +84,15 @@ fun main() {
       // Set values to the page's properties
       // (these must be pre-defined before this API call)
       properties = mapOf(
-        "Title" to prop(title = "Fix a bug".asRichText()),
-        "Severity" to prop(select = severityOptions.single { it.name == "High" }),
-        "Tags" to prop(multiSelect = tagOptions),
-        "Due" to prop(date = prop.Date(start = "2021-05-13", end = "2021-12-31")),
-        "Velocity Points" to prop(number = 3),
-        "Assignee" to prop(people = listOf(assignee)),
-        "Done" to prop(checkbox = true),
-        "Link" to prop(url = "https://www.example.com"),
-        "Contact" to prop(email = "foo@example.com"),
+        "Title" to PageProperty(title = "Fix a bug".asRichText()),
+        "Severity" to PageProperty(select = severityOptions.single { it.name == "High" }),
+        "Tags" to PageProperty(multiSelect = tagOptions),
+        "Due" to PageProperty(date = PageProperty.Date(start = "2021-05-13", end = "2021-12-31")),
+        "Velocity Points" to PageProperty(number = 3),
+        "Assignee" to PageProperty(people = listOf(assignee)),
+        "Done" to PageProperty(checkbox = true),
+        "Link" to PageProperty(url = "https://www.example.com"),
+        "Contact" to PageProperty(email = "foo@example.com"),
       )
     )
     
@@ -104,7 +104,7 @@ fun main() {
         pageId = newPage.id,
         // Update only "Severity" property
         properties = mapOf(
-          severityId to prop(select = severityOptions.single { it.name == "Medium" }),
+          severityId to PageProperty(select = severityOptions.single { it.name == "Medium" }),
         )
       )
 
@@ -113,8 +113,8 @@ fun main() {
   }
 }
 
-private fun String.asRichText(): List<prop.RichText> =
-  listOf(prop.RichText(text = prop.RichText.Text(content = this)))
+private fun String.asRichText(): List<PageProperty.RichText> =
+  listOf(PageProperty.RichText(text = PageProperty.RichText.Text(content = this)))
 ```
 
 #### Using in Java
