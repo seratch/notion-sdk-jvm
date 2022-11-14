@@ -82,11 +82,11 @@ fun main() {
       // Use the "Test Database" as this page's parent
       parent = PageParent.database(database.id),
       // Set values to the page's properties
-      // (these must be pre-defined before this API call)
+      // (Values of referenced options, people, and relations must be pre-defined before this API call!)
       properties = mapOf(
         "Title" to PageProperty(title = "Fix a bug".asRichText()),
         "Severity" to PageProperty(select = severityOptions.single { it.name == "High" }),
-        "Tags" to PageProperty(multiSelect = tagOptions),
+        "Tags" to PageProperty(multiSelect = listOf("Tag1", "Tag2").map { tag -> tagOptions.single { it.name == tag } }),
         "Due" to PageProperty(date = PageProperty.Date(start = "2021-05-13", end = "2021-12-31")),
         "Velocity Points" to PageProperty(number = 3),
         "Assignee" to PageProperty(people = listOf(assignee)),
