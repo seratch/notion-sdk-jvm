@@ -84,7 +84,7 @@ fun main() {
       // Set values to the page's properties
       // (these must be pre-defined before this API call)
       properties = mapOf(
-        "Title" to prop(title = listOf(prop.RichText(text = prop.RichText.Text(content = "Fix a bug")))),
+        "Title" to prop(title = "Fix a bug".asRichText()),
         "Severity" to prop(select = severityOptions.single { it.name == "High" }),
         "Tags" to prop(multiSelect = tagOptions),
         "Due" to prop(date = prop.Date(start = "2021-05-13", end = "2021-12-31")),
@@ -112,6 +112,9 @@ fun main() {
     val retrievedPage = client.retrievePage(newPage.id)
   }
 }
+
+private fun String.asRichText(): List<prop.RichText> =
+  listOf(prop.RichText(text = prop.RichText.Text(content = this)))
 ```
 
 #### Using in Java
