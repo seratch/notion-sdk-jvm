@@ -68,6 +68,7 @@ fun main() {
       .find { it.asDatabase().properties.containsKey("Severity") }
       ?.asDatabase()
       ?: error("Create a database named 'Test Database' and invite this app's user!")
+    // Alternatively if you know the UUID of the Database, use `val database = client.retrieveDatabase("...")`.
 
     // All the options for "Severity" property (select type)
     val severityOptions = database.properties["Severity"]!!.select!!.options!!
