@@ -1,5 +1,6 @@
 package integration_tests
 
+import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
@@ -121,6 +122,18 @@ class SimpleTest {
       val fetchedPage = client.retrievePage(newPage.id)
       assertNotNull(fetchedPage)
       assertFalse(fetchedPage.archived!!)
+
+      val fetchedPage2 =
+          client.retrievePage(
+              newPage.id,
+              filterProperties =
+                  listOf(
+                      database.properties["Velocity Points"]!!.id,
+                      database.properties["Contact"]!!.id,
+                  ),
+          )
+      assertNotNull(fetchedPage2)
+      assertEquals(fetchedPage2.properties.size, 2)
 
       // check child_page block
       val block = client.retrieveBlock(newPage.id)

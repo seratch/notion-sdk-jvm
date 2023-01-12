@@ -18,7 +18,7 @@ constructor(
   override fun get(
       logger: NotionLogger,
       url: String,
-      query: Map<String, String>,
+      query: Map<String, List<String>>,
       headers: Map<String, String>
   ): NotionHttpResponse {
     val startTimeMillis = System.currentTimeMillis()
@@ -45,7 +45,7 @@ constructor(
   override fun postTextBody(
       logger: NotionLogger,
       url: String,
-      query: Map<String, String>,
+      query: Map<String, List<String>>,
       body: String,
       headers: Map<String, String>
   ): NotionHttpResponse {
@@ -74,7 +74,7 @@ constructor(
   override fun patchTextBody(
       logger: NotionLogger,
       url: String,
-      query: Map<String, String>,
+      query: Map<String, List<String>>,
       body: String,
       headers: Map<String, String>
   ): NotionHttpResponse {
@@ -103,7 +103,7 @@ constructor(
   override fun delete(
       logger: NotionLogger,
       url: String,
-      query: Map<String, String>,
+      query: Map<String, List<String>>,
       headers: Map<String, String>
   ): NotionHttpResponse {
     val startTimeMillis = System.currentTimeMillis()

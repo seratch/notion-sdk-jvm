@@ -11,14 +11,14 @@ constructor(
     override var pageSize: Int? = null,
 ) : Pagination {
 
-  fun toQuery(): Map<String, String> {
-    val body = mutableMapOf<String, String>()
-    body["block_id"] = blockId
+  fun toQuery(): Map<String, List<String>> {
+    val body = mutableMapOf<String, List<String>>()
+    body["block_id"] = listOf(blockId)
     if (startCursor != null) {
-      body["start_cursor"] = startCursor!!
+      body["start_cursor"] = listOf(startCursor!!)
     }
     if (pageSize != null) {
-      body["page_size"] = pageSize.toString()
+      body["page_size"] = listOf(pageSize.toString())
     }
     return body
   }

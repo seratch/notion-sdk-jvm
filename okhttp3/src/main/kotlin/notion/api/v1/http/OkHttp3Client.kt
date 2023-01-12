@@ -58,7 +58,7 @@ class OkHttp3Client : NotionHttpClient {
   override fun get(
       logger: NotionLogger,
       url: String,
-      query: Map<String, String>,
+      query: Map<String, List<String>>,
       headers: Map<String, String>
   ): NotionHttpResponse {
     val fullUrl = buildFullUrl(url, buildQueryString(query))
@@ -70,7 +70,7 @@ class OkHttp3Client : NotionHttpClient {
   override fun postTextBody(
       logger: NotionLogger,
       url: String,
-      query: Map<String, String>,
+      query: Map<String, List<String>>,
       body: String,
       headers: Map<String, String>
   ): NotionHttpResponse {
@@ -84,7 +84,7 @@ class OkHttp3Client : NotionHttpClient {
   override fun patchTextBody(
       logger: NotionLogger,
       url: String,
-      query: Map<String, String>,
+      query: Map<String, List<String>>,
       body: String,
       headers: Map<String, String>
   ): NotionHttpResponse {
@@ -98,7 +98,7 @@ class OkHttp3Client : NotionHttpClient {
   override fun delete(
       logger: NotionLogger,
       url: String,
-      query: Map<String, String>,
+      query: Map<String, List<String>>,
       headers: Map<String, String>
   ): NotionHttpResponse {
     val fullUrl = buildFullUrl(url, buildQueryString(query))

@@ -64,14 +64,15 @@ interface PagesSupport : EndpointsSupport {
   // retrievePage
   // -----------------------------------------------
 
-  fun retrievePage(pageId: String): Page {
-    return retrievePage(RetrievePageRequest(pageId))
+  fun retrievePage(pageId: String, filterProperties: List<String>? = null): Page {
+    return retrievePage(RetrievePageRequest(pageId = pageId, filterProperties = filterProperties))
   }
 
   fun retrievePage(request: RetrievePageRequest): Page {
     val httpResponse =
         httpClient.get(
             logger = logger,
+            query = request.toQuery(),
             url = "$baseUrl/pages/${urlEncode(request.pageId)}",
             headers = buildRequestHeaders(emptyMap()))
     if (httpResponse.status == 200) {

@@ -20,7 +20,7 @@ class JavaNetHttpClient(
   override fun get(
       logger: NotionLogger,
       url: String,
-      query: Map<String, String>,
+      query: Map<String, List<String>>,
       headers: Map<String, String>
   ): NotionHttpResponse {
     val startTimeMillis = System.currentTimeMillis()
@@ -49,7 +49,7 @@ class JavaNetHttpClient(
   override fun postTextBody(
       logger: NotionLogger,
       url: String,
-      query: Map<String, String>,
+      query: Map<String, List<String>>,
       body: String,
       headers: Map<String, String>
   ): NotionHttpResponse {
@@ -79,7 +79,7 @@ class JavaNetHttpClient(
   override fun patchTextBody(
       logger: NotionLogger,
       url: String,
-      query: Map<String, String>,
+      query: Map<String, List<String>>,
       body: String,
       headers: Map<String, String>
   ): NotionHttpResponse {
@@ -109,7 +109,7 @@ class JavaNetHttpClient(
   override fun delete(
       logger: NotionLogger,
       url: String,
-      query: Map<String, String>,
+      query: Map<String, List<String>>,
       headers: Map<String, String>
   ): NotionHttpResponse {
     val startTimeMillis = System.currentTimeMillis()
