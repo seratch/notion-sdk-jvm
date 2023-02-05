@@ -1,11 +1,11 @@
-import io.ktor.application.*
 import io.ktor.http.*
 import io.ktor.http.content.*
-import io.ktor.request.*
-import io.ktor.response.*
-import io.ktor.routing.*
+import io.ktor.server.application.*
 import io.ktor.server.engine.*
 import io.ktor.server.netty.*
+import io.ktor.server.request.*
+import io.ktor.server.response.*
+import io.ktor.server.routing.*
 import java.net.URLEncoder
 import java.util.*
 import notion.api.v1.NotionClient
@@ -33,7 +33,7 @@ class StateManager {
   }
 }
 
-fun urlEncode(v: String?): String = URLEncoder.encode(v, Charsets.UTF_8)
+fun urlEncode(v: String?): String = URLEncoder.encode(v, Charsets.UTF_8.toString())
 
 fun main() {
   val logger = LoggerFactory.getLogger("main")
