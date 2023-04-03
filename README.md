@@ -155,7 +155,7 @@ For HTTP communications and logging, you can easily switch to other implementati
 
 As some may know, `java.net.HttpURLConnection` does not support PATCH request method :cry:. Thus, the default `httpClient` has to make an "illegal reflective access" to overcome the limitation for perfoming PATCH method requests (see [this class](https://github.com/seratch/notion-sdk-jvm/blob/main/core/src/main/kotlin/notion/api/v1/http/HttpUrlConnPatchMethodWorkaround.kt) for details). 
 
-If you use PATCH method API calls such as [`PATCH https://api.notion.com/v1/pages/{page_id}`](https://developers.notion.com/reference/patch-page), we recommend other `httpClient` implementations listed below. If you don't use PATCH method APIs at all and don't want to add any extra dependencies, the default `httpClient` works fine for you.
+**The PATCH method workaround does not work with OpenJDK 19 or newer**. Thus, if you use PATCH method API calls such as [`PATCH https://api.notion.com/v1/pages/{page_id}`](https://developers.notion.com/reference/patch-page), we recommend other `httpClient` implementations listed below. If you don't use PATCH method APIs at all and don't want to add any extra dependencies, the default `httpClient` works fine for you.
 
 * [`java.net.HttpClient`](https://docs.oracle.com/en/java/javase/11/docs/api/java.net.http/java/net/http/HttpClient.html) in JDK 11+
 * `okhttp3.OkHttpClient` in [OkHttp](https://square.github.io/okhttp/) 5.x (still alpha)
