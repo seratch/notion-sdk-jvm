@@ -12,6 +12,7 @@ import notion.api.v1.model.databases.DatabaseProperty as prop
 import notion.api.v1.model.databases.query.filter.CompoundFilter
 import notion.api.v1.model.databases.query.filter.PropertyFilter
 import notion.api.v1.model.databases.query.filter.condition.DateFilter
+import notion.api.v1.model.databases.query.filter.condition.StatusFilter
 import notion.api.v1.model.databases.query.filter.condition.TextFilter
 import notion.api.v1.model.databases.query.filter.condition.TimestampFilter
 import notion.api.v1.model.databases.query.sort.QuerySort
@@ -144,18 +145,26 @@ class DatabasesTest {
               ?: throw IllegalStateException(
                   "Create a database named 'Test Database' and invite this app's user!")
 
-      val queryResult =
-          client.queryDatabase(
-              databaseId = database.id,
-              filter = PropertyFilter(property = "title", title = TextFilter(contains = "bug")),
-              sorts =
-                  listOf(
-                      QuerySort(property = "title"),
-                      QuerySort(
-                          timestamp = QuerySortTimestamp.LastEditedTime,
-                          direction = QuerySortDirection.Descending)),
-              pageSize = 1,
-          )
+        val queryResult =
+            client.queryDatabase(
+                databaseId = database.id,
+                filter = CompoundFilter(
+                    or = listOf("Not started", "IN_PROGRESS", "DONE") // Default status property filter
+                        .map { PropertyFilter("Status", status = StatusFilter(equals = it)) }
+                        .toList(),
+                    and = listOf(
+                        PropertyFilter(property = "title", title = TextFilter(contains = "bug"))
+                    )
+                ),
+                sorts = listOf(
+                    QuerySort(property = "title"),
+                    QuerySort(
+                        timestamp = QuerySortTimestamp.LastEditedTime,
+                        direction = QuerySortDirection.Descending
+                    )
+                ),
+                pageSize = 1,
+            )
       assertNotNull(queryResult)
       assertTrue { queryResult.results.isNotEmpty() }
       assertEquals(ObjectType.Page, queryResult.results[0].objectType)
