@@ -13,6 +13,7 @@ constructor(
     val icon: Icon,
     val cover: Cover,
     val url: String,
+    val publicUrl: String? = null,
     val createdTime: String,
     val createdBy: User,
     val lastEditedTime: String,

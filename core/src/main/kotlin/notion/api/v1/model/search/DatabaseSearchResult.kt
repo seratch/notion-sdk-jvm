@@ -21,6 +21,7 @@ constructor(
     override val lastEditedBy: User,
     override val archived: Boolean,
     val url: String,
+    val publicUrl: String? = null,
     val parent: DatabaseParent,
     val title: List<DatabaseProperty.RichText>?,
     val description: List<DatabaseProperty.RichText>?,

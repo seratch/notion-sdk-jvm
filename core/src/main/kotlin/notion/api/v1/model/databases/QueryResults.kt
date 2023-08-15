@@ -17,4 +17,5 @@ constructor(
     override val hasMore: Boolean = false,
     var page: Object? = null,
     var database: Object? = null,
+    var pageOrDatabase: Object? = null,
 ) : WithObjectType, Pagination

@@ -20,6 +20,7 @@ constructor(
     val lastEditedTime: String,
     val lastEditedBy: User,
     val url: String,
+    val publicUrl: String? = null,
     val parent: PageParent? = null,
     val archived: Boolean? = false,
     val properties: Map<String, PageProperty>

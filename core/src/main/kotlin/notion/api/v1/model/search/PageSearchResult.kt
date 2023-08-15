@@ -19,6 +19,7 @@ constructor(
     override val lastEditedTime: String,
     override val lastEditedBy: User,
     val url: String,
+    val publicUrl: String? = null,
     val parent: PageSearchResultParent? = null,
     override val archived: Boolean = false,
     val properties: Map<String, PageProperty>,
