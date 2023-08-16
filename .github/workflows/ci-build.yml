@@ -10,22 +10,24 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-20.04
+    name: Java ${{ matrix.java-version }}
+    runs-on: ubuntu-latest
     timeout-minutes: 10
 
     strategy:
       matrix:
-        java-version: [ '11', '14' ]
+        java-version: [ '11', '17' ]
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Install JDK
-        uses: actions/setup-java@v1
+        uses: actions/setup-java@v3
         with:
           java-version: ${{ matrix.java-version }}
+          distribution: 'temurin'
       - name: Check the code format
         run: |
           mvn spotless:check
       - name: Compile the main/test code
         run: |
-          mvn test-compile --no-transfer-progress -DfailIfNoTests=false '-Dtest=tests.**.*Test' test
+          mvn --no-transfer-progress -DfailIfNoTests=false '-Dtest=tests.**.*Test' test
