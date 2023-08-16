@@ -250,7 +250,7 @@ We know a few novel Kotlin libraries do not support the conversions between snak
 ### Supported Java Runtimes
 
 * OpenJDK 8 or higher
-* All Android runtime versions supported by Kotlin 1.5
+* All Android runtime versions supported by Kotlin 1.x
 
 As `notion-sdk-jvm-httpclient` utilizes `java.net.http.HttpClient`, the module works with JDK 11 and higher versions.
 
