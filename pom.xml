@@ -44,7 +44,7 @@
         <okhttp5.version>5.0.0-alpha.11</okhttp5.version>
         <gson.version>2.10.1</gson.version>
         <slf4j.version>1.7.36</slf4j.version>
-        <slf4j2.version>2.0.7</slf4j2.version>
+        <slf4j2.version>2.0.9</slf4j2.version>
         <logback.version>1.2.10</logback.version>
         <!-- Lock the version: https://github.com/seratch/notion-sdk-jvm/issues/91 -->
         <kotlin.version>1.7.22</kotlin.version>
