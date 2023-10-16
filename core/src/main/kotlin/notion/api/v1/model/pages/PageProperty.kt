@@ -106,5 +106,6 @@ constructor(
       val number: Number? = null,
       val array: List<PageProperty>? = null,
       val function: String? = null,
+      val date: Date? = null,
   )
 }

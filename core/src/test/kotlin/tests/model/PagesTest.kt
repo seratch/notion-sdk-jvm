@@ -44,6 +44,19 @@ class PagesTest {
         }
       ]
     },
+    "Rollup Property": {
+      "id": "da010d01-6406-43d1-ae03-4b4b6989bbd9",
+      "type": "rollup",
+      "rollup": {
+        "type": "date",
+        "function": "opaque_value",
+        "date": {
+          "start": "2023-03-09T00:00:00.000+00:00",
+          "end": null,
+          "time_zone": null
+        }
+      }
+    },
     "Due": {
       "id": "da010d01-6406-43d1-ae03-4b4b6989bbd8",
       "date": {
