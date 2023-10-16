@@ -25,4 +25,5 @@ constructor(
     var relation: RelationFilter? = null,
     var formula: FormulaFilter? = null,
     var status: StatusFilter? = null,
+    var rollup: RollupFilter? = null,
 ) : QueryTopLevelFilter, CompoundFilterElement
