@@ -47,7 +47,7 @@
         <slf4j2.version>2.0.9</slf4j2.version>
         <logback.version>1.2.10</logback.version>
         <!-- Lock the version: https://github.com/seratch/notion-sdk-jvm/issues/91 -->
-        <kotlin.version>1.7.22</kotlin.version>
+        <kotlin.version>1.9.22</kotlin.version>
         <kotlin.code.style>official</kotlin.code.style>
         <duplicate-finder-maven-plugin.version>2.0.1</duplicate-finder-maven-plugin.version>
         <maven-deploy-plugin.version>3.1.1</maven-deploy-plugin.version>
