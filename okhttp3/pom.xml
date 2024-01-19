@@ -6,11 +6,11 @@
     <parent>
         <groupId>com.github.seratch</groupId>
         <artifactId>notion-sdk-jvm-parent</artifactId>
-        <version>1.10.1</version>
+        <version>1.10.2-SNAPSHOT</version>
     </parent>
 
     <artifactId>notion-sdk-jvm-okhttp3</artifactId>
-    <version>1.10.1</version>
+    <version>1.10.2-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <properties>
