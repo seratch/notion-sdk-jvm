@@ -116,6 +116,7 @@ constructor(
         var id: String? = null,
         var name: String? = null,
         var color: OptionColor? = null,
+        var description: String? = null,
     )
   }
 
@@ -124,6 +125,7 @@ constructor(
         val id: String? = null,
         val name: String? = null,
         val color: OptionColor? = null,
+        val description: String? = null,
     )
   }
 
@@ -137,6 +139,7 @@ constructor(
         val id: String? = null,
         val name: String? = null,
         val color: OptionColor? = null,
+        val description: String? = null,
     )
     data class OptionGroup(
         val id: String? = null,

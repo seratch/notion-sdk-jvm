@@ -13,6 +13,7 @@ interface Block : WithObjectType {
   var archived: Boolean?
   var hasChildren: Boolean?
   var parent: BlockParent?
+  val requestId: String?
 
   fun asParagraph(): ParagraphBlock =
       if (type == BlockType.Paragraph) this as ParagraphBlock

@@ -23,4 +23,5 @@ constructor(
     val parent: PageSearchResultParent? = null,
     override val archived: Boolean = false,
     val properties: Map<String, PageProperty>,
+    override val requestId: String? = null,
 ) : SearchResult

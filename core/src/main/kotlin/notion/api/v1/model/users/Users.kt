@@ -14,4 +14,5 @@ constructor(
     override val hasMore: Boolean = false,
     val type: String,
     var user: Object? = null,
+    val requestId: String? = null,
 ) : WithObjectType, Pagination

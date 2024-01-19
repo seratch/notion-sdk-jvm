@@ -16,4 +16,5 @@ constructor(
     val type: String = "comment",
     // We may revisit Any type here once the Notion API uses it in a meaningful way
     val comment: Any? = null,
+    val requestId: String? = null,
 ) : WithObjectType, Pagination

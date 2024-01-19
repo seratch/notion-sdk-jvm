@@ -15,4 +15,5 @@ constructor(
     override val hasMore: Boolean = false,
     val type: String = "block",
     val block: Object = Object(),
+    val requestId: String? = null,
 ) : WithObjectType, Pagination

@@ -22,6 +22,7 @@ constructor(
     override var archived: Boolean? = null,
     override var parent: BlockParent? = null,
     val file: Element? = null,
+    override val requestId: String? = null,
 ) : Block {
 
   // for other JVM languages
@@ -53,6 +54,7 @@ constructor(
   constructor(
       val caption: List<PageProperty.RichText>? = null,
       val type: String? = null, // "file", "external",
+      val name: String? = null,
       val file: FileDetails? = null,
       val external: ExternalFileDetails? = null,
   )

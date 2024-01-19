@@ -16,6 +16,7 @@ interface SearchResult : WithObjectType {
   val createdBy: User
   val lastEditedBy: User
   val archived: Boolean
+  val requestId: String?
 
   fun asDatabase(): DatabaseSearchResult =
       if (objectType == ObjectType.Database) this as DatabaseSearchResult

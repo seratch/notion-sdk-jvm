@@ -35,6 +35,7 @@ constructor(
     val lastEditedBy: User? = null,
     val createdTime: String? = null,
     val lastEditedTime: String? = null,
+    val requestId: String? = null,
 ) {
   data class Element(
       val type: PropertyType, // can be "property_item"

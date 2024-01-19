@@ -22,6 +22,7 @@ constructor(
     override var archived: Boolean? = null,
     override var parent: BlockParent? = null,
     val pdf: Element? = null,
+    override val requestId: String? = null,
 ) : Block {
 
   // for other JVM languages

@@ -19,4 +19,5 @@ constructor(
     val createdBy: User,
     val lastEditedTime: String,
     var richText: List<PageProperty.RichText>,
+    val requestId: String? = null,
 ) : WithObjectType

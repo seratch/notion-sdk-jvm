@@ -27,4 +27,5 @@ constructor(
     val description: List<DatabaseProperty.RichText>?,
     @SerializedName("is_inline") val inline: Boolean,
     val properties: Map<String, DatabaseProperty>,
+    override val requestId: String? = null,
 ) : SearchResult

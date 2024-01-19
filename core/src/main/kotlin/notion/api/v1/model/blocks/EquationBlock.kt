@@ -20,6 +20,7 @@ constructor(
     override var archived: Boolean? = null,
     override var parent: BlockParent? = null,
     val equation: Equation? = null,
+    override val requestId: String? = null,
 ) : Block {
 
   // for other JVM languages

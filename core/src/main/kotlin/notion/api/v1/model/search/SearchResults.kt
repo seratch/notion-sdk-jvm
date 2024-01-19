@@ -15,4 +15,5 @@ constructor(
     val type: String,
     val block: Object? = null,
     var pageOrDatabase: Object? = null,
+    val requestId: String? = null,
 ) : WithObjectType, Pagination

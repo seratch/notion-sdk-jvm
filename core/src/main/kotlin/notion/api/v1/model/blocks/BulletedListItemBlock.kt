@@ -21,6 +21,7 @@ constructor(
     override var archived: Boolean? = null,
     override var parent: BlockParent? = null,
     val bulletedListItem: Element,
+    override val requestId: String? = null,
 ) : Block {
 
   // for other JVM languages

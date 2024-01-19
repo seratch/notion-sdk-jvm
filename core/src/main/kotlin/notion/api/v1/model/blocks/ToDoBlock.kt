@@ -20,6 +20,7 @@ constructor(
     override var hasChildren: Boolean? = null,
     override var archived: Boolean? = null,
     override var parent: BlockParent? = null,
+    override val requestId: String? = null,
     val toDo: Element,
 ) : Block {
 

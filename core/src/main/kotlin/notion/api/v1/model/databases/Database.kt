@@ -24,4 +24,5 @@ constructor(
     @SerializedName("is_inline") val inline: Boolean,
     val properties: Map<String, DatabaseProperty>,
     val archived: Boolean,
+    val requestId: String? = null,
 ) : WithObjectType

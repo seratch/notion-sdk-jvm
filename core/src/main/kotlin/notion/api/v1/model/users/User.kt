@@ -14,4 +14,5 @@ constructor(
     val name: String? = null,
     val avatarUrl: String? = null,
     val bot: Bot? = null,
+    val requestId: String? = null,
 ) : WithObjectType
