@@ -31,7 +31,14 @@ constructor(
     val lastEditedBy: LastEditedBy? = null,
     val createdTime: CreatedTime? = null,
     val lastEditedTime: LastEditedTime? = null,
+    val uniqueId: UniqueId? = null,
 ) {
+
+  open class UniqueId
+  @JvmOverloads
+  constructor(
+      var prefix: String?
+  )
 
   open class RichText
   @JvmOverloads

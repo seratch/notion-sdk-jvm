@@ -125,6 +125,11 @@ class PagesTest {
         ],
         "function": "show_original"
       }
+    },
+    "ID": {
+      "id": "UQGz",
+      "type": "unique_id",
+      "unique_id": {"prefix": "TD", "number": 18}
     }
   }
 }
