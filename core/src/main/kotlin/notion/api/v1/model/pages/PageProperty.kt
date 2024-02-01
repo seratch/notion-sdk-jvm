@@ -37,10 +37,7 @@ constructor(
 
   open class UniqueId
   @JvmOverloads
-  constructor(
-      var number: Number? = null,
-      var prefix: String? = null
-  )
+  constructor(var number: Number? = null, var prefix: String? = null)
   data class RichText
   @JvmOverloads
   constructor(
