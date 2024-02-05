@@ -185,6 +185,11 @@ class DatabasesTest {
           "id": "title",
           "type": "title",
           "title": {}
+        },
+        "ID": {
+          "id": "UQGz",
+          "type": "unique_id",
+          "unique_id": {"prefix": "TD"}
         }
       }
     }
