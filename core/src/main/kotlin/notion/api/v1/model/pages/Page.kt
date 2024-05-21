@@ -25,4 +25,5 @@ constructor(
     val archived: Boolean? = false,
     val properties: Map<String, PageProperty>,
     val requestId: String? = null,
+    var inTrash: Boolean? = null,
 ) : WithObjectType

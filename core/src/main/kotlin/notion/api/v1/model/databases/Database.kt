@@ -25,4 +25,5 @@ constructor(
     val properties: Map<String, DatabaseProperty>,
     val archived: Boolean,
     val requestId: String? = null,
+    var inTrash: Boolean? = null,
 ) : WithObjectType

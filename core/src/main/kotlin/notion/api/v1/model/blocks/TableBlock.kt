@@ -20,6 +20,7 @@ constructor(
     override var parent: BlockParent? = null,
     val table: Element,
     override val requestId: String? = null,
+    override var inTrash: Boolean? = null,
 ) : Block {
 
   // for other JVM languages

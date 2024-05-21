@@ -21,6 +21,7 @@ constructor(
     override var parent: BlockParent? = null,
     val linkToPage: LinkToPage? = null,
     override val requestId: String? = null,
+    override var inTrash: Boolean? = null,
 ) : Block {
 
   // for other JVM languages

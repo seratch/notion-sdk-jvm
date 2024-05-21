@@ -22,6 +22,7 @@ constructor(
     override var parent: BlockParent? = null,
     override val requestId: String? = null,
     val toDo: Element,
+    override var inTrash: Boolean? = null,
 ) : Block {
 
   // for other JVM languages

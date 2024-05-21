@@ -22,6 +22,7 @@ constructor(
     override var parent: BlockParent? = null,
     @SerializedName("heading_1") val heading1: Element,
     override val requestId: String? = null,
+    override var inTrash: Boolean? = null,
 ) : Block {
 
   // for other JVM languages

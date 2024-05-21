@@ -24,4 +24,5 @@ constructor(
     override val archived: Boolean = false,
     val properties: Map<String, PageProperty>,
     override val requestId: String? = null,
+    override var inTrash: Boolean? = null,
 ) : SearchResult
