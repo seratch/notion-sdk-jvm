@@ -44,7 +44,7 @@
         <okhttp5.version>5.0.0-alpha.14</okhttp5.version>
         <gson.version>2.11.0</gson.version>
         <slf4j.version>1.7.36</slf4j.version>
-        <slf4j2.version>2.0.12</slf4j2.version>
+        <slf4j2.version>2.0.16</slf4j2.version>
         <logback.version>1.2.10</logback.version>
         <kotlin.version>2.0.0</kotlin.version>
         <!-- Allow use by clients on earlier versions of Kotlin-->
