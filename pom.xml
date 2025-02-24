@@ -64,7 +64,7 @@
         <nexus-staging-maven-plugin.version>1.7.0</nexus-staging-maven-plugin.version>
         <jacoco-maven-plugin.version>0.8.12</jacoco-maven-plugin.version>
         <dokka.version>2.0.0</dokka.version>
-        <spotless.version>2.20.0</spotless.version>
+        <spotless.version>2.44.3</spotless.version>
     </properties>
 
     <licenses>
