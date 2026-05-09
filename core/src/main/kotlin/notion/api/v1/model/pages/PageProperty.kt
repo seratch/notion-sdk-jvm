@@ -72,7 +72,7 @@ constructor(
     constructor(
         var type: RichTextMentionType? = null,
         var user: User? = null,
-        val page: Page? = null,
+        val page: PageReference? = null,
         val database: Database? = null,
         val date: Date? = null,
     )
